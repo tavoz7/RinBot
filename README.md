@@ -1,8 +1,6 @@
 # LucasBot
 Some dumb bot I made because my friend wouldn't stop making puns out of my username
 
-This project is free to be modified in any way, as long as I recieve credit if it is publicly published.
-
 ### To set up the bot
 First, clone the repo:
 
@@ -22,13 +20,23 @@ After that, navigate to the repo you cloned earlier:
 Then, initalize node:
 
 
-`$ npm install`
+`$ npm init`
 
 
-Then, open up index.js and fill in your token and bot logins.
+Fill out the fields that are presented to you, or press enter for each one to skip this step.
+
+
+
+
+
+Then, open up index.js and fill in your bot token in the nessecary fields, and make changes to what the bot says and does.
 
 
 Finally, to run the bot:
 
 
 `$ npm start`
+
+
+## Credit and other stuff
+This project is free to be modified in any way, as long as I recieve credit if it is publicly published.
