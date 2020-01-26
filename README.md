@@ -11,6 +11,15 @@ First, clone the repo:
 Then, install [node.js](https://nodejs.org).
 
 
+Go to the [Discord Developer Portal](https://discordapp.com/developers) and click 'New Application', and name it.
+
+
+Click "Bot" in the side panel, and then click "Add Bot", and confirm.
+
+
+Give your bot a name, and copy its token.
+
+
 After that, navigate to the repo you cloned earlier:
 
 
@@ -26,7 +35,10 @@ Then, initalize node:
 Fill out the fields that are presented to you, or press enter for each one to skip this step.
 
 
+Import the discord.js library to the project:
 
+
+`$ npm install discord.js --save`
 
 
 Then, open up index.js and fill in your bot token in the nessecary fields, and make changes to what the bot says and does.
