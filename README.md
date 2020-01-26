@@ -17,7 +17,7 @@ Now, we need to tell Discord you're making a bot.
  - Go to the [Discord Developer Portal](https://discordapp.com/developers) and click 'New Application', and name it.
 
 
- - Click "Bot" in the side panel, and then click "Add Bot", and confirm.
+ - Click "Bot" in the side menu, and then click 'Add Bot', and confirm.
 
 
  - Change your bot's name and picture (if you want), and copy its token.
@@ -45,6 +45,9 @@ Import the discord.js library to the project:
 
 
 Then, open up index.js and fill in your bot token in the nessecary fields, and make changes to what the bot says and does.
+
+
+To add the bot to your server, get your Client ID from the 'Home' tab in the side menu, and paste this URL into your web browser. https://discordapp.com/oauth2/authorize?client_id=YOUR_CLIENT_ID_HERE&scope=bot&permissions=67496976
 
 
 Finally, to run the bot:
