@@ -17,7 +17,7 @@ bot.on('message', function(message){
 })
 // Remember the semicolon if you are adding more functions under this one; if thre are none under this one, delete it.
 
-// These lines (apart from the ones that have remember) have been commented since my bot is not using them. If you want to use them, remove the '//' from every line EXCEPT ehe ones that have "Remember the semicolon."
+// These lines (apart from the ones that have remember) have been commented since my bot is not using them. If you want to use them, remove the '//' from every line EXCEPT the ones that have "Remember the semicolon."
 
 // bot.on('message', function(message){
 //  if(message.content == 'daunte')
