@@ -20,7 +20,7 @@ Now, we need to tell Discord you're making a bot.
  - Click "Bot" in the side panel, and then click "Add Bot", and confirm.
 
 
- - Give your bot a name, and copy its token.
+ - Change your bot's name and picture (if you want), and copy its token.
 
 
 After that, navigate to the repo you cloned earlier:
