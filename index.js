@@ -16,35 +16,36 @@ bot.on('message', function(message){
 	}
 })
 
-//bot.on('message', function(message){
-//	if(message.content == 'daunte')
+// bot.on('message', function(message){
+//  if(message.content == 'daunte')
 //	{
 //		message.reply("Daunte? More like Cuntae")
 //	}
-//});
-//REMEMBER THE SEMICOLON
+// });
+// Remember the semicolon if you are adding more functions under this one; if thre are none under this one, delete it.
 
-//bot.on('message', function(message){
+// bot.on('message', function(message){
 //	if(message.content == 'Daunte')
 //	{
 //		message.reply("Daunte? More like Cuntae")
 //	}
-//})
-//REMEMBER THE SEMICOLON
+// })
+// Remember the semicolon if you are adding more functions under this one; if thre are none under this one, delete it.
 
-//bot.on('message', function(message){
+// bot.on('message', function(message){
 //    if(message.author.username == 'Lucas')
 //    {
 //        message.reply("Lucas? More like Lickass")
 //    }
-//});
-//REMEMBER THE SEMICOLON
+// });
+// Remember the semicolon if you are adding more functions under this one; if thre are none under this one, delete it.
 
 //bot.on('message', function(message){
 //    if(message.author.username == 'CominAtYou')
 //    {
 //        message.reply("I'm **cominatyou** with this message")
 //    }
-//})
+// })
+// Remember the semicolon if you are adding more functions under this one; if thre are none under this one, delete it.
 
 bot.login('token');
