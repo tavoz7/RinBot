@@ -11,16 +11,16 @@ First, clone the repo:
 Then, install [node.js](https://nodejs.org).
 
 
-- Now, we need to tell Discord you're making a bot.
+Now, we need to tell Discord you're making a bot.
 
 
-    - Go to the [Discord Developer Portal](https://discordapp.com/developers) and click 'New Application', and name it.
+ - Go to the [Discord Developer Portal](https://discordapp.com/developers) and click 'New Application', and name it.
 
 
-    - Click "Bot" in the side panel, and then click "Add Bot", and confirm.
+ - Click "Bot" in the side panel, and then click "Add Bot", and confirm.
 
 
-    - Give your bot a name, and copy its token.
+ - Give your bot a name, and copy its token.
 
 
 After that, navigate to the repo you cloned earlier:
