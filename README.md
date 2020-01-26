@@ -56,5 +56,5 @@ Finally, to run the bot:
 `$ npm start`
 
 
-## Credit and other stuff
+### Credit and other stuff
 This project is free to be modified in any way, as long as I recieve credit if it is publicly published.
