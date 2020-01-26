@@ -10,7 +10,7 @@ First, clone the repo:
 `$ git clone https://github.com/CominAtYou/LucasBot`
 
 
-Then, install [node.js](nodejs.org).
+Then, install [node.js](https://nodejs.org).
 
 
 After that, navigate to the repo you cloned earlier:
