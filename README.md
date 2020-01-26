@@ -31,4 +31,4 @@ Then, open up index.js and fill in your token and bot logins.
 Finally, to run the bot:
 
 
-`npm start`
+`$ npm start`
