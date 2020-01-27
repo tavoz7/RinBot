@@ -53,7 +53,7 @@ To add the bot to your server, get your Client ID from the 'Home' tab in the sid
 Finally, to run the bot:
 
 
-`$ npm start`
+`$ npm .`
 
 
 ### Credit and other stuff
