@@ -29,6 +29,12 @@ After that, navigate to the repo you cloned earlier:
 `$ cd <PATH/TO/REPO>`
 
 
+Then, run this:
+
+
+`rm package.json`
+
+
 Then, initalize node:
 
 
