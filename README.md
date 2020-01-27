@@ -2,7 +2,6 @@
 Some dumb bot I made because my friend wouldn't stop making puns out of my username
 
 ## To set up the bot
-### Ubuntu
 First, clone the repo:
 
 
@@ -63,5 +62,5 @@ Finally, to run the bot:
 `$ node .`
 
 
-### Credit and other stuff
+## Credit and other stuff
 This project is free to be modified in any way, as long as I recieve credit if it is publicly published.
