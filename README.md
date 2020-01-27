@@ -32,7 +32,7 @@ After that, navigate to the repo you cloned earlier:
 Then, run this:
 
 
-`rm package.json`
+`$ rm package.json`
 
 
 Then, initalize node:
