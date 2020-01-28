@@ -29,7 +29,7 @@ After that, navigate to the repo you cloned earlier:
 `$ cd <PATH/TO/REPO>`
 
 
-Then, run this:
+Then, remove the unneeded package.json since we will be making this later:
 
 
 `$ rm package.json`
