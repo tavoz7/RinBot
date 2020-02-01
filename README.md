@@ -53,7 +53,7 @@ Import the discord.js library to the project:
 Then, open up index.js and fill in your bot token in the nessecary fields, and make changes to what the bot says and does. A helpful resource for things the bot can do is the [discord.js documentation](https://discord.js.org/#/docs/main/stable/general/welcome).
 
 
-To add the bot to your server, get your Client ID from the 'Home' tab in the side menu of the Discord Developer Portal, and paste this URL into your web browser. `https://discordapp.com/oauth2/authorize?client_id=YOUR_CLIENT_ID_HERE&scope=bot&permissions=67496976`, replacing `YOUR_CLIENT_ID_HERE` with the Client ID you previously obtained.
+To add the bot to your server, get your Client ID from the 'Home' tab in the side menu of the Discord Developer Portal, and paste this URL into your web browser `https://discordapp.com/oauth2/authorize?client_id=YOUR_CLIENT_ID_HERE&scope=bot&permissions=67496976`, replacing `YOUR_CLIENT_ID_HERE` with the Client ID you previously obtained.
 
 
 Finally, to run the bot:
