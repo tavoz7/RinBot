@@ -62,6 +62,6 @@ Finally, to run the bot:
 `$ node .`
 
 
-## Licensing and other mumbo jumbo.
+## Licensing and other mumbo jumbo
 
 You can use this repository however you want as long as it is in line with the [license](https://github.com/CominAtYou/LucasBot/blob/master/LICENSE). 
