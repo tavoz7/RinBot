@@ -62,5 +62,6 @@ Finally, to run the bot:
 `$ node .`
 
 
-## Credit and other stuff
-This project is free to be modified in any way, as long as I recieve credit if it is publicly published.
+## Licensing and other mumbo jumbo.
+
+You can use this repository however you want as long as it is in line with the [license](https://github.com/CominAtYou/LucasBot/blob/master/LICENSE). 
