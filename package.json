@@ -1,5 +1,5 @@
 {
-  "name": "lucasbot",
+  "name": "nameless",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,6 +9,7 @@
   "author": "CominAtYou",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^11.5.1"
+    "date": "^1.0.2",
+    "discord.js": "^11.6.4"
   }
 }
