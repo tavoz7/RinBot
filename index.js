@@ -34,7 +34,7 @@ client.on('message', function(message) {
     else if (message.content.startsWith('!userinfo') === true && message.mentions.users.size) { // TODO: scream
         // console.log(message.mentions.users.first());
         var mentionedUser = message.mentions.users.first();
-        if (messasge.member.nickname === null) {
+        if (message.member.nickname === null) {
             var nickname = "None";
         } else {
             nickname = message.member.nickname;
