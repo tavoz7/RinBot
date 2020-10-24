@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 const serverIcon = 'https://cdn.discordapp.com/icons/685236709277040802/771cef9de1fb7c82d7ded91b06383eb1.webp?size=128'
 const config = require('./config.json');
+const moment = require('moment')
 
 client.on('message', function(message) {
     if (!message.guild) return;
@@ -33,17 +34,42 @@ client.on('message', function(message) {
     else if (message.content.startsWith('!userinfo') === true && message.mentions.users.size) { // TODO: scream
         console.log(message.mentions.users.first());
         var mentionedUser = message.mentions.users.first();
+        var guildScopeUser = message.member;
+        if (guildScopeUser.nickname === null) {
+            var nickname = "None";
+        } else {
+            nickname = guildScopeUser.nickname;
+        }
         console.log(mentionedUser);
         var reqEmbed = {
             color: 0x395F85,
             title: `${mentionedUser.username}#${mentionedUser.discriminator} (${mentionedUser.id})`,
             thumbnail: {url: mentionedUser.avatarURL},
-            // thumbnail: {url: }
+            description: "**User Information**",
+            fields: [
+                {
+                    name: "Mention",
+                    value: `<@${mentionedUser.id}>`
+                },
+                {
+                    name: "Nickname",
+                    value: nickname,
+                },
+                {
+                    name: "Joined Server",
+                    value: `${moment(message.member.joinedAt).format('D MMM YYYY')} at ${moment(message.member.joinedTimestamp).format('h:mm A [UTC]Z')}`
+                },
+                {
+                    name: "Account Creation Date",
+                    value: moment(mentionedUser.createdAt).format("D MMM YYYY [at] h:mm A [UTC]Z"), 
+                    
+                }
+            ]
         }
+        
         message.channel.send({embed: reqEmbed});
     } else if (message.content.startsWith('!userinfo') === true && !message.mentions.users.size) {
         var mentionedUser = message.author;
-        // console.log(mentionedUser.avatarURL);
         var reqEmbed = {
             color: 0x395F85,
             title: `${mentionedUser.username}#${mentionedUser.discriminator} (${mentionedUser.id})`,
