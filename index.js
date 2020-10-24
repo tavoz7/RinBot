@@ -149,6 +149,14 @@ client.on('message', function(message) {
                     name: "Member Count",
                     value: message.guild.memberCount,
                 },
+                {
+                    name: "Text Channels",
+                    value: message.guild.channels.filter((c) => c.type === "text").size,
+                },
+                {
+                    name: "Voice Channels",
+                    value: message.guild.channels.filter((c) => c.type === "voice").size,
+                },
             ],
             footer: {
                 text: `Guild ID: ${message.guild.id}`
