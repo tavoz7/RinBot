@@ -14,7 +14,7 @@ client.on('message', function(message) {
             // timestamp = new Date(),
             footer: {
                 text: "Read #rules-and-info for more info.",
-                icon_url: serverIcon
+                icon_url: mesaage.guild.iconURL,
             }
         }
         message.channel.send({ embed: reqEmbed });
