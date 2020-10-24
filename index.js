@@ -20,6 +20,7 @@ client.on('message', function(message) {
         message.channel.send({ embed: reqEmbed });
     } 
     else if (message.content == '!rule spoilers' && message.member.roles.find(r => r.id == '766858374377504818') || message.member.roles.find(r => r.id === '769299680357122088')) {
+        if (!message.guild) return;
         message.delete();
         var reqEmbed = {
             title: "USE SPOILERS RESPECTIVELY",
@@ -32,6 +33,7 @@ client.on('message', function(message) {
         message.channel.send({ embed: reqEmbed });
     }
     else if (message.content.startsWith('!userinfo') === true && message.mentions.users.size) { // TODO: scream
+        if (!message.guild) return;
         // console.log(message.mentions.users.first());
         var mentionedUser = message.mentions.users.first();
         if (message.member.nickname === null) {
@@ -79,6 +81,7 @@ client.on('message', function(message) {
         
         message.channel.send({embed: reqEmbed});
     } else if (message.content.startsWith('!userinfo') === true && !message.mentions.users.size) {
+        if (!message.guild) return;
         var mentionedUser = message.author;
         if (message.member.nickname === null) {
             var nickname = "None";
@@ -124,6 +127,7 @@ client.on('message', function(message) {
         }
         message.channel.send({embed: reqEmbed});
     } else if (message.content == '!serverinfo') {
+        if (!message.guild) return;
         var reqEmbed = {
             color: rin,
             author: {
