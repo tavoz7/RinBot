@@ -14,18 +14,18 @@ module.exports = {
                     },
                     {
                         name: "Arguments",
-                        value: "`@user`, `UserID`\nIf no user is specified, information will be listed for the sender of the message."
+                        value: "`@user`\nIf no user is specified, information will be listed for the sender of the message."
                     },
                     {
                         name: "Example",
-                        value: "!userinfo @user\n!userinfo 123456789098765432"
+                        value: "!userinfo @user"
                     }
                 ]
             }
             message.channel.send({embed: reqEmbed});
         }
         var mentionedUser = message.mentions.users.first();
-        let guildScopeMember = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]))
+        var guildScopeMember = message.guild.member(message.mentions.users.first());
         if (message.mentions.users.first() === undefined) { mentionedUser = message.author }
         if (guildScopeMember === null) {guildScopeMember = message.member}
         if (mentionedUser.nickname === undefined) {
