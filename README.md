@@ -1,8 +1,8 @@
-# Whomst
+# RinBot
 
 If you're reading this:
  - How
  - Why
  - Stop
- 
- Thanks
+
+Thanks
