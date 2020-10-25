@@ -53,7 +53,7 @@ module.exports = {
                 },
                 {
                     name: "Joined Server",
-                    value: `${moment(message.member.joinedAt).format('D MMM YYYY')} at ${moment(message.member.joinedTimestamp).format('h:mm A [UTC]Z')}`
+                    value: `${moment(mentionedUser.joinedAt).format('D MMM YYYY')} at ${moment(mentionedUser.joinedTimestamp).format('h:mm A [UTC]Z')}`
                 },
                 {
                     name: "Account Creation Date",
