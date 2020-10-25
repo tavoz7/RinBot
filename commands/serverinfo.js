@@ -28,7 +28,6 @@ module.exports = {
         }
         else if (args.length === 0) {
             var reqEmbed = {
-                color: 0x395F85,
                 author: {
                     name: message.guild.name,
                     icon_url: message.guild.iconURL,

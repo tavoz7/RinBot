@@ -12,7 +12,6 @@ module.exports = {
                 var reqEmbed = {
                     title: "BE RESPECTFUL",
                     description: "Always be respectful to Moderator and our server members. Avoid starting unnessecary drama and toxicity.",
-                    color: 0x395F85,
                     footer: {
                         text: "Read #rules-and-info for more info.",
                         icon_url: message.guild.iconURL,
@@ -23,7 +22,6 @@ module.exports = {
                 var reqEmbed = {
                     title: "USE SPOILERS RESPECTIVELY",
                     description: "Use spoilers for new content posted to ensure that you do not spoil things for others. In addition, do not use spoilers to imply innapropriate content.",
-                    color: 0x395F85,
                     footer: {
                         text: "Read #rules-and-info for more info.",
                         icon_url: message.guild.iconURL,
@@ -34,7 +32,6 @@ module.exports = {
                 var reqEmbed = {
                     title: "Command: Rule",
                     description: "Send a rule in an embed to a channel.",
-                    color: 0x395F85,
                     fields: [
                         {
                             name: "Syntax",

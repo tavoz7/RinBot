@@ -32,7 +32,6 @@ module.exports = {
             nickname = message.member.nickname;
         }
         var reqEmbed = {
-            color: 0x395F85,
             author: {
                 name: `${mentionedUser.username}#${mentionedUser.discriminator}`,
                 icon_url: mentionedUser.avatarURL,
