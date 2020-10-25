@@ -10,15 +10,15 @@ module.exports = {
                 fields: [
                     {
                         name: "Syntax",
-                        value: "!userinfo <user>"
+                        value: "`!userinfo <user>`"
                     },
                     {
                         name: "Arguments",
-                        value: "@user\nIf no user is specified, information will be listed for the sender of the message."
+                        value: "`@user`, `UserID`\nIf no user is specified, information will be listed for the sender of the message."
                     },
                     {
                         name: "Example",
-                        value: "!userinfo @user"
+                        value: "!userinfo @user\n!userinfo 123456789098765432"
                     }
                 ]
             }
