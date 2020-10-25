@@ -20,7 +20,7 @@ module.exports = {
                     },
                     {
                         name: "Examples",
-                        value: "`!serverinfo`"
+                        value: "!serverinfo"
                     }
                 ]
             }
