@@ -20,16 +20,19 @@ client.on('message', function(message) { // fires whenever a message is sent
     const command = args.shift().toLowerCase(); // set command to the correct .js file as a dependency whenever a command is invoked
 
     if(command === 'rule') {
-        client.commands.get('rule').execute(message, args)
+        client.commands.get('rule').execute(message, args);
     } 
     else if (command === 'userinfo') {
-        client.commands.get('userinfo').execute(message, args)
+        client.commands.get('userinfo').execute(message, args);
     } 
     else if (command === 'serverinfo') {
-        client.commands.get('serverinfo').execute(message, args)
+        client.commands.get('serverinfo').execute(message, args);
     } 
     else if (command === 'random') {
-        client.commands.get('random').execute(message, args)
+        client.commands.get('random').execute(message, args);
+    }
+    else if (command === 'about') {
+        client.commands.get('about').execute(message, client);
     }
 });
 
