@@ -25,11 +25,13 @@ module.exports = {
             message.channel.send({embed: reqEmbed});
         }
         var mentionedUser = message.mentions.users.first();
+        let guildScopeMember = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]))
         if (message.mentions.users.first() === undefined) { mentionedUser = message.author }
-        if (message.member.nickname === null) {
+        if (guildScopeMember === null) {guildScopeMember = message.member}
+        if (mentionedUser.nickname === undefined) {
             var nickname = "None";
         } else {
-            nickname = message.member.nickname;
+            nickname = mentionedUser.nickname;
         }
         var reqEmbed = {
             author: {
@@ -53,7 +55,7 @@ module.exports = {
                 },
                 {
                     name: "Joined Server",
-                    value: `${moment(mentionedUser.joinedAt).format('D MMM YYYY')} at ${moment(mentionedUser.joinedTimestamp).format('h:mm A [UTC]Z')}`
+                    value: `${moment(guildScopeMember.joinedAt).format('D MMM YYYY')} at ${moment(guildScopeMember.joinedTimestamp).format('h:mm A [UTC]Z')}`
                 },
                 {
                     name: "Account Creation Date",
