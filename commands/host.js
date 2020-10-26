@@ -42,7 +42,7 @@ module.exports = {
                 icon_url: client.user.avatarURL,
             },
             thumbnail: {url: thumbnailIcon},
-            title: "Host Stats",
+            title: "**Host Stats**",
             fields: [
                 {
                     name: "Current OS",
