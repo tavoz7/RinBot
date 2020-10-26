@@ -7,10 +7,17 @@ module.exports = {
         if (message.author.id !== '245047280908894209') return;
         if (!os.version().includes("Windows")) { 
             var host_os = 'Ubuntu 20.04.1'; 
-            var percentCPU = (os.loadavg()[0]*100).toFixed(1) 
+            var percentCPU = (os.loadavg()[0]*100).toFixed(1);
+            var thumbnailIcon = "https://cdn.cominatyou.com/cc38be88.png"
         } 
         else { 
-            host_os = os.version(); var percentCPU = (os.loadavg()[0]*10).toFixed(1) 
+            host_os = os.version(); 
+            var percentCPU = (os.loadavg()[0]*10).toFixed(1);
+            if (os.version().includes('Windows')) {
+                var thumbnailIcon = 'https://cdn.cominatyou.com/cc38be89.png';
+            } else {
+                var thumbnailIcon = client.user.avatarURL;
+            }
         }
         freeMem = (os.freemem().toString() / 1000000000).toFixed(2)
         if (Number.parseInt(os.freemem().toString()) < 1000000000) {
@@ -27,6 +34,7 @@ module.exports = {
                 name: client.user.username,
                 icon_url: client.user.avatarURL,
             },
+            thumbnail: {url: thumbnailIcon},
             title: "Host Stats",
             fields: [
                 {
