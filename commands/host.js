@@ -5,7 +5,13 @@ module.exports = {
     description: "get information about the host server.",
     execute(message, args, os, client) {
         if (message.author.id !== '245047280908894209') return;
-        if (!os.version().includes("Windows")) { var host_os = 'Ubuntu 20.04.1' } else { host_os = os.version() }
+        if (!os.version().includes("Windows")) { 
+            var host_os = 'Ubuntu 20.04.1'; 
+            var percentCPU = (os.loadavg()[0]*100).toFixed(1) 
+        } 
+        else { 
+            host_os = os.version(); var percentCPU = (os.loadavg()[0]*10).toFixed(1) 
+        }
         freeMem = (os.freemem().toString() / 1000000000).toFixed(2)
         if (Number.parseInt(os.freemem().toString()) < 1000000000) {
             var unit = 'MB'
@@ -30,7 +36,7 @@ module.exports = {
                 },
                 {
                     name: "Load Average",
-                    value: `${(os.loadavg()[0]*10).toFixed(1)}%`,
+                    value: `${percentCPU}%`,
                     inline: true,
                 },
                 {
