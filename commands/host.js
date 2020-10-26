@@ -6,6 +6,16 @@ module.exports = {
     execute(message, args, os, client) {
         if (message.author.id !== '245047280908894209') return;
         if (!os.version().includes("Windows")) { var host_os = 'Ubuntu 20.04.1' } else { host_os = os.version() }
+        freeMem = (os.freemem().toString() / 1000000000).toFixed(2)
+        if (Number.parseInt(os.freemem().toString()) < 1,000,000,000) {
+            var unit = 'MB'
+            if (host_os = 'Ubuntu 20.04.1') {
+                var freeMem = (os.freemem().toString() / 1000000).toFixed(0)
+            } else if (os.version().includes("Windows")) {
+                var freeMem = (os.freemem().toString() / 1000000000).toFixed(0)
+            }
+        } 
+        else { var unit = 'GB' }
         var reqEmbed = {
             author: {
                 name: client.user.username,
@@ -20,12 +30,12 @@ module.exports = {
                 },
                 {
                     name: "Load Average",
-                    value: `${os.loadavg()[0]*10}%`,
+                    value: `${(os.loadavg()[0]*10).toFixed(1)}%`,
                     inline: true,
                 },
                 {
                     name: "Free Memory",
-                    value: `${(os.freemem().toString() / 1000000000).toFixed(2)} GB`,
+                    value: `${freeMem} ${unit}`,
                     inline: true,
                 }
             ],
