@@ -36,30 +36,35 @@ module.exports = {
         }
         else if (args.length === 1 && Number.isInteger(parseInt(args[0]))) {
             var reqEmbed = {
+                color: 0xD72D42,
                 description: ":x: Not enough parameters supplied."
             }
             message.channel.send({embed: reqEmbed});
         }
         else if (args.length === 1 && !Number.isInteger(parseInt(args[0]))) {
             var reqEmbed = {
+                color: 0xD72D42,
                 description: ":x: Invalid parameters supplied."
             }
             message.channel.send({embed: reqEmbed});
         }
         else if (args.length > 2) {
             var reqEmbed = {
+                color: 0xD72D42,
                 description: ":x: Too many parameters supplied."
             }
             message.channel.send({embed: reqEmbed});
         }
         else if (Number.isNaN(parseInt(args[0])) === true || Number.isNaN(parseInt(args[1])) === true) {
             var reqEmbed = {
+                color: 0xD72D42,
                 description: ":x: Invlid parameters supplied."
             }
             message.channel.send({embed: reqEmbed});
         }
         else if (parseInt(args[0] > (Number.MAX_SAFE_INTEGER - 1) || parseInt(args[1]) > (Number.MAX_SAFE_INTEGER - 1))) {
             var reqEmbed = {
+                color: 0xD72D42,
                 description: `:x: Numbers greater than ${(Number.MAX_SAFE_INTEGER - 1)} are not supported.`
             }
             message.channel.send({embed: reqEmbed})
@@ -69,6 +74,7 @@ module.exports = {
         }
         else if (parseInt(args [0]) > parseInt(args[1])) {
             var reqEmbed = {
+                color: 0xD72D42,
                 description: ":x: Minimum number cannot be greater than maximum number."
             }
             message.channel.send({embed: reqEmbed});

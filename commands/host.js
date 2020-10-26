@@ -4,7 +4,14 @@ module.exports = {
     name: "host",
     description: "get information about the host server.",
     execute(message, args, os, client) {
-        if (message.author.id !== '245047280908894209') return;
+        if (message.author.id !== '245047280908894209') {
+            var reqEmbed = {
+                color: 0xD72D42,
+                description: ":x: You don't have permission to do that.",
+            }
+            message.channel.send({embed: reqEmbed});
+            return;
+        }
         if (!os.version().includes("Windows")) { 
             var host_os = 'Ubuntu 20.04.1'; 
             var percentCPU = (os.loadavg()[0]).toFixed(2);
