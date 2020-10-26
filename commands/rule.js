@@ -1,5 +1,3 @@
-const { DiscordAPIError } = require("discord.js");
-
 module.exports = {
     name: 'rule',
     description: 'Send a server rule as an embed in chat.',
@@ -7,7 +5,7 @@ module.exports = {
         if (args[0] !== '-h') {
         message.delete();
         }
-        if (message.member.roles.find(r => r.id === '766858374377504818') || message.member.roles.find(r => r.id === '769299680357122088')) {
+        // if (message.member.roles.find(r => r.id === '766858374377504818') || message.member.roles.find(r => r.id === '769299680357122088')) {
             if (args[0] === 'respect') {
                 var reqEmbed = {
                     title: "BE RESPECTFUL",
@@ -54,6 +52,6 @@ module.exports = {
                 }
                 message.channel.send({ embed: reqEmbed })
             }
-        }
+        // }
     }
 };

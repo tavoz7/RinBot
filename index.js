@@ -21,6 +21,13 @@ for (const file of commandFiles) {
 }
 client.on('message', function(message) { // fires whenever a message is sent
     if (!message.content.startsWith(prefix) || message.author.bot) return;
+    if (message.member.roles.find(r => r.id === '685237145052512321') /* head mods */ || message.member.roles.find(r => r.id === '769013132541558795') /* mods */ || message.member.roles.find(r => r.id === '582984530848251939') /* sea of voices */ || message.member.roles.find(r => r.id === '766858374377504818'))  /* bot testing lounge - new role */ 
+    { 
+        // I couldn't get it to work when evaluating to false so an empty result on true works
+    } 
+    else { 
+        return; 
+    }
 
     const args = message.content.slice(prefix.length).trim().split(/ +/); // stuff to throw arguments into an array
     const command = args.shift().toLowerCase(); // set command to the correct .js file as a dependency whenever a command is invoked

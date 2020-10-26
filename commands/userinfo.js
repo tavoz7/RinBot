@@ -14,36 +14,36 @@ module.exports = {
                     },
                     {
                         name: "Arguments",
-                        value: "`@user`\nIf no user is specified, information will be listed for the sender of the message."
+                        value: "`@user`, `UserID`\nIf no user is specified, information will be listed for the sender of the message."
                     },
                     {
-                        name: "Example",
-                        value: "!userinfo @user"
+                        name: "Examples",
+                        value: "!userinfo @user\n!userinfo 123456789098765432"
                     }
                 ]
             }
             message.channel.send({embed: reqEmbed});
+            return;
         }
-        var mentionedUser = message.mentions.users.first();
-        var guildScopeMember = message.guild.member(message.mentions.users.first());
-        if (message.mentions.users.first() === undefined) { mentionedUser = message.author }
-        if (guildScopeMember === null) {guildScopeMember = message.member}
-        if (mentionedUser.nickname === undefined) {
+        var mentionedUser = message.guild.member(message.mentions.users.first());
+        if (args.length === 0 &&  message.mentions.users.first() === undefined) { mentionedUser = message.guild.member(message.member) } else if (args.length > 0 && message.mentions.users.first() === undefined) { mentionedUser = message.guild.members.get(args[0]) } // stuff for determining who's info to pull up
+        if (mentionedUser.user.displayName === undefined) {
             var nickname = "None";
         } else {
-            nickname = mentionedUser.nickname;
+            var nickname = mentionedUser.user.displayName;
         }
+
         var reqEmbed = {
             author: {
-                name: `${mentionedUser.username}#${mentionedUser.discriminator}`,
-                icon_url: mentionedUser.avatarURL,
+                name: `${mentionedUser.user.username}#${mentionedUser.user.discriminator}`,
+                icon_url: `https://cdn.discordapp.com/avatars/${mentionedUser.user.id}/${mentionedUser.user.avatar}.png`,
             },
-            thumbnail: {url: mentionedUser.avatarURL},
+            thumbnail: {url: `https://cdn.discordapp.com/avatars/${mentionedUser.user.id}/${mentionedUser.user.avatar}.png`},
             title: "**User Information**",
             fields: [
                 {
                     name: "Mention",
-                    value: `<@${mentionedUser.id}>`
+                    value: `<@${mentionedUser.user.id}>`
                 },
                 {
                     name: "Nickname",
@@ -51,20 +51,20 @@ module.exports = {
                 },
                 {
                     name: "Is Bot",
-                    value: mentionedUser.bot,
+                    value: mentionedUser.user.bot,
                 },
                 {
                     name: "Joined Server",
-                    value: `${moment(guildScopeMember.joinedAt).format('D MMM YYYY')} at ${moment(guildScopeMember.joinedTimestamp).format('h:mm A [UTC]Z')}`
+                    value: `${moment(mentionedUser.joinedAt).format('D MMM YYYY')} at ${moment(mentionedUser.joinedTimestamp).format('h:mm A [UTC]Z')}`
                 },
                 {
                     name: "Account Creation Date",
-                    value: moment(mentionedUser.createdAt).format("D MMM YYYY [at] h:mm A [UTC]Z"), 
+                    value: moment(mentionedUser.user.createdAt).format("D MMM YYYY [at] h:mm A [UTC]Z"), 
                     
                 }
             ],
             footer: {
-                text: `User ID: ${mentionedUser.id}`,
+                text: `User ID: ${mentionedUser.user.id}`,
             }
     
         }

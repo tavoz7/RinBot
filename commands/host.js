@@ -14,6 +14,7 @@ module.exports = {
         }
         if (!os.version().includes("Windows")) { 
             var host_os = 'Ubuntu 20.04.1'; 
+            var color = 0xDD4814;
             var percentCPU = (os.loadavg()[0]*50).toFixed(1);
             var thumbnailIcon = "https://cdn.cominatyou.com/cc38be88.png"
         } 
@@ -21,6 +22,7 @@ module.exports = {
             host_os = os.version(); 
             var percentCPU = (os.loadavg()[0]*10).toFixed(1);
             if (os.version().includes('Windows')) {
+                var color = 0x00BCF5;
                 var thumbnailIcon = 'https://cdn.cominatyou.com/cc38be89.png';
             } else {
                 var thumbnailIcon = client.user.avatarURL;
@@ -44,6 +46,7 @@ module.exports = {
             },
             thumbnail: {url: thumbnailIcon},
             title: "**Host Stats**",
+            color: color,
             fields: [
                 {
                     name: "Current OS",
