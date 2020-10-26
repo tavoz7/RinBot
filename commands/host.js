@@ -7,7 +7,7 @@ module.exports = {
         if (message.author.id !== '245047280908894209') return;
         if (!os.version().includes("Windows")) { 
             var host_os = 'Ubuntu 20.04.1'; 
-            var percentCPU = (os.loadavg()[0]).toFixed(1);
+            var percentCPU = (os.loadavg()[0]).toFixed(2);
             var thumbnailIcon = "https://cdn.cominatyou.com/cc38be88.png"
         } 
         else { 
