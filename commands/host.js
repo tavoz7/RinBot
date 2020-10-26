@@ -7,7 +7,7 @@ module.exports = {
         if (message.author.id !== '245047280908894209') return;
         if (!os.version().includes("Windows")) { var host_os = 'Ubuntu 20.04.1' } else { host_os = os.version() }
         freeMem = (os.freemem().toString() / 1000000000).toFixed(2)
-        if (Number.parseInt(os.freemem().toString()) < 1,000,000,000) {
+        if (Number.parseInt(os.freemem().toString()) < 1000000000) {
             var unit = 'MB'
             if (host_os = 'Ubuntu 20.04.1') {
                 var freeMem = (os.freemem().toString() / 1000000).toFixed(0)
