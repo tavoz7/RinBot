@@ -2,7 +2,13 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 const fs = require('fs');
+const os = require('os');
+var date = new Date();
+
 const {prefix, token} = require('./config.json')
+var version = "0.3.2 - Pre-Release";
+var versionDate = "25 October 2020";
+require('loadavg-windows');
 
 // that one colour i need: 0x395F85;
 
@@ -32,7 +38,10 @@ client.on('message', function(message) { // fires whenever a message is sent
         client.commands.get('random').execute(message, args);
     }
     else if (command === 'about') {
-        client.commands.get('about').execute(message, client);
+        client.commands.get('about').execute(message, client, version, versionDate);
+    }
+    else if (command === 'host') {
+        client.commands.get('host').execute(message, args, os, client);
     }
 });
 
