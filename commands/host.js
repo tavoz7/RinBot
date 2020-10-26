@@ -35,7 +35,8 @@ module.exports = {
                 var freeMem = (os.freemem().toString() / 1000000000).toFixed(0)
             }
         } 
-        else { var unit = 'GB' }
+        else { var unit = "GB" }
+
         var reqEmbed = {
             author: {
                 name: client.user.username,
@@ -56,7 +57,7 @@ module.exports = {
                 },
                 {
                     name: "Free Memory",
-                    value: `${freeMem} ${unit}`,
+                    value: `${freeMem} ${unit} / ${(os.totalmem()/1000000000).toFixed(0)} GB`,
                     inline: true,
                 }
             ],
