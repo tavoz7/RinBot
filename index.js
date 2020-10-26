@@ -6,7 +6,7 @@ const os = require('os');
 var date = new Date();
 
 const {prefix, token} = require('./config.json')
-var version = "0.3.2 - Pre-Release";
+var version = "0.4 - Pre-Release";
 var versionDate = "25 October 2020";
 require('loadavg-windows');
 
