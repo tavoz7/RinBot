@@ -4,9 +4,10 @@ client.commands = new Discord.Collection();
 const fs = require('fs');
 const os = require('os');
 var date = new Date();
+const { exec } = require("child_process");
 
 const {prefix, token} = require('./config.json')
-var version = "0.4.1 - Pre-Release";
+var version = "0.4.3 - Pre-Release";
 var versionDate = "26 October 2020";
 require('loadavg-windows');
 
@@ -50,6 +51,56 @@ client.on('message', function(message) { // fires whenever a message is sent
     else if (command === 'host') {
         client.commands.get('host').execute(message, args, os, client);
     }
+    else if (command === 'update') {
+        if (message.author.id !== '245047280908894209') {
+            var reqEmbed = {
+                color: 0xD72D42,
+                description: ":x: You don't have permission to do that."
+            }
+        message.channel.send({embed: reqEmbed});
+        return;
+        }
+        exec("git pull", (error, stdout, stderr) => {
+            if (stdout.includes("file changed") === false) {
+                if (error) {
+                    var reqEmbed = {
+                        title: "Update",
+                        color: 0xD72D42,
+                        description: "`" + error + "`",
+                        timestamp: new Date()
+                    }
+                    message.channel.send({embed: reqEmbed});
+                    return;
+                }
+                if (stderr) {
+                    var reqEmbed = {
+                        title: "Update",
+                        color: 0xD72D42,
+                        description: "`" + stderr + "`",
+                        timestamp: new Date()
+                    }
+                    message.channel.send({embed: reqEmbed})
+                    return;
+                }
+            }
+            if (stdout.includes("Already up to date.")) {
+                var reqEmbed = {
+                    title: "Update",
+                    description: ":white_check_mark: Already up to date."
+                }
+                message.channel.send({embed: reqEmbed});
+                return;
+            } 
+            else {
+                var reqEmbed = {
+                    title: "Update",
+                    description: ":arrows_counterclockwise: Restarting..."
+                }
+                message.channel.send({embed: reqEmbed})
+                setTimeout(() => {  process.exit(); }, 3000);
+            }
+        })};
+    //  else if (new command) ....
 });
 
 client.on("ready", () => { // bot custom status
