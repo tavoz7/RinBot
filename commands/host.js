@@ -16,16 +16,16 @@ module.exports = {
             var host_os = 'Ubuntu 20.04.1'; 
             var color = 0xDD4814;
             var percentCPU = (os.loadavg()[0]*50).toFixed(1);
-            var thumbnailIcon = "https://cdn.cominatyou.com/cc38be88.png"
+            var osIcon = "https://cdn.cominatyou.com/cc38be88.png"
         } 
         else { 
             host_os = os.version(); 
             var percentCPU = (os.loadavg()[0]*10).toFixed(1);
             if (os.version().includes('Windows')) {
                 var color = 0x00BCF5;
-                var thumbnailIcon = 'https://cdn.cominatyou.com/cc38be89.png';
+                var osIcon = 'https://cdn.cominatyou.com/cc38be89.png';
             } else {
-                var thumbnailIcon = client.user.avatarURL;
+                var osIcon = client.user.avatarURL;
             }
         }
         freeMem = (os.freemem().toString() / 1000000000).toFixed(2)
@@ -38,13 +38,20 @@ module.exports = {
             }
         } 
         else { var unit = "GB" }
+        var clientUptimeSec = (client.uptime / 100).toFixed(0);
+        if (clientUptimeSec / 3600 === 1) {
+            var hrUnit = "hr"
+        }
+        else {
+            hrUnit = "hrs"
+        }
 
         var reqEmbed = {
             author: {
                 name: client.user.username,
                 icon_url: client.user.avatarURL,
             },
-            thumbnail: {url: thumbnailIcon},
+            thumbnail: {url: osIcon},
             title: "**Host Stats**",
             color: color,
             fields: [
@@ -55,7 +62,7 @@ module.exports = {
                 },
                 {
                     name: "Load Average",
-                    value: `${percentCPU}%`,
+                    value: `${percentCPU}% (${os.loadavg[0]})`,
                     inline: true,
                 },
                 {
@@ -64,6 +71,9 @@ module.exports = {
                     inline: true,
                 }
             ],
+            footer: {
+                text: `Uptime: ${clientUptimeSec / 3600} ${hrUnit}, ${clientUptimeSec / 60} min, ${clientUptimeSec %= 60} sec`
+            },
             timestamp: new Date()
         }
         message.channel.send({embed: reqEmbed});
