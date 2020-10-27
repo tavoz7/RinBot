@@ -3,18 +3,19 @@ const client = new Discord.Client();
 client.commands = new Discord.Collection();
 const fs = require('fs');
 const os = require('os');
-var date = new Date();
 const { exec } = require("child_process");
-
-const {prefix, token} = require('./config.json')
-var version = "0.4.3.4 - Pre-Release";
-var versionDate = "26 October 2020";
 require('loadavg-windows');
 
-// that one colour i need: 0x395F85;
+const { prefix, token, lastChannelID } = require('./config.json');
+var { updateInProgress, lastClientMessageID } = require('./config.json');
+var version = "0.4.4.4 - Pre-Release";
+var versionDate = "27 October 2020";
+const configFile = './config.json';
+const file = require(configFile);
+
+// that one color i need: 0x395F85;
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js')); // add command files to array as dependencies
-
 
 for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
@@ -61,7 +62,7 @@ client.on('message', function(message) { // fires whenever a message is sent
         return;
         }
         exec("git pull", (error, stdout, stderr) => {
-            if (stdout.includes("file changed") === false || stdout.includes("master     ->") === false) {
+            if (stdout.includes("file changed") === false || stderr.includes("From https://github.com/CominAtYou/RinBot" === false)) {
                 if (error) {
                     var reqEmbed = {
                         title: "Update",
@@ -86,22 +87,32 @@ client.on('message', function(message) { // fires whenever a message is sent
             if (stdout.includes("Already up to date.")) {
                 var reqEmbed = {
                     title: "Update",
-                    description: ":white_check_mark: Already up to date."
+                    description: ":white_check_mark: Already up to date.",
+                    color: 0x77B255,
+                    footer: {text: `Version ${version}`}
                 }
                 message.channel.send({embed: reqEmbed});
                 return;
             } 
             else {
                 var reqEmbed = {
-                    title: "Update",
-                    description: ":arrows_counterclockwise: Restarting to install update..."
+                    title: "Update in Progress",
+                    color: 0xFFCC4D,
+                    description: ":arrows_counterclockwise: Restarting to install update...",
+                    timestamp: new Date()
                 }
                 message.channel.send({embed: reqEmbed})
+                // Write to config.json to notify the bot upon restart that an update was applied, and where to delete the restart message and send the update complete message
+                file.updateInProgress = true;
+                file.lastChannelID = message.channel.id;
+                setTimeout(() => { file.lastClientMessageID = client.user.lastMessageID; }, 1500);
+                setTimeout(() => { fs.writeFile(configFile, JSON.stringify(file, null, 2), function writeJSON(err) { if (err) throw (err); }) }, 2500);
                 setTimeout(() => {  process.exit(); }, 3000);
             }
-        })};
-    //  else if (new command) ....
-});
+        });       
+    }
+}); 
+//  else if (new command) ....
 
 client.on("ready", () => { // bot custom status
     console.log(`Logged in as ${client.user.tag}`);
@@ -112,6 +123,26 @@ client.on("ready", () => { // bot custom status
             type: "Listening" // PLAYING, WATCHING, LISTENING, STREAMING
         }
     });
+    if (updateInProgress === true) {
+        var reqEmbed = {
+            title: "Update Complete!",
+            color: 0x77B255,
+            description: `:white_check_mark: Version ${version}`,
+            timestamp: new Date()
+        }
+        
+        var channel = client.channels.get(lastChannelID)
+        channel.fetchMessage(lastClientMessageID).then(message => message.delete())
+        channel.send({embed: reqEmbed});
+
+        file.updateInProgress = false;
+        file.lastChannelID = "";
+        file.lastClientMessageID = "";
+
+        fs.writeFile(configFile, JSON.stringify(file, null, 2), function writeJSON(err) {
+            if (err) throw (err);
+        })
+    }
  });
 
  client.login(token); // makes stuff work

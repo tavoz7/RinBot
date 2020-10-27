@@ -1,5 +1,3 @@
-const { Message } = require("discord.js");
-
 module.exports = {
     name: "random",
     description: "Generate a random number",
