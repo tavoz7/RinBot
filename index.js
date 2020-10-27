@@ -103,7 +103,7 @@ client.on('message', function(message) { // fires whenever a message is sent
         })};
     //  else if (new command) ....
 });
-
+// test
 client.on("ready", () => { // bot custom status
     console.log(`Logged in as ${client.user.tag}`);
     client.user.setPresence({
