@@ -38,14 +38,8 @@ module.exports = {
             }
         } 
         else { var unit = "GB" }
-        var clientUptimeSec = (client.uptime / 100).toFixed(0);
-        if (clientUptimeSec / 3600 === 1) {
-            var hrUnit = "hr"
-        }
-        else {
-            hrUnit = "hrs"
-        }
-
+        var clientUptimeSec = (client.uptime / 1000).toFixed(0);
+        
         var reqEmbed = {
             author: {
                 name: client.user.username,
@@ -62,7 +56,7 @@ module.exports = {
                 },
                 {
                     name: "Load Average",
-                    value: `${percentCPU}% (${os.loadavg[0]})`,
+                    value: `${percentCPU}%`,
                     inline: true,
                 },
                 {
@@ -72,7 +66,7 @@ module.exports = {
                 }
             ],
             footer: {
-                text: `Uptime: ${clientUptimeSec / 3600} ${hrUnit}, ${clientUptimeSec / 60} min, ${clientUptimeSec %= 60} sec`
+                text: `Uptime: ${(clientUptimeSec / 3600).toFixed(0)} hr, ${(clientUptimeSec / 60).toFixed(0)} min, ${clientUptimeSec % 60} sec`
             },
             timestamp: new Date()
         }
