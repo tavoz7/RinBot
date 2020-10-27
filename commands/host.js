@@ -38,7 +38,7 @@ module.exports = {
             }
         } 
         else { var unit = "GB" }
-        var clientUptimeSec = (client.uptime / 1000).toFixed(0);
+        var clientUptimeSec = (client.uptime / 1000);
         
         var reqEmbed = {
             author: {
