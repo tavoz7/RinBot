@@ -8,7 +8,7 @@ module.exports = {
                 icon_url: client.user.avatarURL,
             },
             title: "**About**",
-            description: `${client.user.username} is a bot made with good vibes in Kansas City.`,
+            description: `${client.user.username} is a bot made with warmth in Kansas City.`,
             thumbnail: {url: client.user.avatarURL},
             fields: [
                 {
@@ -38,14 +38,9 @@ module.exports = {
                 },
                 {
                     name: "Special Thanks",
-                    value: "VCInventerman\nMy Cats",
+                    value: "VCInventerman\nStack Overflow",
                     inline: true,
                 }
-                // {
-                //     name: "\u200b",
-                //     value: "\u200b",
-                //     inline: true,
-                // }
             ]
         }
         message.channel.send({embed: reqEmbed});
