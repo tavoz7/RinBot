@@ -39,6 +39,7 @@ module.exports = {
         } 
         else { var unit = "GB" }
         var clientUptimeSec = (client.uptime / 1000);
+        var clientUptimeMin = clientUptimeSec / 60
         
         var reqEmbed = {
             author: {
@@ -66,7 +67,7 @@ module.exports = {
                 }
             ],
             footer: {
-                text: `Uptime: ${Math.floor(clientUptimeSec / 3600)} hr, ${Math.floor(clientUptimeSec / 60)} min, ${Math.floor(clientUptimeSec % 60)} sec`
+                text: `Uptime: ${Math.floor(clientUptimeSec / 3600)} hr ${Math.floor(clientUptimeMin % 60)} min ${Math.floor(clientUptimeSec % 60)} sec`
             },
             timestamp: new Date()
         }
