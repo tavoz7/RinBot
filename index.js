@@ -7,7 +7,7 @@ var date = new Date();
 const { exec } = require("child_process");
 
 const {prefix, token} = require('./config.json')
-var version = "0.4.3.3 - Pre-Release";
+var version = "0.4.3.4 - Pre-Release";
 var versionDate = "26 October 2020";
 require('loadavg-windows');
 
