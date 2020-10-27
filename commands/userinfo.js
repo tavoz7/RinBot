@@ -36,9 +36,9 @@ module.exports = {
         var reqEmbed = {
             author: {
                 name: `${mentionedUser.user.username}#${mentionedUser.user.discriminator}`,
-                icon_url: `https://cdn.discordapp.com/avatars/${mentionedUser.user.id}/${mentionedUser.user.avatar}.png`,
+                icon_url: mentionedUser.user.avatarURL,
             },
-            thumbnail: {url: `https://cdn.discordapp.com/avatars/${mentionedUser.user.id}/${mentionedUser.user.avatar}.png`},
+            thumbnail: {url: mentionedUser.user.avatarURL},
             title: "**User Information**",
             fields: [
                 {
