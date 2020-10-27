@@ -60,6 +60,7 @@ client.on('message', function(message) { // fires whenever a message is sent
         message.channel.send({embed: reqEmbed});
         return;
         }
+        //whomst
         exec("git pull", (error, stdout, stderr) => {
             if (stdout.includes("file changed") === false && stdout.includes("master     ->") === false) {
                 if (error) {
