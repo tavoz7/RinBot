@@ -66,7 +66,7 @@ module.exports = {
                 }
             ],
             footer: {
-                text: `Uptime: ${(clientUptimeSec / 3600).toFixed(0)} hr, ${(clientUptimeSec / 60).toFixed(0)} min, ${clientUptimeSec % 60} sec`
+                text: `Uptime: ${Math.floor(clientUptimeSec / 3600)} hr, ${Math.floor(clientUptimeSec / 60)} min, ${clientUptimeSec % 60} sec`
             },
             timestamp: new Date()
         }
