@@ -38,7 +38,7 @@ module.exports = {
                 },
                 {
                     name: "Special Thanks",
-                    value: "VCInventerman\nStack Overflow",
+                    value: "VCInventerman\nStackOverflow",
                     inline: true,
                 }
             ]
