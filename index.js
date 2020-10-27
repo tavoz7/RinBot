@@ -61,7 +61,6 @@ client.on('message', function(message) { // fires whenever a message is sent
         return;
         }
         exec("git pull", (error, stdout, stderr) => {
-            console.log(stdout)
             if (stdout.includes("file changed") === false || stdout.includes("master     ->")) {
                 if (error) {
                     var reqEmbed = {
