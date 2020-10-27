@@ -61,6 +61,7 @@ client.on('message', function(message) { // fires whenever a message is sent
         return;
         }
         exec("git pull", (error, stdout, stderr) => {
+            console.log(stdout)
             if (stdout.includes("file changed") === false) {
                 if (error) {
                     var reqEmbed = {
@@ -102,7 +103,7 @@ client.on('message', function(message) { // fires whenever a message is sent
         })};
     //  else if (new command) ....
 });
-//test
+
 client.on("ready", () => { // bot custom status
     console.log(`Logged in as ${client.user.tag}`);
     client.user.setPresence({
