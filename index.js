@@ -8,8 +8,8 @@ require('loadavg-windows');
 
 const { prefix, token, lastChannelID } = require('./config.json');
 var { updateInProgress, lastClientMessageID } = require('./config.json');
-var version = "0.4.4.9 - Pre-Release";
-var versionDate = "27 October 2020";
+var version = "0.4.4.9a - Pre-Release";
+var versionDate = "28 October 2020";
 const configFile = './config.json';
 const file = require(configFile);
 
@@ -111,8 +111,14 @@ client.on('message', function(message) { // fires whenever a message is sent
             }
         });       
     }
+    else if (command === 'help') {
+        var reqEmbed = {
+            description: ":rage: Ksxp is mean!"
+        }
+        message.channel.send({embed: reqEmbed});
+    }
 }); 
-//  else if (new command) ....
+//  
 
 client.on("ready", () => { // bot custom status
     console.log(`Logged in as ${client.user.tag}`);
