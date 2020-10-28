@@ -14,6 +14,7 @@ const configFile = './config.json';
 const file = require(configFile);
 
 // that one color i need: 0x395F85;
+//test
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js')); // add command files to array as dependencies
 
@@ -61,8 +62,8 @@ client.on('message', function(message) { // fires whenever a message is sent
         message.channel.send({embed: reqEmbed});
         return;
         }
-        exec("git pull", (error, stdout, stderr) => {
-            if (stdout.includes("file changed") === false || stdout.includes("files changed") === false || stderr.includes("origin/master" === false)) {
+        exec("git pull", (error, stdout) => {
+            if (stdout.includes("file changed") === false || stdout.includes("files changed") === false /*|| stderr.includes("origin/master" === false) */) {
                 if (error) {
                     var reqEmbed = {
                         title: "Update",
@@ -73,7 +74,7 @@ client.on('message', function(message) { // fires whenever a message is sent
                     message.channel.send({embed: reqEmbed});
                     return;
                 }
-                if (stderr) {
+                /* if (stderr) {
                     var reqEmbed = {
                         title: "Update",
                         color: 0xD72D42,
@@ -82,7 +83,7 @@ client.on('message', function(message) { // fires whenever a message is sent
                     }
                     message.channel.send({embed: reqEmbed})
                     return;
-                }
+                }*/
             }
             if (stdout.includes("Already up to date.")) {
                 var reqEmbed = {
