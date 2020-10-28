@@ -14,7 +14,6 @@ const configFile = './config.json';
 const file = require(configFile);
 
 // that one color i need: 0x395F85;
-//test
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js')); // add command files to array as dependencies
 
