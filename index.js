@@ -8,7 +8,7 @@ require('loadavg-windows');
 
 const { prefix, token, lastChannelID } = require('./config.json');
 var { updateInProgress, lastClientMessageID } = require('./config.json');
-var version = "0.4.4.6 - Pre-Release";
+var version = "0.4.4.7 - Pre-Release";
 var versionDate = "27 October 2020";
 const configFile = './config.json';
 const file = require(configFile);
@@ -62,7 +62,7 @@ client.on('message', function(message) { // fires whenever a message is sent
         return;
         }
         exec("git pull", (error, stdout, stderr) => {
-            if (stdout.includes("file changed") === false || stderr.contains("origin/master" === false)) {
+            if (stdout.includes("file changed") === false || stdout.includes("files changed") === false || stderr.contains("origin/master" === false)) {
                 if (error) {
                     var reqEmbed = {
                         title: "Update",
