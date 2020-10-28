@@ -12,7 +12,7 @@ var version = "0.4.4.7 - Pre-Release";
 var versionDate = "27 October 2020";
 const configFile = './config.json';
 const file = require(configFile);
-// broken?
+// broken.
 
 // that one color i need: 0x395F85;
 
