@@ -23,7 +23,7 @@ module.exports = {
                 },
                 {
                     name: "Commands",
-                    value: "Soon:tm:",
+                    value: "[List](https://gist.github.com/CominAtYou/8f65f2329619ad7e988601a0f5072d60)",
                     inline: true,
                 },
                 {

@@ -8,7 +8,7 @@ require('loadavg-windows');
 
 const { prefix, token, lastChannelID } = require('./config.json');
 var { updateInProgress, lastClientMessageID } = require('./config.json');
-var version = "0.4.4.9a - Pre-Release";
+var version = "0.4.5 - Pre-Release";
 var versionDate = "28 October 2020";
 const configFile = './config.json';
 const file = require(configFile);
@@ -50,16 +50,16 @@ client.on('message', function(message) { // fires whenever a message is sent
         client.commands.get('about').execute(message, client, version, versionDate);
     }
     else if (command === 'host') {
-        client.commands.get('host').execute(message, args, os, client);
+        client.commands.get('host').execute(message, args, os, client); // me only
     }
-    else if (command === 'update') {
+    else if (command === 'update') { // me only
         if (message.author.id !== '245047280908894209') {
             var reqEmbed = {
                 color: 0xD72D42,
                 description: ":x: You don't have permission to do that."
             }
-        message.channel.send({embed: reqEmbed});
-        return;
+            message.channel.send({embed: reqEmbed});
+            return;
         }
         exec("git pull", (error, stdout) => {
             if (stdout.includes("file changed") === false || stdout.includes("files changed") === false /*|| stderr.includes("origin/master" === false) */) {
@@ -112,10 +112,7 @@ client.on('message', function(message) { // fires whenever a message is sent
         });       
     }
     else if (command === 'help') {
-        var reqEmbed = {
-            description: ":rage: Ksxp is mean!"
-        }
-        message.channel.send({embed: reqEmbed});
+        client.commands.get('help').execute(message, prefix, client);
     }
 }); 
 //  
