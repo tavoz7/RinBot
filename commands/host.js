@@ -38,14 +38,20 @@ module.exports = {
             }
         } 
         else { var unit = "GB" }
-        var clientUptimeSec = (client.uptime / 1000);
+        var clientUptimeSec = client.uptime / 1000;
         var clientUptimeMin = clientUptimeSec / 60;
         var clientUptimeHours = clientUptimeSec / 3600;
         var clientUptimeDays = clientUptimeSec / 86400;
-        if (clientUptimeDays % 86400 === 1) {
-            var dayUnit = day
+        var clientUptimeDaysMod = Math.floor(clientUptimeDays % 86400) // why is JS dumb
+
+        if (clientUptimeDaysMod === 0) {
+            var uptimeStr = `${Math.floor(clientUptimeHours % 3600)} hr ${Math.floor(clientUptimeMin % 60)} min ${Math.floor(clientUptimeSec % 60)} sec`;
+        } else if (clientUptimeDaysMod === 1) {
+            var uptimeStr = `${clientUptimeDaysMod} day ${Math.floor(clientUptimeHours % 3600)} hr ${Math.floor(clientUptimeMin % 60)} min ${Math.floor(clientUptimeSec % 60)} sec`;
         }
-        else { dayunit = "days" }
+        else if (clientUptimeDaysMod % 86400 > 1) {
+            var uptimeStr = `${clientUptimeDaysMod} days ${Math.floor(clientUptimeHours % 3600)} hr ${Math.floor(clientUptimeMin % 60)} min ${Math.floor(clientUptimeSec % 60)} sec`;
+        }
         var reqEmbed = {
             author: {
                 name: client.user.username,
@@ -72,7 +78,7 @@ module.exports = {
                 }
             ],
             footer: {
-                text: `Uptime: ${Math.floor(clientUptimeDays % 86400)} ${dayUnit} ${Math.floor(clientUptimeHours % 3600)} hr ${Math.floor(clientUptimeMin % 60)} min ${Math.floor(clientUptimeSec % 60)} sec`
+                text: `Uptime: ${uptimeStr}`
             },
             timestamp: new Date()
         }
