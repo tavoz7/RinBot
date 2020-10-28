@@ -63,7 +63,7 @@ client.on('message', function(message) { // fires whenever a message is sent
         return;
         }
         exec("git pull", (error, stdout, stderr) => {
-            if (stdout.includes("file changed") === false || stdout.includes("files changed") === false || stderr.contains("origin/master" === false)) {
+            if (stdout.includes("file changed") === false || stdout.includes("files changed") === false || stderr.includes("origin/master" === false)) {
                 if (error) {
                     var reqEmbed = {
                         title: "Update",
