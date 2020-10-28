@@ -45,7 +45,7 @@ module.exports = {
         if (clientUptimeDays % 86400 === 1) {
             var dayUnit = day
         }
-        else { dayunit = days }
+        else { dayunit = "days" }
         var reqEmbed = {
             author: {
                 name: client.user.username,
