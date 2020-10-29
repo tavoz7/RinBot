@@ -5,7 +5,7 @@ module.exports = {
         var reqEmbed = {
             author: {
                 name: client.user.username,
-                icon_url: client.user.avatarURL
+                icon_url: client.user.avatarURL()
             },
             title: "**Help**",
             description: "The prefix for " + message.guild.name + " is `" + prefix + "`",

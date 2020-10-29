@@ -8,10 +8,11 @@ require('loadavg-windows');
 
 const { prefix, token, lastChannelID } = require('./config.json');
 var { updateInProgress, lastClientMessageID } = require('./config.json');
-var version = "0.4.5.1 - Pre-Release";
-var versionDate = "28 October 2020";
+var version = "0.5 - Pre-Release";
+var versionDate = "29 October 2020";
 const configFile = './config.json';
 const file = require(configFile);
+const guild = new Discord.Guild()
 
 // that one color i need: 0x395F85;
 
@@ -23,7 +24,7 @@ for (const file of commandFiles) {
 }
 client.on('message', function(message) { // fires whenever a message is sent
     if (!message.content.startsWith(prefix) || message.author.bot) return;
-    if (message.member.roles.find(r => r.id === '685237145052512321') /* head mods */ || message.member.roles.find(r => r.id === '769013132541558795') /* mods */ || message.member.roles.find(r => r.id === '582984530848251939') /* sea of voices */ || message.member.roles.find(r => r.id === '766858374377504818'))  /* bot testing lounge - new role */ 
+    if (message.member.roles.cache.has('685237145052512321') /* head mods */ || message.member.roles.cache.has('769013132541558795') /* mods */ || message.member.roles.cache.has('582984530848251939') /* sea of voices */ || message.member.roles.cache.has('766858374377504818'))  /* bot testing lounge - new role */ 
     { 
         // I couldn't get it to work when evaluating to false so an empty result on true works
     } 
@@ -41,7 +42,7 @@ client.on('message', function(message) { // fires whenever a message is sent
         client.commands.get('userinfo').execute(message, args);
     } 
     else if (command === 'serverinfo') {
-        client.commands.get('serverinfo').execute(message, args);
+        client.commands.get('serverinfo').execute(message, args, client);
     } 
     else if (command === 'random') {
         client.commands.get('random').execute(message, args);
@@ -133,9 +134,8 @@ client.on("ready", () => { // bot custom status
             timestamp: new Date()
         }
         
-        var channel = client.channels.get(lastChannelID)
-        channel.fetchMessage(lastClientMessageID).then(message => message.delete())
-        channel.send({embed: reqEmbed});
+        client.channels.fetch(lastChannelID).then(channel => channel.messages.fetch(lastClientMessageID).then(message => message.delete()));
+        client.channels.fetch(lastChannelID).then(channel => channel.send({embed: reqEmbed}));
 
         file.updateInProgress = false;
         file.lastChannelID = "";

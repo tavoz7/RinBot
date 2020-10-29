@@ -12,7 +12,7 @@ module.exports = {
                     description: "Always be respectful to Moderator and our server members. Avoid starting unnessecary drama and toxicity.",
                     footer: {
                         text: "Read #rules-and-info for more info.",
-                        icon_url: message.guild.iconURL,
+                        icon_url: message.guild.iconURL(),
                     }
                 }
                 message.channel.send({ embed: reqEmbed });
@@ -22,7 +22,7 @@ module.exports = {
                     description: "Use spoilers for new content posted to ensure that you do not spoil things for others. In addition, do not use spoilers to imply innapropriate content.",
                     footer: {
                         text: "Read #rules-and-info for more info.",
-                        icon_url: message.guild.iconURL,
+                        icon_url: message.guild.iconURL(),
                     }
                 }
                 message.channel.send({ embed: reqEmbed });
@@ -48,7 +48,14 @@ module.exports = {
                 message.channel.send({ embed: reqEmbed });
             } else if (args.length === 0) {
                 var reqEmbed = {
+                    color: 0xD72D42,
                     description: ":x: You didn't specify a rule!"
+                }
+                message.channel.send({ embed: reqEmbed })
+            } else {
+                var reqEmbed = {
+                    color: 0xD72D42,
+                    description: ":x: That rule doesn't exist!"
                 }
                 message.channel.send({ embed: reqEmbed })
             }

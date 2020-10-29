@@ -5,11 +5,11 @@ module.exports = {
         var reqEmbed = {
             author: {
                 name: client.user.username,
-                icon_url: client.user.avatarURL,
+                icon_url: client.user.avatarURL(),
             },
             title: "**About**",
             description: `${client.user.username} is a bot made with warmth in Kansas City.`,
-            thumbnail: {url: client.user.avatarURL},
+            thumbnail: {url: client.user.avatarURL()},
             fields: [
                 {
                     name: "Creator",
