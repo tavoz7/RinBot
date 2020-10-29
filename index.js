@@ -8,7 +8,7 @@ require('loadavg-windows');
 
 const { prefix, token, lastChannelID } = require('./config.json');
 var { updateInProgress, lastClientMessageID } = require('./config.json');
-var version = "0.4.5 - Pre-Release";
+var version = "0.4.5.1 - Pre-Release";
 var versionDate = "28 October 2020";
 const configFile = './config.json';
 const file = require(configFile);
@@ -115,7 +115,6 @@ client.on('message', function(message) { // fires whenever a message is sent
         client.commands.get('help').execute(message, prefix, client);
     }
 }); 
-//  
 
 client.on("ready", () => { // bot custom status
     console.log(`Logged in as ${client.user.tag}`);
