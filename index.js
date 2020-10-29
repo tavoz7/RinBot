@@ -15,6 +15,7 @@ const file = require(configFile);
 const guild = new Discord.Guild()
 
 // that one color i need: 0x395F85;
+// test the updater
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js')); // add command files to array as dependencies
 
