@@ -18,7 +18,7 @@ module.exports = {
                 fields: [
                     {
                         name: "Syntax",
-                        value: "`!random <min> <max>`\nIf no arguments are supplied, a number is randomly generated up to ~9.007 trillion."
+                        value: "`!random <min> <max>`\nIf no arguments are supplied, a number is randomly generated up to " + Number.MAX_SAFE_INTEGER
                     },
                     {
                         name: "Arguments",
