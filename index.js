@@ -8,7 +8,7 @@ require('loadavg-windows');
 
 const { prefix, token, lastChannelID } = require('./config.json');
 var { updateInProgress, lastClientMessageID } = require('./config.json');
-var version = "0.5.1 - Pre-Release";
+var version = "0.5.2 - Pre-Release";
 var versionDate = "29 October 2020";
 const configFile = './config.json';
 const file = require(configFile);
