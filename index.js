@@ -120,13 +120,7 @@ client.on('message', function(message) { // fires whenever a message is sent
 
 client.once("ready", () => { // bot custom status
     console.log(`Logged in as ${client.user.tag}`);
-    client.user.setPresence({
-        status: "online",  // You can show online, idle, dnd
-        game: {
-            name: "the campfire crackle",  // The message shown
-            type: "Listening" // PLAYING, WATCHING, LISTENING, STREAMING
-        }
-    });
+    client.user.setActivity("to the campfire crackle", {type: "LISTENING"});
     if (updateInProgress === true) {
         var reqEmbed = {
             title: "Update Complete!",
