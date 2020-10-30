@@ -8,7 +8,7 @@ require('loadavg-windows');
 
 const { prefix, token, lastChannelID } = require('./config.json');
 var { updateInProgress, lastClientMessageID } = require('./config.json');
-var version = "0.5 - Pre-Release";
+var version = "0.5.1 - Pre-Release";
 var versionDate = "29 October 2020";
 const configFile = './config.json';
 const file = require(configFile);
@@ -103,11 +103,12 @@ client.on('message', function(message) { // fires whenever a message is sent
                     timestamp: new Date()
                 }
                 message.channel.send({embed: reqEmbed})
-                // Write to config.json to notify the bot upon restart that an update was applied, and where to delete the restart message and send the update complete message
+                // Write to config.json to notify the bot upon restart that an update was applied, and where to delete the restart message then replace it with the update complete message
                 file.updateInProgress = true;
                 file.lastChannelID = message.channel.id;
                 setTimeout(() => { file.lastClientMessageID = client.user.lastMessageID; }, 1500);
                 setTimeout(() => { fs.writeFile(configFile, JSON.stringify(file, null, 2), function writeJSON(err) { if (err) throw (err); }) }, 2500);
+                // please for the love of god add error handling here
                 setTimeout(() => {  process.exit(); }, 3000);
             }
         });       
@@ -117,7 +118,7 @@ client.on('message', function(message) { // fires whenever a message is sent
     }
 }); 
 
-client.on("ready", () => { // bot custom status
+client.once("ready", () => { // bot custom status
     console.log(`Logged in as ${client.user.tag}`);
     client.user.setPresence({
         status: "online",  // You can show online, idle, dnd

@@ -8,6 +8,10 @@
   },
   "author": "CominAtYou",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/CominAtYou/RinBot.git"
+  },
   "dependencies": {
     "date": "^1.0.2",
     "discord.js": "^12.4.1",
