@@ -25,7 +25,7 @@ module.exports = {
                 var color = 0x00BCF5;
                 var osIcon = 'https://cdn.cominatyou.com/cc38be89.png';
             } else {
-                var osIcon = client.user.avatarURL;
+                var osIcon = client.user.avatarURL();
             }
         }
         freeMem = (os.freemem().toString() / 1000000000).toFixed(2)
@@ -55,7 +55,7 @@ module.exports = {
         var reqEmbed = {
             author: {
                 name: client.user.username,
-                icon_url: client.user.avatarURL,
+                icon_url: client.user.avatarURL(),
             },
             thumbnail: {url: osIcon},
             title: "**Host Stats**",

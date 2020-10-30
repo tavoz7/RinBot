@@ -1,5 +1,4 @@
 const moment = require('moment');
-const { execute } = require('./userinfo');
 
 module.exports = {
     name: 'serverinfo',
@@ -30,10 +29,10 @@ module.exports = {
             var reqEmbed = {
                 author: {
                     name: message.guild.name,
-                    icon_url: message.guild.iconURL,
+                    icon_url: message.guild.iconURL(),
                 },
                 title: "**Server Information**",
-                thumbnail: {url: message.guild.iconURL},
+                thumbnail: {url: message.guild.iconURL()},
                 fields: [
                     {
                         name: "Server Owner",
@@ -53,12 +52,12 @@ module.exports = {
                     },
                     {
                         name: "Text Channels",
-                        value: message.guild.channels.filter((c) => c.type === "text").size,
+                        value: message.guild.channels.cache.filter((c) => c.type === "text").size,
                         inline: true,
                     },
                     {
                         name: "Voice Channels",
-                        value: message.guild.channels.filter((c) => c.type === "voice").size,
+                        value: message.guild.channels.cache.filter((c) => c.type === "voice").size,
                         inline: true,
                     },
                 ],

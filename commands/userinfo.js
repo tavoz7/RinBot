@@ -26,7 +26,7 @@ module.exports = {
             return;
         }
         var mentionedUser = message.guild.member(message.mentions.users.first());
-        if (args.length === 0 &&  message.mentions.users.first() === undefined) { mentionedUser = message.guild.member(message.member) } else if (args.length > 0 && message.mentions.users.first() === undefined) { mentionedUser = message.guild.members.get(args[0]) } // stuff for determining who's info to pull up
+        if (args.length === 0 &&  message.mentions.users.first() === undefined) { mentionedUser = message.guild.member(message.member) } else if (args.length > 0 && message.mentions.users.first() === undefined) { mentionedUser = message.guild.members.cache.get(args[0]) } // stuff for determining who's info to pull up
         if (mentionedUser.user.displayName === undefined) {
             var nickname = "None";
         } else {
@@ -35,10 +35,10 @@ module.exports = {
 
         var reqEmbed = {
             author: {
-                name: `${mentionedUser.user.username}#${mentionedUser.user.discriminator}`,
-                icon_url: mentionedUser.user.avatarURL,
+                name: `${mentionedUser.user.tag}`,
+                icon_url: mentionedUser.user.avatarURL({format: 'webp', dynamic: true, size: 1024}),
             },
-            thumbnail: {url: mentionedUser.user.avatarURL},
+            thumbnail: {url: mentionedUser.user.avatarURL({format: 'webp', dynamic: true, size: 1024})},
             title: "**User Information**",
             fields: [
                 {
@@ -51,7 +51,7 @@ module.exports = {
                 },
                 {
                     name: "Is Bot",
-                    value: mentionedUser.user.bot,
+                    value: `${(mentionedUser.user.bot.toString()).charAt(0).toUpperCase()}${mentionedUser.user.bot.toString().slice(1)}`,
                 },
                 {
                     name: "Joined Server",
