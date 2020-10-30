@@ -62,7 +62,7 @@ client.on('message', function(message) { // fires whenever a message is sent
             message.channel.send({embed: reqEmbed});
             return;
         }
-        exec("git pull", (error, stdout) => {
+        exec("git pull 2>&1", (error, stdout) => {
             if (stdout.includes("file changed") === false || stdout.includes("files changed") === false /*|| stderr.includes("origin/master" === false) */) {
                 if (error) {
                     var reqEmbed = {
@@ -128,7 +128,7 @@ client.once("ready", () => { // bot custom status
             description: `:white_check_mark: Version ${version}`,
             timestamp: new Date()
         }
-        
+
         client.channels.fetch(lastChannelID).then(channel => channel.messages.fetch(lastClientMessageID).then(message => message.delete()));
         client.channels.fetch(lastChannelID).then(channel => channel.send({embed: reqEmbed}));
 
