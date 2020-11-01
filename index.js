@@ -2,7 +2,6 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 const fs = require('fs');
-const { exec } = require("child_process");
 
 const { prefix, token, lastChannelID } = require('./config.json');
 var { updateInProgress, lastClientMessageID } = require('./config.json');
@@ -52,64 +51,7 @@ client.on('message', function(message) { // fires whenever a message is sent
         client.commands.get('host').execute(message, client); // me only
     }
     else if (command === 'update') { // me only
-        if (message.author.id !== '245047280908894209') {
-            var reqEmbed = {
-                color: 0xD72D42,
-                description: ":x: You don't have permission to do that."
-            }
-            message.channel.send({embed: reqEmbed});
-            return;
-        }
-        exec("git pull 2>&1", (error, stdout) => {
-            if (stdout.includes("file changed") === false || stdout.includes("files changed") === false /*|| stderr.includes("origin/master" === false) */) {
-                if (error) {
-                    var reqEmbed = {
-                        title: "Update",
-                        color: 0xD72D42,
-                        description: "`" + error + "`",
-                        timestamp: new Date()
-                    }
-                    message.channel.send({embed: reqEmbed});
-                    return;
-                }
-                /* if (stderr) {
-                    var reqEmbed = {
-                        title: "Update",
-                        color: 0xD72D42,
-                        description: "`" + stderr + "`",
-                        timestamp: new Date()
-                    }
-                    message.channel.send({embed: reqEmbed})
-                    return;
-                }*/
-            }
-            if (stdout.includes("Already up to date.")) {
-                var reqEmbed = {
-                    title: "Update",
-                    description: ":white_check_mark: Already up to date.",
-                    color: 0x77B255,
-                    footer: {text: `Version ${version}`}
-                }
-                message.channel.send({embed: reqEmbed});
-                return;
-            } 
-            else {
-                var reqEmbed = {
-                    title: "Update in Progress",
-                    color: 0xFFCC4D,
-                    description: ":arrows_counterclockwise: Restarting to install update...",
-                    timestamp: new Date()
-                }
-                message.channel.send({embed: reqEmbed})
-                // Write to config.json to notify the bot upon restart that an update was applied, and where to delete the restart message then replace it with the update complete message
-                file.updateInProgress = true;
-                file.lastChannelID = message.channel.id;
-                setTimeout(() => { file.lastClientMessageID = client.user.lastMessageID; }, 1500); // god i hate async
-                setTimeout(() => { fs.writeFile(configFile, JSON.stringify(file, null, 2), function writeJSON(err) { if (err) throw (err); }) }, 2500);
-                // please for the love of god add error handling here
-                setTimeout(() => {  process.exit(); }, 3000);
-            }
-        });       
+        client.commands.get('update').execute(message, client, configFile, file, version);
     }
     else if (command === 'help') {
         client.commands.get('help').execute(message, prefix, client);
@@ -131,8 +73,8 @@ client.once("ready", () => { // bot custom status
         client.channels.fetch(lastChannelID).then(channel => channel.send({embed: reqEmbed}));
 
         file.updateInProgress = false;
-        file.lastChannelID = "";
-        file.lastClientMessageID = "";
+        file.lastChannelID = null;
+        file.lastClientMessageID = null;
 
         fs.writeFile(configFile, JSON.stringify(file, null, 2), function writeJSON(err) {
             if (err) throw (err);
