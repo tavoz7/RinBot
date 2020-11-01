@@ -1,4 +1,5 @@
 const { exec } = require("child_process");
+const fs = require('fs');
 module.exports = {
     name: "update",
     description: "nil",
