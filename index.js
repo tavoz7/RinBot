@@ -6,7 +6,7 @@ const { exec } = require("child_process");
 
 const { prefix, token, lastChannelID } = require('./config.json');
 var { updateInProgress, lastClientMessageID } = require('./config.json');
-var version = "0.5.3.1 - Pre-Release";
+var version = "0.5.3.2 - Pre-Release";
 var versionDate = "31 October 2020";
 const configFile = './config.json';
 const file = require(configFile);
@@ -22,7 +22,7 @@ for (const file of commandFiles) {
 }
 client.on('message', function(message) { // fires whenever a message is sent
     if (!message.content.startsWith(prefix) || message.author.bot) return;
-    if (message.member.roles.cache.has('685237145052512321') /* head mods */ || message.member.roles.cache.has('769013132541558795') /* mods */ || message.member.roles.cache.has('582984530848251939') /* sea of voices */ || message.member.roles.cache.has('766858374377504818') || message.member.user.id === "245047280908894209")  /* bot testing lounge - new role */
+    if (message.member.roles.cache.has('685237145052512321') /* head mods */ || message.member.roles.cache.has('769013132541558795') /* mods */ || message.member.roles.cache.has('582984530848251939') /* sea of voices */ || message.member.roles.cache.has('766858374377504818') || message.member.roles.cache.has('713050424067883089'))  /* bot testing lounge - new role */
     { 
         // I couldn't get it to work when evaluating to false so an empty result on true works
     } 
