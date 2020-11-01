@@ -1,9 +1,10 @@
-const { execute } = require("./random");
+const os = require('os');
+require('loadavg-windows');
 
 module.exports = {
     name: "host",
     description: "get information about the host server.",
-    execute(message, args, os, client) {
+    execute(message, client) {
         if (message.author.id !== '245047280908894209') {
             var reqEmbed = {
                 color: 0xD72D42,
@@ -13,7 +14,7 @@ module.exports = {
             return;
         }
         if (!os.version().includes("Windows")) { 
-            var host_os = 'Ubuntu 20.04.1'; 
+            var host_os = 'Ubuntu 20.04.1'; // I'm too lazy to actually get distro information so this works, it'll suck when I use both arch and ubuntu
             var color = 0xDD4814;
             var percentCPU = (os.loadavg()[0]*50).toFixed(1);
             var osIcon = "https://cdn.cominatyou.com/cc38be88.png"
@@ -42,7 +43,7 @@ module.exports = {
         var clientUptimeMin = clientUptimeSec / 60;
         var clientUptimeHours = clientUptimeSec / 3600;
         var clientUptimeDays = clientUptimeSec / 86400;
-        var clientUptimeDaysMod = Math.floor(clientUptimeDays % 86400) // why is JS dumb
+        var clientUptimeDaysMod = Math.floor(clientUptimeDays % 86400) // why is JS dumb to where you can't modulo an equation
 
         if (clientUptimeDaysMod === 0) {
             var uptimeStr = `${Math.floor(clientUptimeHours % 3600)} hr ${Math.floor(clientUptimeMin % 60)} min ${Math.floor(clientUptimeSec % 60)} sec`;

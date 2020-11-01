@@ -29,10 +29,10 @@ module.exports = {
             var reqEmbed = {
                 author: {
                     name: message.guild.name,
-                    icon_url: message.guild.iconURL(),
+                    icon_url: message.guild.iconURL0({dynamic: true}),
                 },
                 title: "**Server Information**",
-                thumbnail: {url: message.guild.iconURL()},
+                thumbnail: {url: message.guild.iconURL({dynamic: true})},
                 fields: [
                     {
                         name: "Server Owner",

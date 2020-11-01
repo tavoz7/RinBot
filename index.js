@@ -2,17 +2,14 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 const fs = require('fs');
-const os = require('os');
 const { exec } = require("child_process");
-require('loadavg-windows');
 
 const { prefix, token, lastChannelID } = require('./config.json');
 var { updateInProgress, lastClientMessageID } = require('./config.json');
-var version = "0.5.3 - Pre-Release";
-var versionDate = "29 October 2020";
+var version = "0.5.3.1 - Pre-Release";
+var versionDate = "31 October 2020";
 const configFile = './config.json';
 const file = require(configFile);
-const guild = new Discord.Guild()
 
 // that one color i need: 0x395F85;
 
@@ -21,10 +18,11 @@ const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('
 for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
     client.commands.set(command.name, command);
+    
 }
 client.on('message', function(message) { // fires whenever a message is sent
     if (!message.content.startsWith(prefix) || message.author.bot) return;
-    if (message.member.roles.cache.has('685237145052512321') /* head mods */ || message.member.roles.cache.has('769013132541558795') /* mods */ || message.member.roles.cache.has('582984530848251939') /* sea of voices */ || message.member.roles.cache.has('766858374377504818'))  /* bot testing lounge - new role */ 
+    if (message.member.roles.cache.has('685237145052512321') /* head mods */ || message.member.roles.cache.has('769013132541558795') /* mods */ || message.member.roles.cache.has('582984530848251939') /* sea of voices */ || message.member.roles.cache.has('766858374377504818') || message.member.user.id === "245047280908894209")  /* bot testing lounge - new role */
     { 
         // I couldn't get it to work when evaluating to false so an empty result on true works
     } 
@@ -51,7 +49,7 @@ client.on('message', function(message) { // fires whenever a message is sent
         client.commands.get('about').execute(message, client, version, versionDate);
     }
     else if (command === 'host') {
-        client.commands.get('host').execute(message, args, os, client); // me only
+        client.commands.get('host').execute(message, client); // me only
     }
     else if (command === 'update') { // me only
         if (message.author.id !== '245047280908894209') {
@@ -106,7 +104,7 @@ client.on('message', function(message) { // fires whenever a message is sent
                 // Write to config.json to notify the bot upon restart that an update was applied, and where to delete the restart message then replace it with the update complete message
                 file.updateInProgress = true;
                 file.lastChannelID = message.channel.id;
-                setTimeout(() => { file.lastClientMessageID = client.user.lastMessageID; }, 1500);
+                setTimeout(() => { file.lastClientMessageID = client.user.lastMessageID; }, 1500); // god i hate async
                 setTimeout(() => { fs.writeFile(configFile, JSON.stringify(file, null, 2), function writeJSON(err) { if (err) throw (err); }) }, 2500);
                 // please for the love of god add error handling here
                 setTimeout(() => {  process.exit(); }, 3000);
@@ -138,7 +136,7 @@ client.once("ready", () => { // bot custom status
 
         fs.writeFile(configFile, JSON.stringify(file, null, 2), function writeJSON(err) {
             if (err) throw (err);
-        })
+        });
     }
  });
 
