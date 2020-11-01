@@ -5,13 +5,12 @@ const fs = require('fs');
 
 const { prefix, token, lastChannelID } = require('./config.json');
 var { updateInProgress, lastClientMessageID } = require('./config.json');
-var version = "0.5.3.2 - Pre-Release";
-var versionDate = "31 October 2020";
+var version = "0.5.3.3 - Pre-Release";
+var versionDate = "1 November 2020";
 const configFile = './config.json';
 const file = require(configFile);
 
 // that one color i need: 0x395F85;
-// test update
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js')); // add command files to array as dependencies
 
