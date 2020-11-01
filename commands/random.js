@@ -9,7 +9,7 @@ module.exports = {
         // console.log(args[0] < args[1]); // true
         console
         if (args.length === 0) {
-            message.channel.send((Math.random() * (Math.floor((Number.MAX_SAFE_INTEGER - 1)) - 1) + 1));
+            message.channel.send(Math.floor((Math.random() * (Number.MAX_SAFE_INTEGER - 1) - 1) + 1));
         }
         else if (args[0] === '-h') {
             var reqEmbed = {
