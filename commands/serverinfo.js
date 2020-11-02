@@ -29,7 +29,7 @@ module.exports = {
             var reqEmbed = {
                 author: {
                     name: message.guild.name,
-                    icon_url: message.guild.iconURL0({dynamic: true}),
+                    icon_url: message.guild.iconURL({dynamic: true}),
                 },
                 title: "**Server Information**",
                 thumbnail: {url: message.guild.iconURL({dynamic: true})},
@@ -39,16 +39,17 @@ module.exports = {
                         value: `${message.guild.owner.user.username}#${message.guild.owner.user.discriminator}`,
                     },
                     {
-                        name: "Server Creation Date",
-                        value: moment(message.guild.createdAt).format("D MMM YYYY [at] h:mm A [UTC]Z"),
+                        name: "Member Count",
+                        value: message.guild.memberCount,
                     },
                     {
                         name: "Server Region",
                         value: message.guild.region,
+                        inline: true
                     },
                     {
-                        name: "Member Count",
-                        value: message.guild.memberCount,
+                        name: "Server Boost",
+                        value: `Boosters: ${message.guild.premiumSubscriptionCount}\n Level: ${message.guild.premiumTier}`
                     },
                     {
                         name: "Text Channels",
@@ -59,6 +60,10 @@ module.exports = {
                         name: "Voice Channels",
                         value: message.guild.channels.cache.filter((c) => c.type === "voice").size,
                         inline: true,
+                    },
+                    {
+                        name: "Server Creation Date",
+                        value: moment(message.guild.createdAt).format("D MMM YYYY [at] h:mm A [UTC]Z"),
                     },
                 ],
                 footer: {

@@ -2,7 +2,7 @@ const moment = require('moment');
 module.exports = {
     name: 'userinfo',
     description: "Get information about a user's account.",
-    execute(message, args) {
+    execute(message, args, mentionedUser) {
         if (args[0] === '-h') {
             var reqEmbed = {
                 title: "Command: userinfo",
@@ -25,12 +25,16 @@ module.exports = {
             message.channel.send({embed: reqEmbed});
             return;
         }
-        var mentionedUser = message.guild.member(message.mentions.users.first());
-        if (args.length === 0 &&  message.mentions.users.first() === undefined) { mentionedUser = message.guild.member(message.member) } else if (args.length > 0 && message.mentions.users.first() === undefined) { mentionedUser = message.guild.members.cache.get(args[0]) } // stuff for determining who's info to pull up
-        if (mentionedUser.user.displayName === undefined) {
+        if (mentionedUser.nickname === null) {
             var nickname = "None";
         } else {
-            var nickname = mentionedUser.user.displayName;
+            var nickname = mentionedUser.nickname;
+        }
+        if (mentionedUser.premiumSinceTimestamp === 0) {
+            var boostStatus = "Not Boosting"
+        }
+        else {
+            var boostStatus = moment(mentionedUser.premiumSinceTimestamp).format("D MMM YYYY [at] h:mm A [UTC]Z")
         }
 
         var reqEmbed = {
@@ -61,6 +65,10 @@ module.exports = {
                     name: "Account Creation Date",
                     value: moment(mentionedUser.user.createdAt).format("D MMM YYYY [at] h:mm A [UTC]Z"), 
                     
+                },
+                {
+                    name: "Server Boost Date",
+                    value: boostStatus
                 }
             ],
             footer: {

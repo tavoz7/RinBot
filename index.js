@@ -5,7 +5,7 @@ const fs = require('fs');
 
 const { prefix, token, lastChannelID } = require('./config.json');
 var { updateInProgress, lastClientMessageID } = require('./config.json');
-var version = "0.5.3.4 - Pre-Release";
+var version = "0.6 - Pre-Release";
 var versionDate = "1 November 2020";
 const configFile = './config.json';
 const file = require(configFile);
@@ -36,8 +36,7 @@ client.on('message', function(message) { // fires whenever a message is sent
         client.commands.get('rule').execute(message, args);
     } 
     else if (command === 'userinfo') {
-        client.commands.get('userinfo').execute(message, args);
-    } 
+        if (args.length === 0 &&  message.mentions.users.first() === undefined) { mentionedUser = message.member; client.commands.get('userinfo').execute(message, args, mentionedUser); } else if (args.length === 1 && message.mentions.users.first() === undefined) { mentionedUser = message.guild.members.fetch(args[0]).then(mentionedUser => client.commands.get('userinfo').execute(message, args, mentionedUser)) } else {client.commands.get('userinfo').execute(message, args, mentionedUser);}} // stuff for determining who's info to pull up
     else if (command === 'serverinfo') {
         client.commands.get('serverinfo').execute(message, args, client);
     } 
