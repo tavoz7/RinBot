@@ -9,6 +9,7 @@ module.exports = {
             },
             title: "**Help**",
             description: "The prefix for " + message.guild.name + " is `" + prefix + "`",
+            color: 0x24ACF2,
             fields: [
                 {
                     name: "Support",

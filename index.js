@@ -36,8 +36,21 @@ client.on('message', function(message) { // fires whenever a message is sent
         client.commands.get('rule').execute(message, args);
     } 
     else if (command === 'userinfo') {
-        var mentionedUser = message.guild.member(message.mentions.users.first());
-        if (args.length === 0 &&  message.mentions.users.first() === undefined) { mentionedUser = message.member; client.commands.get('userinfo').execute(message, args, mentionedUser); } else if (args.length === 1 && message.mentions.users.first() === undefined) { mentionedUser = message.guild.members.fetch(args[0]).then(mentionedUser => client.commands.get('userinfo').execute(message, args, mentionedUser)) } else {client.commands.get('userinfo').execute(message, args, mentionedUser);}} // stuff for determining who's info to pull up
+        var mentionedUser = message.guild.member(message.mentions.users.first()); 
+        if (args.length === 0 &&  message.mentions.users.first() === undefined) { // stuff for determining who's info to pull up
+            mentionedUser = message.member; 
+            client.commands.get('userinfo').execute(message, args, mentionedUser); 
+        } 
+        else if (args[0] === "-h") { 
+            client.commands.get('userinfo').execute(message, args) 
+        } 
+        else if (args.length === 1 && message.mentions.users.first() === undefined) { 
+            mentionedUser = message.guild.members.fetch(args[0]).then(mentionedUser => client.commands.get('userinfo').execute(message, args, mentionedUser)) 
+        } 
+        else {
+            client.commands.get('userinfo').execute(message, args, mentionedUser);
+        }
+    } 
     else if (command === 'serverinfo') {
         client.commands.get('serverinfo').execute(message, args, client);
     } 

@@ -13,6 +13,7 @@ module.exports = {
         if (args[0] === '-h') {
             var reqEmbed = {
                 title: "Command: serverinfo",
+                color: 0x24ACF2,
                 description: "List information about the current server",
                 fields: [
                     {
@@ -38,6 +39,7 @@ module.exports = {
                     icon_url: message.guild.iconURL({dynamic: true}),
                 },
                 title: "**Server Information**",
+                color: 0x24ACF2,
                 thumbnail: {url: message.guild.iconURL({dynamic: true})},
                 fields: [
                     {

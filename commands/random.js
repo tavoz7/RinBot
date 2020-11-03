@@ -15,6 +15,7 @@ module.exports = {
             var reqEmbed = {
                 title: "Command: Random",
                 description: "Generate a random number",
+                color: 0x24ACF2,
                 fields: [
                     {
                         name: "Syntax",

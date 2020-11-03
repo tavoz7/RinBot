@@ -30,6 +30,7 @@ module.exports = {
                 var reqEmbed = {
                     title: "Command: Rule",
                     description: "Send a rule in an embed to a channel.",
+                    color: 0x24ACF2,
                     fields: [
                         {
                             name: "Syntax",

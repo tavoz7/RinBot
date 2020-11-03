@@ -3,6 +3,29 @@ module.exports = {
     name: 'userinfo',
     description: "Get information about a user's account.",
     execute(message, args, mentionedUser) {
+                if (args[0] === '-h') {
+            var reqEmbed = {
+                title: "Command: userinfo",
+                color: 0x24ACF2,
+                description: "List information about a user",
+                fields: [
+                    {
+                        name: "Syntax",
+                        value: "`!userinfo <user>`"
+                    },
+                    {
+                        name: "Arguments",
+                        value: "`@user`, `UserID`\nIf no user is specified, information will be listed for the sender of the message."
+                    },
+                    {
+                        name: "Examples",
+                        value: "!userinfo @user\n!userinfo 123456789098765432"
+                    }
+                ]
+            }
+            message.channel.send({embed: reqEmbed});
+            return;
+        }
         var userPerms = mentionedUser.permissions.toArray().sort(function (a, b) {
             if (a < b) return -1;
             else if (a > b) return 1;
@@ -13,7 +36,7 @@ module.exports = {
         if (userPerms.length === 0) {
             userPerms = "None"
         } else {
-        userPerms = userPerms.join(", ").replace(/_/g, ' ').toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ').replace("Add Reactions, ", "").replace("Attach Files,", "").replace();
+            userPerms = userPerms.join(", ").replace(/_/g, ' ').toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ').replace("Add Reactions, ", "").replace("Attach Files,", "").replace();
         }
 
         if (moment(mentionedUser.joinedTimestamp).format('Z').includes("05:00")) {
@@ -36,30 +59,6 @@ module.exports = {
             var serverAcknowledgements = "Administrator"
         } else {
             var serverAcknowledgements = "Member"
-        }
-
-
-        if (args[0] === '-h') {
-            var reqEmbed = {
-                title: "Command: userinfo",
-                description: "List information about a user",
-                fields: [
-                    {
-                        name: "Syntax",
-                        value: "`!userinfo <user>`"
-                    },
-                    {
-                        name: "Arguments",
-                        value: "`@user`, `UserID`\nIf no user is specified, information will be listed for the sender of the message."
-                    },
-                    {
-                        name: "Examples",
-                        value: "!userinfo @user\n!userinfo 123456789098765432"
-                    }
-                ]
-            }
-            message.channel.send({embed: reqEmbed});
-            return;
         }
         if (mentionedUser.nickname === null) {
             var nickname = "None";
@@ -85,6 +84,7 @@ module.exports = {
             },
             thumbnail: {url: mentionedUser.user.avatarURL({format: 'webp', dynamic: true, size: 1024})},
             title: "**User Information**",
+            color: 0x24ACF2,
             fields: [
                 {
                     name: "Mention",
