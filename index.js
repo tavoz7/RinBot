@@ -5,7 +5,7 @@ const fs = require('fs');
 
 const { prefix, token, lastChannelID } = require('./config.json');
 var { updateInProgress, lastClientMessageID } = require('./config.json');
-var version = "0.6.2 - Pre-Release";
+var version = "0.6.3 - Pre-Release";
 var versionDate = "2 November 2020";
 const configFile = './config.json';
 const file = require(configFile);
