@@ -3,6 +3,42 @@ module.exports = {
     name: 'userinfo',
     description: "Get information about a user's account.",
     execute(message, args, mentionedUser) {
+        var userPerms = mentionedUser.permissions.toArray().sort(function (a, b) {
+            if (a < b) return -1;
+            else if (a > b) return 1;
+            return 0;
+        });
+        var unnededPerms = ['ADD_REACTIONS','ATTACH_FILES','CHANGE_NICKNAME','CONNECT','CREATE_INSTANT_INVITE','DEAFEN_MEMBERS','EMBED_LINKS','MANAGE_EMOJIS','MOVE_MEMBERS','MUTE_MEMBERS','PRIORITY_SPEAKER','READ_MESSAGE_HISTORY','SEND_MESSAGES','SEND_TTS_MESSAGES','SPEAK','STREAM','USE_EXTERNAL_EMOJIS','USE_VAD','VIEW_AUDIT_LOG','VIEW_CHANNEL','VIEW_GUILD_INSIGHTS']
+        var userPerms = userPerms.filter(f => !unnededPerms.includes(f));
+        if (userPerms.length === 0) {
+            userPerms = "None"
+        } else {
+        userPerms = userPerms.join(", ").replace(/_/g, ' ').toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ').replace("Add Reactions, ", "").replace("Attach Files,", "").replace();
+        }
+
+        if (moment(mentionedUser.joinedTimestamp).format('Z').includes("05:00")) {
+            var joinedAtTimeZone = "CDT";
+        }
+        else if (moment(mentionedUser.joinedTimestamp).format('Z').includes("06:00")) {
+            var joinedAtTimeZone = "CST"
+        }
+
+
+        if (moment(mentionedUser.user.createdAt).format("Z").includes("05:00")) {
+            var createdAtTimeZone = "CDT"
+        }
+        else if (moment(mentionedUser.user.createdAt).format("Z").includes("06:00")) {
+            var createdAtTimeZone = "CST"
+        }
+        if (mentionedUser.id === message.guild.ownerID) {
+            var serverAcknowledgements = "Server Owner"
+        } else if (mentionedUser.hasPermission("ADMINISTRATOR")) {
+            var serverAcknowledgements = "Administrator"
+        } else {
+            var serverAcknowledgements = "Member"
+        }
+
+
         if (args[0] === '-h') {
             var reqEmbed = {
                 title: "Command: userinfo",
@@ -34,7 +70,12 @@ module.exports = {
             var boostStatus = "Not Boosting"
         }
         else {
-            var boostStatus = moment(mentionedUser.premiumSinceTimestamp).format("D MMM YYYY [at] h:mm A [UTC]Z")
+            if (moment(mentionedUser.premiumSinceTimestamp).format("Z").includes("05:00")) {
+                var boostStatus = moment(mentionedUser.premiumSinceTimestamp).format("D MMM YYYY [at] h:mm A") + " CDT"
+            }
+            else if (moment(mentionedUser.premiumSinceTimestamp).format("Z").includes("06:00")) {
+                var boostStatus = moment(mentionedUser.premiumSinceTimestamp).format("D MMM YYYY [at] h:mm A") + " CST"
+            }
         }
 
         var reqEmbed = {
@@ -54,21 +95,31 @@ module.exports = {
                     value: nickname,
                 },
                 {
-                    name: "Is Bot",
-                    value: `${(mentionedUser.user.bot.toString()).charAt(0).toUpperCase()}${mentionedUser.user.bot.toString().slice(1)}`,
-                },
-                {
                     name: "Joined Server",
-                    value: `${moment(mentionedUser.joinedAt).format('D MMM YYYY')} at ${moment(mentionedUser.joinedTimestamp).format('h:mm A [UTC]Z')}`
+                    value: `${moment(mentionedUser.joinedAt).format('D MMM YYYY [at] h:mm A')} ${joinedAtTimeZone}`,
+                    inline: true
                 },
                 {
                     name: "Account Creation Date",
-                    value: moment(mentionedUser.user.createdAt).format("D MMM YYYY [at] h:mm A [UTC]Z"), 
+                    value: `${moment(mentionedUser.user.createdAt).format("D MMM YYYY [at] h:mm A")} ${createdAtTimeZone}`,
+                    inline: true
                     
                 },
                 {
                     name: "Server Boost Date",
                     value: boostStatus
+                },
+                {
+                    name: "Is Bot",
+                    value: `${(mentionedUser.user.bot.toString()).charAt(0).toUpperCase()}${mentionedUser.user.bot.toString().slice(1)}`,
+                },
+                {
+                    name: "Significant Permissions",
+                    value: userPerms
+                },
+                {
+                    name: "Server Relation",
+                    value: serverAcknowledgements
                 }
             ],
             footer: {

@@ -4,6 +4,12 @@ module.exports = {
     name: 'serverinfo',
     description: "Get information about the current guild",
     execute(message, args) {
+        if (moment(message.guild.createdAt).format("Z").includes("05:00")) {
+            var serverCreatedAtTimeZone = "CDT"
+        }
+        else if (moment(message.guild.createdAt).format("Z").includes("06:00")) {
+            var serverCreatedAtTimeZone = "CST"
+        }
         if (args[0] === '-h') {
             var reqEmbed = {
                 title: "Command: serverinfo",
@@ -36,7 +42,7 @@ module.exports = {
                 fields: [
                     {
                         name: "Server Owner",
-                        value: `${message.guild.owner.user.username}#${message.guild.owner.user.discriminator}`,
+                        value: `${message.guild.owner.user.tag}`,
                     },
                     {
                         name: "Member Count",
@@ -63,7 +69,7 @@ module.exports = {
                     },
                     {
                         name: "Server Creation Date",
-                        value: moment(message.guild.createdAt).format("D MMM YYYY [at] h:mm A [UTC]Z"),
+                        value: `${moment(message.guild.createdAt).format("D MMM YYYY [at] h:mm A")} ${serverCreatedAtTimeZone}`,
                     },
                 ],
                 footer: {
