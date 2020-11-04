@@ -8,6 +8,10 @@ module.exports = {
                 icon_url: client.user.avatarURL()
             },
             title: "**Help**",
+            author: {
+                name: client.user.username,
+                icon_url: client.user.avatarURL(),
+            },
             description: "The prefix for " + message.guild.name + " is `" + prefix + "`",
             color: 0x24ACF2,
             fields: [

@@ -5,19 +5,18 @@ const fs = require('fs');
 
 const { prefix, token, lastChannelID } = require('./config.json');
 var { updateInProgress, lastClientMessageID } = require('./config.json');
-var version = "0.6.3 - Pre-Release";
-var versionDate = "2 November 2020";
+var version = "0.6.3.1 - Pre-Release";
+var versionDate = "3 November 2020";
 const configFile = './config.json';
 const file = require(configFile);
 
 // that one color i need: 0x395F85;
 
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js')); // add command files to array as dependencies
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.ts')); // add command files to array as dependencies
 
 for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
     client.commands.set(command.name, command);
-    
 }
 client.on('message', function(message) { // fires whenever a message is sent
     if (!message.content.startsWith(prefix) || message.author.bot) return;
@@ -30,19 +29,19 @@ client.on('message', function(message) { // fires whenever a message is sent
     }
 
     const args = message.content.slice(prefix.length).trim().split(/ +/); // stuff to throw arguments into an array
-    const command = args.shift().toLowerCase(); // set command to the correct .js file as a dependency whenever a command is invoked
+    const command = args.shift().toLowerCase(); // extract command from message
 
     if(command === 'rule') {
-        client.commands.get('rule').execute(message, args);
+        client.commands.get('rule').execute(message, args, client);
     } 
     else if (command === 'userinfo') {
         var mentionedUser = message.guild.member(message.mentions.users.first()); 
         if (args.length === 0 &&  message.mentions.users.first() === undefined) { // stuff for determining who's info to pull up
             mentionedUser = message.member; 
-            client.commands.get('userinfo').execute(message, args, mentionedUser); 
+            client.commands.get('userinfo').execute(message, args, mentionedUser, client); 
         } 
         else if (args[0] === "-h") { 
-            client.commands.get('userinfo').execute(message, args) 
+            client.commands.get('userinfo').execute(message, args, null, client) 
         } 
         else if (args.length === 1 && message.mentions.users.first() === undefined) { 
             mentionedUser = message.guild.members.fetch(args[0]).then(mentionedUser => client.commands.get('userinfo').execute(message, args, mentionedUser)) 
@@ -55,13 +54,13 @@ client.on('message', function(message) { // fires whenever a message is sent
         client.commands.get('serverinfo').execute(message, args, client);
     } 
     else if (command === 'random') {
-        client.commands.get('random').execute(message, args);
+        client.commands.get('random').execute(message, args, client);
     }
     else if (command === 'about') {
         client.commands.get('about').execute(message, client, version, versionDate);
     }
-    else if (command === 'host') {
-        client.commands.get('host').execute(message, client); // me only
+    else if (command === 'host') { // me only
+        client.commands.get('host').execute(message, client); 
     }
     else if (command === 'update') { // me only
         client.commands.get('update').execute(message, client, configFile, file, version);

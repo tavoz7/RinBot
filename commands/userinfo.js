@@ -2,10 +2,14 @@ const moment = require('moment');
 module.exports = {
     name: 'userinfo',
     description: "Get information about a user's account.",
-    execute(message, args, mentionedUser) {
+    execute(message, args, mentionedUser, client) {
                 if (args[0] === '-h') {
             var reqEmbed = {
-                title: "Command: userinfo",
+                author: {
+                    name: client.user.username,
+                    icon_url: client.user.avatarURL(),
+                },
+                title: "**Userinfo**",
                 color: 0x24ACF2,
                 description: "List information about a user",
                 fields: [

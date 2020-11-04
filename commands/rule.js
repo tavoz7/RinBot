@@ -1,7 +1,7 @@
 module.exports = {
     name: 'rule',
     description: 'Send a server rule as an embed in chat.',
-    execute(message, args) {
+    execute(message, args, client) {
         if (args[0] !== '-h') {
         message.delete();
         }
@@ -28,9 +28,13 @@ module.exports = {
                 message.channel.send({ embed: reqEmbed });
             } else if (args[0] === '-h') {
                 var reqEmbed = {
-                    title: "Command: Rule",
+                    title: "**Rule**",
                     description: "Send a rule in an embed to a channel.",
                     color: 0x24ACF2,
+                    author: {
+                        name: client.user.username,
+                        icon_url: client.user.avatarURL(),
+                    },
                     fields: [
                         {
                             name: "Syntax",

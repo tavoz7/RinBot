@@ -1,7 +1,7 @@
 module.exports = {
     name: "random",
     description: "Generate a random number",
-    execute(message, args) {
+    execute(message, args, client) {
         // console.log(Number.isNaN(args[0])); // false
         // console.log(Number.isNaN(args[1])); // false 
         // console.log(args[0] <= (Number.MAX_SAFE_INTEGER - 1)); // true
@@ -13,7 +13,11 @@ module.exports = {
         }
         else if (args[0] === '-h') {
             var reqEmbed = {
-                title: "Command: Random",
+                author: {
+                    name: client.user.username,
+                    icon_url: client.user.avatarURL(),
+                },
+                title: "**Random**",
                 description: "Generate a random number",
                 color: 0x24ACF2,
                 fields: [

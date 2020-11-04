@@ -3,7 +3,7 @@ const moment = require('moment');
 module.exports = {
     name: 'serverinfo',
     description: "Get information about the current guild",
-    execute(message, args) {
+    execute(message, args, client) {
         if (moment(message.guild.createdAt).format("Z").includes("05:00")) {
             var serverCreatedAtTimeZone = "CDT"
         }
@@ -12,7 +12,11 @@ module.exports = {
         }
         if (args[0] === '-h') {
             var reqEmbed = {
-                title: "Command: serverinfo",
+                author: {
+                    name: client.user.username,
+                    icon_url: client.user.avatarURL(),
+                },
+                title: "**Serverinfo**",
                 color: 0x24ACF2,
                 description: "List information about the current server",
                 fields: [
