@@ -12,7 +12,7 @@ const file = require(configFile);
 
 // that one color i need: 0x395F85;
 
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.ts')); // add command files to array as dependencies
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js')); // add command files to array as dependencies
 
 for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
