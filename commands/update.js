@@ -60,7 +60,7 @@ module.exports = {
                 setTimeout(() => { fs.writeFile(configFile, JSON.stringify(file, null, 2), function writeJSON(err) { if (err) throw (err); }) }, 2500);
                 // please for the love of god add error handling here
                 setTimeout(() => {  process.exit(); }, 3000);
-            } //
+            }
         });
     }
 }
