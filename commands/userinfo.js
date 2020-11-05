@@ -84,7 +84,7 @@ module.exports = {
         var reqEmbed = {
             author: {
                 name: `${mentionedUser.user.tag}`,
-                icon_url: mentionedUser.user.avatarURL({format: 'webp', dynamic: true, size: 1024}),
+                icon_url: mentionedUser.user.avatarURL({format: 'webp', dynamic: false, size: 1024}),
             },
             thumbnail: {url: mentionedUser.user.avatarURL({format: 'webp', dynamic: true, size: 1024})},
             title: "**User Information**",

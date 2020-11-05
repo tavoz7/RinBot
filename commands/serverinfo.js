@@ -36,6 +36,13 @@ module.exports = {
             }
             message.channel.send({embed: reqEmbed});
         }
+        else if (!message.guild.available) {
+            var reqEmbed = {
+                color: 0xD72D42,
+                description: ":x: Unable to retrieve guild information at this time."
+            }
+            message.channel.send({embed: reqEmbed});
+        }
         else if (args.length === 0) {
             var reqEmbed = {
                 author: {
