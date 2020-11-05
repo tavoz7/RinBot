@@ -96,7 +96,7 @@ client.on('message', function(message) { // fires whenever a message is sent
         }
     }
 }); 
-
+// test update
 client.once("ready", () => { // bot custom status
     console.log(`Logged in as ${client.user.tag}`);
     client.user.setActivity("the campfire crackle", {type: "LISTENING"});
