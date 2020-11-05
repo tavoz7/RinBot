@@ -56,10 +56,10 @@ module.exports = {
                 // Write to config.json to notify the bot upon restart that an update was applied, and where to delete the restart message then replace it with the update complete message
                 file.updateInProgress = true;
                 file.lastChannelID = message.channel.id;
-                file.lastClientMessageID = client.user.lastMessageID;
-                fs.writeFileSync(configFile, JSON.stringify(file, null, 2), function writeJSON(err) { if (err) throw (err); })
+                setTimeout(() => { file.lastClientMessageID = client.user.lastMessageID; }, 1500); // god i hate async
+                setTimeout(() => { fs.writeFile(configFile, JSON.stringify(file, null, 2), function writeJSON(err) { if (err) throw (err); }) }, 2500);
                 // please for the love of god add error handling here
-                process.exit();
+                setTimeout(() => {  process.exit(); }, 3000);
             }
         });
     }
