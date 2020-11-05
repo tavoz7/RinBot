@@ -83,7 +83,7 @@ client.once("ready", () => { // bot custom status
 
         // client.channels.fetch(lastChannelID).then(channel => channel.messages.fetch(lastClientMessageID).then(message => message.delete()));
         // client.channels.fetch(lastChannelID).then(channel => channel.send({embed: reqEmbed}));
-        client.channels.fetch(lastChannelID).then(channel => channel.messages.fetch(lastClientMessageID).then(message => message.edit({embed: reqEmbed})));
+        client.channels.fetch(lastChannelID).then(channel => channel.messages.fetch(lastClientMessageID).then(message => message.edit({embed: reqEmbed}, "")));
 
         file.updateInProgress = false;
         file.lastChannelID = null;
