@@ -57,9 +57,9 @@ module.exports = {
                 file.updateInProgress = true;
                 file.lastChannelID = message.channel.id;
                 setTimeout(() => { file.lastClientMessageID = client.user.lastMessageID; }, 1500); // god i hate async
-                setTimeout(() => { fs.writeFile(configFile, JSON.stringify(file, null, 2), function writeJSON(err) { if (err) throw (err); }) }, 2500);
+                fs.writeFileSync(configFile, JSON.stringify(file, null, 2), function writeJSON(err) { if (err) throw (err); })
                 // please for the love of god add error handling here
-                setTimeout(() => {  process.exit(); }, 3000);
+                process.exit();
             }
         });
     }
