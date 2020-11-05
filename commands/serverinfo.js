@@ -48,7 +48,7 @@ module.exports = {
                 fields: [
                     {
                         name: "Server Owner",
-                        value: `${message.guild.owner.user.tag}`,
+                        value: message.guild.owner.user.tag,
                     },
                     {
                         name: "Member Count",
