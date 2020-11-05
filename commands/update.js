@@ -60,7 +60,7 @@ module.exports = {
                 fs.writeFileSync(configFile, JSON.stringify(file, null, 2), function writeJSON(err) { if (err) throw (err); })
                 // please for the love of god add error handling here
                 process.exit();
-            }
+            } // test
         });
     }
 }
