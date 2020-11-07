@@ -41,7 +41,8 @@ module.exports = {
             var reqType = 'png';
         }
         if (reqType === 'png' || reqType === 'gif' || reqType === 'webp') {
-        } else {
+        } 
+        else {
             return;
         }
         var reqEmbed = {

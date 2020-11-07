@@ -4,8 +4,8 @@ client.commands = new Discord.Collection();
 const fs = require('fs');
 
 const { prefix, token, lastChannelID, updateInProgress, lastClientMessageID } = require('./config.json');
-var version = "0.7.1 - Pre-Release";
-var versionDate = "4 November 2020";
+var version = "0.7.1.1 - Pre-Release";
+var versionDate = "7 November 2020";
 const configFile = './config.json';
 const file = require(configFile);
 
@@ -71,7 +71,8 @@ client.on('message', function(message) { // fires whenever a message is sent
     else if (command === 'avatar') {
         if (args[0] === '-h') {
             client.commands.get('avatar').execute(message, args, null, client); 
-        } else {
+        } 
+        else {
             var mentionedUser = message.mentions.users.first();
             if (args[0] === 'webp' || args[0] === 'png') {
                 mentionedUser = message.author;

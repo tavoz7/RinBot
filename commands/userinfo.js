@@ -3,7 +3,7 @@ module.exports = {
     name: 'userinfo',
     description: "Get information about a user's account.",
     execute(message, args, mentionedUser, client) {
-                if (args[0] === '-h') {
+        if (args[0] === '-h') {
             var reqEmbed = {
                 author: {
                     name: client.user.username,
@@ -39,7 +39,8 @@ module.exports = {
         var userPerms = userPerms.filter(f => !unnededPerms.includes(f));
         if (userPerms.length === 0) {
             userPerms = "None"
-        } else {
+        } 
+        else {
             userPerms = userPerms.join(", ").replace(/_/g, ' ').toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ').replace("Add Reactions, ", "").replace("Attach Files,", "").replace();
         }
 
@@ -47,37 +48,40 @@ module.exports = {
             var joinedAtTimeZone = "CDT";
         }
         else if (moment(mentionedUser.joinedTimestamp).format('Z').includes("06:00")) {
-            var joinedAtTimeZone = "CST"
+            var joinedAtTimeZone = "CST";
         }
 
 
         if (moment(mentionedUser.user.createdAt).format("Z").includes("05:00")) {
-            var createdAtTimeZone = "CDT"
+            var createdAtTimeZone = "CDT";
         }
         else if (moment(mentionedUser.user.createdAt).format("Z").includes("06:00")) {
-            var createdAtTimeZone = "CST"
+            var createdAtTimeZone = "CST";
         }
         if (mentionedUser.id === message.guild.ownerID) {
-            var serverAcknowledgements = "Server Owner"
-        } else if (mentionedUser.hasPermission("ADMINISTRATOR")) {
-            var serverAcknowledgements = "Administrator"
-        } else {
-            var serverAcknowledgements = "Member"
+            var serverAcknowledgements = "Server Owner";
+        } 
+        else if (mentionedUser.hasPermission("ADMINISTRATOR")) {
+            var serverAcknowledgements = "Administrator";
+        } 
+        else {
+            var serverAcknowledgements = "Member";
         }
         if (mentionedUser.nickname === null) {
             var nickname = "None";
-        } else {
+        } 
+        else {
             var nickname = mentionedUser.nickname;
         }
         if (mentionedUser.premiumSinceTimestamp === 0) {
-            var boostStatus = "Not Boosting"
+            var boostStatus = "Not Boosting";
         }
         else {
             if (moment(mentionedUser.premiumSinceTimestamp).format("Z").includes("05:00")) {
-                var boostStatus = moment(mentionedUser.premiumSinceTimestamp).format("D MMM YYYY [at] h:mm A") + " CDT"
+                var boostStatus = moment(mentionedUser.premiumSinceTimestamp).format("D MMM YYYY [at] h:mm A") + " CDT";
             }
             else if (moment(mentionedUser.premiumSinceTimestamp).format("Z").includes("06:00")) {
-                var boostStatus = moment(mentionedUser.premiumSinceTimestamp).format("D MMM YYYY [at] h:mm A") + " CST"
+                var boostStatus = moment(mentionedUser.premiumSinceTimestamp).format("D MMM YYYY [at] h:mm A") + " CST";
             }
         }
 
@@ -135,8 +139,6 @@ module.exports = {
             }
     
         }
-        if (args[0] !== '-h') {
             message.channel.send({embed: reqEmbed});
-        }
     }
 }
