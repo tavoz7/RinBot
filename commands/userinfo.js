@@ -118,6 +118,10 @@ module.exports = {
                     value: `${(mentionedUser.user.bot.toString()).charAt(0).toUpperCase()}${mentionedUser.user.bot.toString().slice(1)}`,
                 },
                 {
+                    name: `Roles (${mentionedUser.roles.cache.map(role => role.id).length - 1})`,
+                    value: mentionedUser.roles.cache.map(roles => roles).sort((a, b) => b.rawPosition - a.rawPosition).join(' ').replace("@everyone", "")
+                },
+                {
                     name: "Significant Permissions",
                     value: userPerms
                 },
