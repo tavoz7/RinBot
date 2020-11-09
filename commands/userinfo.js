@@ -63,19 +63,19 @@ module.exports = {
         if (mentionedUser.id === message.guild.ownerID) {
             var serverAcknowledgements = "Server Owner";
             if (mentionedUser.id === '245047280908894209') {
-                var serverAcknowledgements = `Server Owner, ${client.user.username} Developer`
+                serverAcknowledgements = `Server Owner, ${client.user.username} Developer`
             }
         } 
         else if (mentionedUser.hasPermission("ADMINISTRATOR")) {
             var serverAcknowledgements = "Administrator";
             if (mentionedUser.id === '245047280908894209') {
-                var serverAcknowledgements = `Server Owner, ${client.user.username} Developer`
+                serverAcknowledgements = `Server Owner, ${client.user.username} Developer`
             }
         } 
         else {
             var serverAcknowledgements = "Member";
             if (mentionedUser.id === '245047280908894209') {
-                var serverAcknowledgements = `Server Owner, ${client.user.username} Developer`
+                serverAcknowledgements = `Server Owner, ${client.user.username} Developer`
             }
         }
         if (mentionedUser.nickname === null) {
