@@ -18,7 +18,7 @@ for (const file of commandFiles) {
     client.commands.set(command.name, command);
 }
 
-client.on('message', function(message) { // fires whenever a message is sent
+client.on('message', (message) => { // fires whenever a message is sent
     if (!message.content.startsWith(prefix) || message.author.bot) return;
     if (message.member.roles.cache.has('685237145052512321') /* head mods */ || message.member.roles.cache.has('769013132541558795') /* mods */ || message.member.roles.cache.has('582984530848251939') /* sea of voices */ || message.member.roles.cache.has('766858374377504818') /* bot testing lounge - new role */ || message.member.roles.cache.has('713050424067883089') /* the phoenix den - RTX ON */) 
     { 
@@ -31,7 +31,7 @@ client.on('message', function(message) { // fires whenever a message is sent
     const args = message.content.slice(prefix.length).trim().split(/ +/); // stuff to throw arguments into an array
     const command = args.shift().toLowerCase(); // extract command from message
 
-    if(command === 'rule') {
+    if (command === 'rule') {
         client.commands.get('rule').execute(message, args, client);
     } 
     else if (command === 'userinfo') {

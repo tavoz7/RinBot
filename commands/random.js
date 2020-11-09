@@ -2,12 +2,6 @@ module.exports = {
     name: "random",
     description: "Generate a random number",
     execute(message, args, client) {
-        // console.log(Number.isNaN(args[0])); // false
-        // console.log(Number.isNaN(args[1])); // false 
-        // console.log(args[0] <= (Number.MAX_SAFE_INTEGER - 1)); // true
-        // console.log(args[1] <= (Number.MAX_SAFE_INTEGER - 1)); // true
-        // console.log(args[0] < args[1]); // true
-        console
         if (args.length === 0) {
             message.channel.send(Math.floor((Math.random() * (Number.MAX_SAFE_INTEGER - 1) - 1) + 1));
         }
@@ -23,7 +17,7 @@ module.exports = {
                 fields: [
                     {
                         name: "Syntax",
-                        value: "`!random <min> <max>`\nIf no arguments are supplied, a number is randomly generated up to " + Number.MAX_SAFE_INTEGER
+                        value: "`!random <min> <max>`\nIf no arguments are supplied, a number is randomly generated up to " + Number.MAX_SAFE_INTEGER - 1
                     },
                     {
                         name: "Arguments",
