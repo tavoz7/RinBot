@@ -30,11 +30,13 @@ module.exports = {
             message.channel.send({embed: reqEmbed});
             return;
         }
-        var userPerms = mentionedUser.permissions.toArray().sort(function (a, b) {
-            if (a < b) return -1;
-            else if (a > b) return 1;
-            return 0;
-        });
+        var userPerms = mentionedUser.permissions.toArray().sort((a, b) => {
+                if (a < b)
+                    return -1;
+                else if (a > b)
+                    return 1;
+                return 0;
+            });
         var unnededPerms = ['ADD_REACTIONS','ATTACH_FILES','CHANGE_NICKNAME','CONNECT','CREATE_INSTANT_INVITE','DEAFEN_MEMBERS','EMBED_LINKS','MANAGE_EMOJIS','MOVE_MEMBERS','MUTE_MEMBERS','PRIORITY_SPEAKER','READ_MESSAGE_HISTORY','SEND_MESSAGES','SEND_TTS_MESSAGES','SPEAK','STREAM','USE_EXTERNAL_EMOJIS','USE_VAD','VIEW_AUDIT_LOG','VIEW_CHANNEL','VIEW_GUILD_INSIGHTS']
         var userPerms = userPerms.filter(f => !unnededPerms.includes(f));
         if (userPerms.length === 0) {
@@ -60,12 +62,21 @@ module.exports = {
         }
         if (mentionedUser.id === message.guild.ownerID) {
             var serverAcknowledgements = "Server Owner";
+            if (mentionedUser.id === '245047280908894209') {
+                var serverAcknowledgements = `Server Owner, ${client.user.username} Developer`
+            }
         } 
         else if (mentionedUser.hasPermission("ADMINISTRATOR")) {
             var serverAcknowledgements = "Administrator";
+            if (mentionedUser.id === '245047280908894209') {
+                var serverAcknowledgements = `Server Owner, ${client.user.username} Developer`
+            }
         } 
         else {
             var serverAcknowledgements = "Member";
+            if (mentionedUser.id === '245047280908894209') {
+                var serverAcknowledgements = `Server Owner, ${client.user.username} Developer`
+            }
         }
         if (mentionedUser.nickname === null) {
             var nickname = "None";
@@ -88,9 +99,9 @@ module.exports = {
         var reqEmbed = {
             author: {
                 name: `${mentionedUser.user.tag}`,
-                icon_url: mentionedUser.user.avatarURL({format: 'webp', dynamic: false, size: 1024}),
+                icon_url: mentionedUser.user.avatarURL({format: 'webp', dynamic: false, size: 256}),
             },
-            thumbnail: {url: mentionedUser.user.avatarURL({format: 'webp', dynamic: true, size: 1024})},
+            thumbnail: {url: mentionedUser.user.avatarURL({format: 'webp', dynamic: true, size: 512})},
             title: "**User Information**",
             color: 0x24ACF2,
             fields: [
