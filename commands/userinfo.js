@@ -69,13 +69,13 @@ module.exports = {
         else if (mentionedUser.hasPermission("ADMINISTRATOR")) {
             var serverAcknowledgements = "Administrator";
             if (mentionedUser.id === '245047280908894209') {
-                serverAcknowledgements = `Server Owner, ${client.user.username} Developer`
+                serverAcknowledgements = `Administrator, ${client.user.username} Developer`
             }
         } 
         else {
             var serverAcknowledgements = "Member";
             if (mentionedUser.id === '245047280908894209') {
-                serverAcknowledgements = `Server Owner, ${client.user.username} Developer`
+                serverAcknowledgements = `Member, ${client.user.username} Developer`
             }
         }
         if (mentionedUser.nickname === null) {
