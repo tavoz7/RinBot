@@ -4,8 +4,8 @@ client.commands = new Discord.Collection();
 const fs = require('fs');
 
 const { prefix, token, lastChannelID, updateInProgress, lastClientMessageID } = require('./config.json');
-var version = "0.7.1.2 - Pre-Release";
-var versionDate = "9 November 2020";
+var version = "0.7.1.3 - Pre-Release";
+var versionDate = "11 November 2020";
 const configFile = './config.json';
 const file = require(configFile);
 
