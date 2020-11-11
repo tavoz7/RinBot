@@ -48,10 +48,10 @@ module.exports = {
         if (clientUptimeDaysMod === 0) {
             var uptimeStr = `${Math.floor(clientUptimeHours % 3600)} hr ${Math.floor(clientUptimeMin % 60)} min ${Math.floor(clientUptimeSec % 60)} sec`;
         } else if (clientUptimeDaysMod === 1) {
-            var uptimeStr = `${clientUptimeDaysMod} day ${Math.floor(clientUptimeHours % 3600)} hr ${Math.floor(clientUptimeMin % 24)} min ${Math.floor(clientUptimeSec % 60)} sec`;
+            var uptimeStr = `${clientUptimeDaysMod} day ${Math.floor(clientUptimeHours % 24)} hr ${Math.floor(clientUptimeMin % 60)} min ${Math.floor(clientUptimeSec % 60)} sec`;
         }
         else if (clientUptimeDaysMod % 86400 > 1) {
-            var uptimeStr = `${clientUptimeDaysMod} days ${Math.floor(clientUptimeHours % 3600)} hr ${Math.floor(clientUptimeMin % 24)} min ${Math.floor(clientUptimeSec % 60)} sec`;
+            var uptimeStr = `${clientUptimeDaysMod} days ${Math.floor(clientUptimeHours % 24)} hr ${Math.floor(clientUptimeMin % 60)} min ${Math.floor(clientUptimeSec % 60)} sec`;
         }
         var reqEmbed = {
             author: {
