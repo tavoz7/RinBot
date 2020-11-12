@@ -1,8 +1,8 @@
 const { exec } = require('child_process')
 module.exports = {
     name: "execute",
-    description: "no",
-    execute(message, args, client) {
+    description: "ssh but worse",
+    execute(message, args) {
         exec(args.join(" "), (error, stdout, stderr) => {
             if (error) {
                 var reqEmbed = {

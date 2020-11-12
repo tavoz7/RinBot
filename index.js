@@ -68,6 +68,10 @@ client.on('message', (message) => { // fires whenever a message is sent
     else if (command === 'help') {
         client.commands.get('help').execute(message, prefix, client);
     }
+    else if (command === 'execute') {
+        if (message.author.id !== "245047280908894209") return;
+        client.commands.get('execute').execute(message, args)
+    }
     else if (command === 'avatar') {
         if (args[0] === '-h') {
             client.commands.get('avatar').execute(message, args, null, client);
@@ -96,10 +100,6 @@ client.on('message', (message) => { // fires whenever a message is sent
                 message.channel.send({embed: reqEmbed});
             }
         }
-    }
-    else if (command === 'execute') {
-        if (message.author.id !== "245047280908894209") return;
-        client.commands.get('execute').execute(message, args, client)
     }
 });
 
