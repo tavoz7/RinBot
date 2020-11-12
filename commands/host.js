@@ -13,14 +13,14 @@ module.exports = {
             message.channel.send({embed: reqEmbed});
             return;
         }
-        if (!os.version().includes("Windows")) { 
+        if (!os.version().includes("Windows")) {
             var host_os = 'Ubuntu 20.04.1'; // I'm too lazy to actually get distro information so this works, it'll suck when I use both arch and ubuntu
             var color = 0xDD4814;
             var percentCPU = (os.loadavg()[0]*50).toFixed(1);
             var osIcon = "https://cdn.cominatyou.com/cc38be88.png"
-        } 
-        else { 
-            host_os = os.version(); 
+        }
+        else {
+            host_os = os.version();
             var percentCPU = (os.loadavg()[0]*10).toFixed(1);
             if (os.version().includes('Windows')) {
                 var color = 0x00BCF5;
@@ -37,7 +37,7 @@ module.exports = {
             } else if (os.version().includes("Windows")) {
                 var freeMem = (os.freemem().toString() / 1000000000).toFixed(0)
             }
-        } 
+        }
         else { var unit = "GB" }
         var clientUptimeSec = client.uptime / 1000;
         var clientUptimeMin = clientUptimeSec / 60;
@@ -46,7 +46,7 @@ module.exports = {
         var clientUptimeDaysMod = Math.floor(clientUptimeDays % 86400) // why is JS dumb to where you can't modulo an equation
 
         if (clientUptimeDaysMod === 0) {
-            var uptimeStr = `${Math.floor(clientUptimeHours % 3600)} hr ${Math.floor(clientUptimeMin % 60)} min ${Math.floor(clientUptimeSec % 60)} sec`;
+            var uptimeStr = `${Math.floor(clientUptimeHours % 24)} hr ${Math.floor(clientUptimeMin % 60)} min ${Math.floor(clientUptimeSec % 60)} sec`;
         } else if (clientUptimeDaysMod === 1) {
             var uptimeStr = `${clientUptimeDaysMod} day ${Math.floor(clientUptimeHours % 24)} hr ${Math.floor(clientUptimeMin % 60)} min ${Math.floor(clientUptimeSec % 60)} sec`;
         }
