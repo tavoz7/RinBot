@@ -11,7 +11,7 @@ module.exports = {
                     description: "```" + error + "```",
                     timestamp: new Date(),
                     footer: {
-                        text: "Origin: Node/DOS Command Line Error"
+                        text: "Origin: Node/Command Line Error"
                     }
                 }
                 message.channel.send({embed: reqEmbed});
