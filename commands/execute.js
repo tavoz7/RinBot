@@ -40,7 +40,7 @@ module.exports = {
                         text: "Origin: stdout"
                     }
                 }
-                message.channel.send({embed: reqEmbed})
+                message.channel.send({embed: reqEmbed});
             }
         })
     }
