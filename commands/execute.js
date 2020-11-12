@@ -21,7 +21,7 @@ module.exports = {
                 var reqEmbed = {
                     color: 0xD72D42,
                     title: "Error",
-                    description: "```" + error + "```",
+                    description: "```" + stderr + "```",
                     timestamp: new Date(),
                     footer: {
                         text: "Origin: stderr"
