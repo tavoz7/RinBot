@@ -1,4 +1,4 @@
-const { exec } = require('child_process')
+const { exec } = require('child_process');
 module.exports = {
     name: "execute",
     description: "ssh but worse",
