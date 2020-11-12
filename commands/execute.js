@@ -36,6 +36,9 @@ module.exports = {
                     title: "Output",
                     description: "```" + stdout + "```",
                     timestamp: new Date(),
+                    footer: {
+                        text: "Origin: stdout"
+                    }
                 }
                 message.channel.send({embed: reqEmbed})
             }
