@@ -31,7 +31,6 @@ module.exports = {
                 console.error(stderr);
             }
             else if (stdout) {
-                console.log(stdout)
                 var reqEmbed = {
                     color: 0x77B255,
                     title: "Output",
