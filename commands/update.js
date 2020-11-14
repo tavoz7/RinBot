@@ -13,27 +13,17 @@ module.exports = {
             return;
         }
         exec("git pull 2>&1", (error, stdout) => {
-            if (stdout.includes("file changed") === false || stdout.includes("files changed") === false /*|| stderr.includes("origin/master" === false) */) {
+            if (!stdout.includes("file changed") || !stdout.includes("files changed") /*|| stderr.includes("origin/master" === false) */) {
                 if (error) {
                     var reqEmbed = {
                         title: "Update",
                         color: 0xD72D42,
-                        description: "`" + error + "`",
+                        description: "```" + error + "```",
                         timestamp: new Date()
                     }
                     message.channel.send({embed: reqEmbed});
                     return;
                 }
-                /* if (stderr) {
-                    var reqEmbed = {
-                        title: "Update",
-                        color: 0xD72D42,
-                        description: "`" + stderr + "`",
-                        timestamp: new Date()
-                    }
-                    message.channel.send({embed: reqEmbed})
-                    return;
-                }*/
             }
             if (stdout.includes("Already up to date.")) {
                 var reqEmbed = {
@@ -44,7 +34,7 @@ module.exports = {
                 }
                 message.channel.send({embed: reqEmbed});
                 return;
-            } 
+            }
             else {
                 var reqEmbed = {
                     title: "Update in Progress",
