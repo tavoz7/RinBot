@@ -72,6 +72,9 @@ client.on('message', (message) => { // fires whenever a message is sent
         if (message.author.id !== "245047280908894209") return;
         client.commands.get('execute').execute(message, args)
     }
+    else if (command === 'shibe') {
+        client.commands.get('shibe').execute(message)
+    }
     else if (command === 'avatar') {
         if (args[0] === '-h') {
             client.commands.get('avatar').execute(message, args, null, client);
