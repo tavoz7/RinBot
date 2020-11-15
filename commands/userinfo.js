@@ -41,7 +41,7 @@ module.exports = {
         var userPerms = userPerms.filter(f => !unnededPerms.includes(f));
         if (userPerms.length === 0) {
             userPerms = "None"
-        } 
+        }
         else {
             userPerms = userPerms.join(", ").replace(/_/g, ' ').toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ').replace("Add Reactions, ", "").replace("Attach Files,", "").replace();
         }
@@ -65,13 +65,13 @@ module.exports = {
             if (mentionedUser.id === '245047280908894209') {
                 serverAcknowledgements = `Server Owner, ${client.user.username} Developer`
             }
-        } 
+        }
         else if (mentionedUser.hasPermission("ADMINISTRATOR")) {
             var serverAcknowledgements = "Administrator";
             if (mentionedUser.id === '245047280908894209') {
                 serverAcknowledgements = `Administrator, ${client.user.username} Developer`
             }
-        } 
+        }
         else {
             var serverAcknowledgements = "Member";
             if (mentionedUser.id === '245047280908894209') {
@@ -80,7 +80,7 @@ module.exports = {
         }
         if (mentionedUser.nickname === null) {
             var nickname = "None";
-        } 
+        }
         else {
             var nickname = mentionedUser.nickname;
         }
@@ -122,7 +122,7 @@ module.exports = {
                     name: "Account Creation Date",
                     value: `${moment(mentionedUser.user.createdAt).format("D MMM YYYY [at] h:mm A")} ${createdAtTimeZone}`,
                     inline: true
-                    
+
                 },
                 {
                     name: "Server Boost Date",
@@ -148,7 +148,7 @@ module.exports = {
             footer: {
                 text: `User ID: ${mentionedUser.user.id}`,
             }
-    
+
         }
             message.channel.send({embed: reqEmbed});
     }
