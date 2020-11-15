@@ -17,7 +17,6 @@ module.exports = {
                 image: {
                     url: d.toString().replace(/[\[\]"]+/g,'')
                 },
-                timestamp: new Date(),
                 footer: {
                     text: "Images from shibe.online"
                 }
