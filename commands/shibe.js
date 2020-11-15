@@ -13,6 +13,7 @@ module.exports = {
         res.on('data', d => {
             var reqEmbed = {
                 title: "Shibe",
+                color: 0x24ACF2,
                 image: {
                     url: d.toString().replace(/[\[\]"]+/g,'')
                 },
