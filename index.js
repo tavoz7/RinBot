@@ -173,7 +173,7 @@ client.once("ready", () => { // bot custom status
             timestamp: new Date()
         }
 
-        client.channels.fetch(lastChannelID).then(channel => channel.message.fetch(lastClientMessageID).then(message => message.delete()));
+        client.channels.fetch(lastChannelID).then(channel => channel.messages.fetch(lastClientMessageID).then(message => message.delete()));
         client.channels.fetch(lastChannelID).then(channel => channel.send({embed: reqEmbed}));
 
         // client.channels.fetch(lastChannelID).then(channel => channel.messages.fetch(lastClientMessageID).then(message => message.edit({embed: reqEmbed})));
