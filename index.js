@@ -1,11 +1,11 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-client.commands = new Discord.Collection();
+const commands = new Discord.Collection();
 const fs = require('fs');
 
 const { prefix, token, lastChannelID, updateInProgress, lastClientMessageID } = require('./config.json');
-var version = "0.10 - Pre-Release";
-var versionDate = "15 November 2020";
+var version = "0.10.1 - Pre-Release";
+var versionDate = "24 November 2020";
 const configFile = './config.json';
 const file = require(configFile);
 
@@ -22,7 +22,7 @@ const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('
 
 for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
-    client.commands.set(command.name, command);
+    commands.set(command.name, command);
 }
 
 client.on('message', (message) => { // fires whenever a message is sent
@@ -40,23 +40,23 @@ client.on('message', (message) => { // fires whenever a message is sent
 
     if (command === 'rule') {
         if (!approvedUser) return;
-        client.commands.get('rule').execute(message, args, client);
+        commands.get('rule').execute(message, args, client);
     }
     else if (command === 'userinfo') {
         if (!approvedUser) return;
         var mentionedUser = message.guild.member(message.mentions.users.first());
         if (args.length === 0 &&  message.mentions.users.first() === undefined) { // stuff for determining who's info to pull up
             mentionedUser = message.member;
-            client.commands.get('userinfo').execute(message, args, mentionedUser, client);
+            commands.get('userinfo').execute(message, args, mentionedUser, client);
         }
         else if (args[0] === "-h") {
-            client.commands.get('userinfo').execute(message, args, null, client)
+            commands.get('userinfo').execute(message, args, null, client)
         }
         else if (args.length === 1 && message.mentions.users.first() === undefined) {
-            mentionedUser = message.guild.members.fetch(args[0]).then(mentionedUser => client.commands.get('userinfo').execute(message, args, mentionedUser))
+            mentionedUser = message.guild.members.fetch(args[0]).then(mentionedUser => commands.get('userinfo').execute(message, args, mentionedUser))
         }
         else {
-            client.commands.get('userinfo').execute(message, args, mentionedUser);
+            commands.get('userinfo').execute(message, args, mentionedUser);
         }
     }
     else if (command === 'serverinfo') { // open to all users
@@ -68,7 +68,7 @@ client.on('message', (message) => { // fires whenever a message is sent
             serverInfoRateLimit.add(message.author.id);
             setTimeout(() => { serverInfoRateLimit.delete(message.author.id); }, 5000);
         }
-        client.commands.get('serverinfo').execute(message, args, client);
+        commands.get('serverinfo').execute(message, args, client);
     }
     else if (command === 'random') { // open to all users
         if (!approvedUser) {
@@ -79,7 +79,7 @@ client.on('message', (message) => { // fires whenever a message is sent
             randomRateLimit.add(message.author.id);
             setTimeout(() => { randomRateLimit.delete(message.author.id); }, 5000);
         }
-        client.commands.get('random').execute(message, args, client);
+        commands.get('random').execute(message, args, client);
     }
     else if (command === 'about') { // open to all users
         if (!approvedUser) {
@@ -90,13 +90,13 @@ client.on('message', (message) => { // fires whenever a message is sent
             aboutRateLimit.add(message.author.id);
             setTimeout(() => { aboutRateLimit.delete(message.author.id); }, 5000);
         }
-        client.commands.get('about').execute(message, client, version, versionDate);
+        commands.get('about').execute(message, client, version, versionDate);
     }
     else if (command === 'host') { // me only
-        client.commands.get('host').execute(message, client);
+        commands.get('host').execute(message, client);
     }
     else if (command === 'update') { // me only
-        client.commands.get('update').execute(message, client, configFile, file, version);
+        commands.get('update').execute(message, client, configFile, file, version);
     }
     else if (command === 'help') {
         if (!approvedUser) {
@@ -107,11 +107,11 @@ client.on('message', (message) => { // fires whenever a message is sent
             helpRateLimit.add(message.author.id);
             setTimeout(() => { helpRateLimit.delete(message.author.id); }, 5000);
         }
-        client.commands.get('help').execute(message, prefix, client);
+        commands.get('help').execute(message, prefix, client);
     }
     else if (command === 'execute') {
         if (message.author.id !== "245047280908894209") return;
-        client.commands.get('execute').execute(message, args)
+        commands.get('execute').execute(message, args)
     }
     else if (command === 'shibe') {
         if (shibeRateLimit.has(message.author.id)) {
@@ -121,7 +121,7 @@ client.on('message', (message) => { // fires whenever a message is sent
         shibeRateLimit.add(message.author.id);
         setTimeout(() => { shibeRateLimit.delete(message.author.id); }, 10000);
 
-        client.commands.get('shibe').execute(message);
+        commands.get('shibe').execute(message);
     }
     else if (command === 'avatar') { // open to all users
         if (!approvedUser) {
@@ -133,23 +133,23 @@ client.on('message', (message) => { // fires whenever a message is sent
             setTimeout(() => { avatarRateLimit.delete(message.author.id); }, 5000);
         }
         if (args[0] === '-h') {
-            client.commands.get('avatar').execute(message, args, null, client);
+            commands.get('avatar').execute(message, args, null, client);
         }
         else {
             var mentionedUser = message.mentions.users.first();
             if (args[0] === 'webp' || args[0] === 'png') {
                 mentionedUser = message.author;
-                client.commands.get('avatar').execute(message, args, mentionedUser);
+                commands.get('avatar').execute(message, args, mentionedUser);
             }
             else if (mentionedUser !== undefined) {
-                client.commands.get('avatar').execute(message, args, mentionedUser);
+                commands.get('avatar').execute(message, args, mentionedUser);
             }
             else if (mentionedUser === undefined && args.length === 0) {
                 mentionedUser = message.author;
-                client.commands.get('avatar').execute(message, args, mentionedUser);
+                commands.get('avatar').execute(message, args, mentionedUser);
                 }
             else if (mentionedUser === undefined && args.length > 0 && args.length < 3) {
-                mentionedUser = message.guild.members.fetch(args[0]).then(mentionedUser => client.commands.get('avatar').execute(message, args, mentionedUser.user ));
+                mentionedUser = message.guild.members.fetch(args[0]).then(mentionedUser => commands.get('avatar').execute(message, args, mentionedUser.user ));
             }
             else if (args.length >= 3) {
                 var reqEmbed = {
@@ -173,7 +173,7 @@ client.once("ready", () => { // bot custom status
             timestamp: new Date()
         }
 
-        client.channels.fetch(lastChannelID).then(channel => channel.messages.fetch(lastClientMessageID).then(message => message.delete()));
+        client.channels.fetch(lastChannelID).then(channel => channel.fetch(lastClientMessageID).then(message => message.delete()));
         client.channels.fetch(lastChannelID).then(channel => channel.send({embed: reqEmbed}));
 
         // client.channels.fetch(lastChannelID).then(channel => channel.messages.fetch(lastClientMessageID).then(message => message.edit({embed: reqEmbed})));

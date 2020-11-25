@@ -8,7 +8,7 @@ module.exports = {
                 icon_url: client.user.avatarURL(),
             },
             title: "**About**",
-            description: `${client.user.username} is a bot made with warmth in Kansas City.`,
+            description: `${client.user.username} is a bot made in Kansas City.`,
             thumbnail: {url: client.user.avatarURL()},
             color: 0x24ACF2,
             fields: [
