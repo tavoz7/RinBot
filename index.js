@@ -4,7 +4,7 @@ const commands = new Discord.Collection();
 const fs = require('fs');
 
 const { prefix, token, lastChannelID, updateInProgress, lastClientMessageID } = require('./config.json');
-var version = "0.10.1 - Pre-Release";
+var version = "0.10.2 - Pre-Release";
 var versionDate = "24 November 2020";
 const configFile = './config.json';
 const file = require(configFile);
@@ -173,7 +173,7 @@ client.once("ready", () => { // bot custom status
             timestamp: new Date()
         }
 
-        client.channels.fetch(lastChannelID).then(channel => channel.fetch(lastClientMessageID).then(message => message.delete()));
+        client.channels.fetch(lastChannelID).then(channel => channel.message.fetch(lastClientMessageID).then(message => message.delete()));
         client.channels.fetch(lastChannelID).then(channel => channel.send({embed: reqEmbed}));
 
         // client.channels.fetch(lastChannelID).then(channel => channel.messages.fetch(lastClientMessageID).then(message => message.edit({embed: reqEmbed})));
