@@ -84,7 +84,7 @@ module.exports = {
         else {
             var nickname = mentionedUser.nickname;
         }
-        if (mentionedUser.premiumSinceTimestamp === 0) {
+        if (mentionedUser.premiumSinceTimestamp === null) {
             var boostStatus = "Not Boosting";
         }
         else {
