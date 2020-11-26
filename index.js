@@ -4,10 +4,11 @@ const commands = new Discord.Collection();
 const fs = require('fs');
 
 const { prefix, token, lastChannelID, updateInProgress, lastClientMessageID } = require('./config.json');
-var version = "0.11 - Pre-Release";
+var version = "0.11.1 - Pre-Release";
 var versionDate = "26 November 2020";
 const configFile = './config.json';
 const file = require(configFile);
+const modLogChannel = "726176580405035169";
 
 const shibeRateLimit = new Set();
 const randomRateLimit = new Set()
@@ -165,7 +166,7 @@ client.on('message', (message) => { // fires whenever a message is sent
                 return;
             }
             else {
-                message.guild.members.fetch(args[0]).then(target => commands.get('kick').execute(message, args, target)).catch(() => { message.channel.send(":x: That user doesn't seem to exist!") });
+                message.guild.members.fetch(args[0]).then(target => commands.get('kick').execute(message, args, target, modLogChannel)).catch(() => { message.channel.send(":x: That user doesn't seem to exist!") });
             }
         }
         else if (message.mentions.users.first() !== undefined) {

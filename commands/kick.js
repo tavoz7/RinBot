@@ -1,7 +1,7 @@
 const uuid = require('uuid');
 module.exports = {
     name: "kick",
-    execute(message, args, target) {
+    execute(message, args, target, modLogChannel) {
         if (args[1] === undefined) {
             var reason = "None provided";
         }
@@ -44,7 +44,7 @@ module.exports = {
                 },
                 timestamp: new Date()
             }
-            message.guild.channels.resolve('781602141584097351').send({embed: logEmbed});
+            message.guild.channels.resolve(modLogChannel).send({embed: logEmbed});
         }).catch(() => {
             message.channel.send({embed: {
                 color: 0xD72D42,

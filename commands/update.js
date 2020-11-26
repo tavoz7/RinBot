@@ -12,7 +12,7 @@ module.exports = {
             message.channel.send({embed: reqEmbed});
             return;
         }
-        exec("git pull 2>&1", (error, stdout) => {
+        exec("git pull 2>&1 && npm i", (error, stdout) => {
             if (!stdout.includes("file changed") || !stdout.includes("files changed") /*|| stderr.includes("origin/master" === false) */) {
                 if (error) {
                     var reqEmbed = {
