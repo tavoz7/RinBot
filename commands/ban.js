@@ -43,7 +43,7 @@ module.exports = {
                 },
                 timestamp: new Date()
             }
-            message.guild.channels.resolve('781602141584097351').send({embed: logEmbed});
+            message.guild.channels.resolve(modLogChannel).send({embed: logEmbed});
         }).catch(() => {
             message.channel.send({embed: {
                 color: 0xD72D42,
