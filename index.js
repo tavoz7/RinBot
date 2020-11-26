@@ -4,8 +4,8 @@ const commands = new Discord.Collection();
 const fs = require('fs');
 
 const { prefix, token, lastChannelID, updateInProgress, lastClientMessageID } = require('./config.json');
-var version = "0.10.3 - Pre-Release";
-var versionDate = "25 November 2020";
+var version = "0.11 - Pre-Release";
+var versionDate = "26 November 2020";
 const configFile = './config.json';
 const file = require(configFile);
 
@@ -53,10 +53,7 @@ client.on('message', (message) => { // fires whenever a message is sent
             commands.get('userinfo').execute(message, args, null, client)
         }
         else if (args.length === 1 && message.mentions.users.first() === undefined) {
-            mentionedUser = message.guild.members.fetch(args[0]).then(mentionedUser => commands.get('userinfo').execute(message, args, mentionedUser))
-        }
-        else {
-            commands.get('userinfo').execute(message, args, mentionedUser);
+            message.guild.members.fetch(args[0]).then(mentionedUser => commands.get('userinfo').execute(message, args, mentionedUser, client)).catch(() => { message.channel.send(":x: That user doesn't seem to exist!") });
         }
     }
     else if (command === 'serverinfo') { // open to all users
@@ -158,6 +155,22 @@ client.on('message', (message) => { // fires whenever a message is sent
                 }
                 message.channel.send({embed: reqEmbed});
             }
+        }
+    }
+    else if (command === "kick") {
+        if (!approvedUser) return;
+        if (message.mentions.users.first() === undefined) {
+            if (args.length === 0) {
+                message.channel.send(":no_entry: Please specify a user.");
+                return;
+            }
+            else {
+                message.guild.members.fetch(args[0]).then(target => commands.get('kick').execute(message, args, target)).catch(() => { message.channel.send(":x: That user doesn't seem to exist!") });
+            }
+        }
+        else if (message.mentions.users.first() !== undefined) {
+            var target = message.guild.member(message.mentions.users.first());
+            commands.get('kick').execute(message, args, client, target);
         }
     }
 });

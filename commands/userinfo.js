@@ -84,7 +84,7 @@ module.exports = {
         else {
             var nickname = mentionedUser.nickname;
         }
-        if (mentionedUser.premiumSinceTimestamp === null) {
+        if (mentionedUser.premiumSinceTimestamp === null || mentionedUser.premiumSinceTimestamp === 0) {
             var boostStatus = "Not Boosting";
         }
         else {
@@ -94,6 +94,11 @@ module.exports = {
             else if (moment(mentionedUser.premiumSinceTimestamp).format("Z").includes("06:00")) {
                 var boostStatus = moment(mentionedUser.premiumSinceTimestamp).format("D MMM YYYY [at] h:mm A") + " CST";
             }
+        }
+        if (mentionedUser.roles.cache.map(role => role.id).length - 1 === 0) {
+            var memberRoles = "None";
+        } else {
+            var memberRoles = mentionedUser.roles.cache.map(roles => roles).sort((a, b) => b.rawPosition - a.rawPosition).join(' ').replace("@everyone", "");
         }
 
         var reqEmbed = {
@@ -134,7 +139,7 @@ module.exports = {
                 },
                 {
                     name: `Roles (${mentionedUser.roles.cache.map(role => role.id).length - 1})`,
-                    value: mentionedUser.roles.cache.map(roles => roles).sort((a, b) => b.rawPosition - a.rawPosition).join(' ').replace("@everyone", "")
+                    value: memberRoles
                 },
                 {
                     name: "Significant Permissions",
