@@ -4,7 +4,7 @@ const commands = new Discord.Collection();
 const fs = require('fs');
 
 const { prefix, token, lastChannelID, updateInProgress, lastClientMessageID } = require('./config.json');
-var version = "0.11.1 - Pre-Release";
+var version = "0.11.2 - Pre-Release";
 var versionDate = "26 November 2020";
 const configFile = './config.json';
 const file = require(configFile);
@@ -171,7 +171,23 @@ client.on('message', (message) => { // fires whenever a message is sent
         }
         else if (message.mentions.users.first() !== undefined) {
             var target = message.guild.member(message.mentions.users.first());
-            commands.get('kick').execute(message, args, client, target);
+            commands.get('kick').execute(message, args, client, target, modLogChannel);
+        }
+    }
+    else if (command === "ban") {
+        if (!approvedUser) return;
+        if (message.mentions.users.first() === undefined) {
+            if (args.length === 0) {
+                message.channel.send(":no_entry: Please specify a user.");
+                return;
+            }
+            else {
+                message.guild.members.fetch(args[0]).then(target => commands.get('ban').execute(message, args, target, modLogChannel)).catch(() => { message.channel.send(":x: That user doesn't seem to exist!") });
+            }
+        }
+        else if (message.mentions.users.first() !== undefined) {
+            var target = message.guild.member(message.mentions.users.first());
+            commands.get('ban').execute(message, args, client, target, modLogChannel);
         }
     }
 });

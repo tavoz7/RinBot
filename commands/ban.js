@@ -1,6 +1,6 @@
 const uuid = require('uuid');
 module.exports = {
-    name: "kick",
+    name: "ban",
     execute(message, args, target, modLogChannel) {
         if (args[1] === undefined) {
             var reason = "None provided";
@@ -8,9 +8,9 @@ module.exports = {
         else {
             var reason = args.slice(1).join(" ");
         }
-        target.kick([reason]).then(() => {
+        target.ban({reason: reason}).then(() => {
             var successEmbed = {
-                description: `${target.user.tag} was kicked.\nReason: ${reason}`,
+                description: `${target.user.tag} was banned.\nReason: ${reason}`,
                 color: 0x24ACF2
             }
             message.channel.send({embed: successEmbed});
@@ -19,7 +19,7 @@ module.exports = {
                     name: target.user.username,
                     icon_url: target.user.avatarURL()
                 },
-                title: "Member Kicked",
+                title: "Member Banned",
                 color: 0x24ACF2,
                 fields: [
                     {
@@ -43,11 +43,11 @@ module.exports = {
                 },
                 timestamp: new Date()
             }
-            message.guild.channels.resolve(modLogChannel).send({embed: logEmbed});
+            message.guild.channels.resolve('781602141584097351').send({embed: logEmbed});
         }).catch(() => {
             message.channel.send({embed: {
                 color: 0xD72D42,
-                description: ":x: Error when trying to kick. Please make sure the bot has the proper permissions."
+                description: ":x: Error when trying to ban member. Please make sure the bot has the proper permissions."
             }})
         })
     }
