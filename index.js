@@ -4,7 +4,7 @@ const commands = new Discord.Collection();
 const fs = require('fs');
 
 const { prefix, token, lastChannelID, updateInProgress, lastClientMessageID } = require('./config.json');
-var version = "0.11.2 - Pre-Release";
+var version = "0.11.3 - Pre-Release";
 var versionDate = "26 November 2020";
 const configFile = './config.json';
 const file = require(configFile);
@@ -27,7 +27,7 @@ for (const file of commandFiles) {
 }
 
 client.on('message', (message) => { // fires whenever a message is sent
-    if (message.member.roles.cache.has('685237145052512321') /* head mods */ || message.member.roles.cache.has('769013132541558795') /* mods */ || message.member.roles.cache.has('582984530848251939') /* sea of voices */ || message.member.roles.cache.has('766858374377504818') /* bot testing lounge - new role */ || message.member.roles.cache.has('713050424067883089') /* the phoenix den - RTX ON */)
+    if (message.member.roles.cache.has('685237145052512321') /* head mods */ || message.member.roles.cache.has('769013132541558795') /* mods */ || message.author.id === "245047280908894209")
     {
         var approvedUser = true;
     }
@@ -171,7 +171,7 @@ client.on('message', (message) => { // fires whenever a message is sent
         }
         else if (message.mentions.users.first() !== undefined) {
             var target = message.guild.member(message.mentions.users.first());
-            commands.get('kick').execute(message, args, client, target, modLogChannel);
+            commands.get('kick').execute(message, args, target, modLogChannel);
         }
     }
     else if (command === "ban") {
@@ -187,7 +187,7 @@ client.on('message', (message) => { // fires whenever a message is sent
         }
         else if (message.mentions.users.first() !== undefined) {
             var target = message.guild.member(message.mentions.users.first());
-            commands.get('ban').execute(message, args, client, target, modLogChannel);
+            commands.get('ban').execute(message, args, target, modLogChannel);
         }
     }
 });
