@@ -74,9 +74,11 @@ module.exports = {
                 if (userJSON.success === false) {
                     if (userJSON.errorMessage === 'User not found') {
                         message.channel.send(":x: That user does not exist!");
+                        return;
                     }
                     else {
                         message.channel.send("There was an error.");
+                        return;
                     }
                 } else {
                     getProfileInfo(message, userJSON);
