@@ -7,6 +7,36 @@ module.exports = {
     name: "getprofile",
     description: "",
     execute(message, args, client) {
+        if (args[0] === '-h') {
+            var reqEmbed = {
+                author: {
+                    name: client.user.username,
+                    icon_url: client.user.avatarURL(),
+                },
+                title: "**Getprofile**",
+                color: 0x24ACF2,
+                description: "Retrieve a ROBLOX profile",
+                fields: [
+                    {
+                        name: "Syntax",
+                        value: "`!getprofile <username>`"
+                    },
+                    {
+                        name: "Arguments",
+                        value: "`username`"
+                    },
+                    {
+                        name: "Examples",
+                        value: "!getprofile Builderman"
+                    }
+                ]
+            }
+            message.channel.send({embed: reqEmbed});
+            return;
+        }
+        if (args[0] === undefined) {
+            message.channel.send(":x: Please specify a user.");
+        }
         function getProfileInfo(message, userJSON) {
             const requestOptions = {
                 hostname: 'users.roblox.com',
