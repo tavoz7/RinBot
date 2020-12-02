@@ -49,6 +49,7 @@ module.exports = {
                                 inline: true
                             }
                         ],
+                        color: 0xDF2623,
                         description: profileJSON.description
                     }
                     message.channel.send({embed: reqEmbed});
