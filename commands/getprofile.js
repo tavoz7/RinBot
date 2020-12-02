@@ -36,6 +36,7 @@ module.exports = {
         }
         if (args[0] === undefined) {
             message.channel.send(":x: Please specify a user.");
+            return;
         }
         function getProfileInfo(message, userJSON) {
             const requestOptions = {
