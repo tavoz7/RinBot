@@ -38,21 +38,22 @@ module.exports = {
             message.channel.send(":x: Please specify a user.");
             return;
         }
-        function getProfileInfo(message, userJSON) {
+        function assembleEmbed(message, userJSON, profileJSON) {
             const requestOptions = {
-                hostname: 'users.roblox.com',
+                hostname: 'api.roblox.com',
                 port: 443,
-                path: `/v1/users/${userJSON.Id}`,
+                path: `/users/${userJSON.Id}/onlinestatus/`,
                 method: 'GET'
             }
             const req = https.request(requestOptions, res => {
                 res.on('data', d => {
-                    const profileJSON = JSON.parse(d);
-                    if (userJSON.IsOnline === false) {
-                        var status = "Offline";
+                    const statusJSON = JSON.parse(d);
+                    console.log(statusJSON);
+                    if (statusJSON.LastLocation === "Playing") {
+                        var status = "In-game";
                     }
                     else {
-                        var status = "Online";
+                        var status = statusJSON.LastLocation;
                     }
                     var reqEmbed = {
                         author: {
@@ -84,6 +85,25 @@ module.exports = {
                         description: profileJSON.description
                     }
                     message.channel.send({embed: reqEmbed});
+                })
+            });
+            req.on('error', error => {
+                console.log(error);
+                message.channel.send(":x: There was an error contacting the HTTP endpoint. Please try again later.");
+            });
+            req.end();
+        }
+        function getProfileInfo(message, userJSON) {
+            const requestOptions = {
+                hostname: 'users.roblox.com',
+                port: 443,
+                path: `/v1/users/${userJSON.Id}`,
+                method: 'GET'
+            }
+            const req = https.request(requestOptions, res => {
+                res.on('data', d => {
+                    const profileJSON = JSON.parse(d);
+                    assembleEmbed(message, userJSON, profileJSON)
                 });
             });
             req.on('error', error => {
