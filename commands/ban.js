@@ -48,7 +48,8 @@ module.exports = {
             message.channel.send({embed: {
                 color: 0xD72D42,
                 description: ":x: Error when trying to ban member. Please make sure the bot has the proper permissions."
-            }})
-        })
+            }
+        });
+        });
     }
 }

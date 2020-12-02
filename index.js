@@ -4,8 +4,8 @@ const commands = new Discord.Collection();
 const fs = require('fs');
 
 const { prefix, token, lastChannelID, updateInProgress, lastClientMessageID } = require('./config.json');
-var version = "0.11.3 - Pre-Release";
-var versionDate = "26 November 2020";
+var version = "0.12 - Pre-Release";
+var versionDate = "2 December 2020";
 const configFile = './config.json';
 const file = require(configFile);
 const modLogChannel = "726176580405035169";
@@ -16,6 +16,7 @@ const aboutRateLimit = new Set();
 const avatarRateLimit = new Set();
 const serverInfoRateLimit = new Set();
 const helpRateLimit = new Set();
+const robloxRateLimit = new Set();
 
 // that one color i need: 0x395F85;
 
@@ -117,7 +118,7 @@ client.on('message', (message) => { // fires whenever a message is sent
             return;
         }
         shibeRateLimit.add(message.author.id);
-        setTimeout(() => { shibeRateLimit.delete(message.author.id); }, 10000);
+        setTimeout(() => { shibeRateLimit.delete(message.author.id); }, 10000); // making it this long because i don't want to bombard the endpoint
 
         commands.get('shibe').execute(message);
     }
@@ -190,6 +191,46 @@ client.on('message', (message) => { // fires whenever a message is sent
             commands.get('ban').execute(message, args, target, modLogChannel);
         }
     }
+    // else if (command === "mute") {
+    //     if (!approvedUser) return;
+    //     if (message.mentions.users.first() === undefined) {
+    //         if (args.length === 0) {
+    //             message.channel.send(":no_entry: Please specify a user.");
+    //             return;
+    //         }
+    //         else {
+    //             message.guild.members.fetch(args[0]).then(target => commands.get('mute').execute(message, args, target, modLogChannel)).catch(() => { message.channel.send(":x: That user doesn't seem to exist!") });
+    //         }
+    //     }
+    //     else if (message.mentions.users.first() !== undefined) {
+    //         var target = message.guild.member(message.mentions.users.first());
+    //         commands.get('mute').execute(message, args, target, modLogChannel);
+    //     }
+    // }
+    else if (command === "getid") {
+        if (!approvedUser) return;
+
+        if (robloxRateLimit.has(message.author.id)) {
+            message.channel.send(":x: Please wait 5 more seconds before doing that again!");
+            return;
+        }
+        robloxRateLimit.add(message.author.id);
+        setTimeout(() => { robloxRateLimit.delete(message.author.id); }, 3000);
+
+        commands.get("getid").execute(message, args, client);
+    }
+    else if (command === "getprofile") {
+        if (!approvedUser) return;
+
+        if (robloxRateLimit.has(message.author.id)) {
+            message.channel.send(":x: Please wait 5 more seconds before doing that again!");
+            return;
+        }
+        robloxRateLimit.add(message.author.id);
+        setTimeout(() => { robloxRateLimit.delete(message.author.id); }, 3000);
+
+        commands.get("getprofile").execute(message, args, client);
+    }
 });
 
 client.once("ready", () => { // bot custom status
@@ -202,16 +243,12 @@ client.once("ready", () => { // bot custom status
             description: `:white_check_mark: Version ${version}`,
             timestamp: new Date()
         }
-
         client.channels.fetch(lastChannelID).then(channel => channel.messages.fetch(lastClientMessageID).then(message => message.delete()));
         client.channels.fetch(lastChannelID).then(channel => channel.send({embed: reqEmbed}));
-
         // client.channels.fetch(lastChannelID).then(channel => channel.messages.fetch(lastClientMessageID).then(message => message.edit({embed: reqEmbed})));
-
         file.updateInProgress = false;
         file.lastChannelID = null;
         file.lastClientMessageID = null;
-
         fs.writeFile(configFile, JSON.stringify(file, null, 2), function writeJSON(error) {
             if (error) {
                 var reqEmbed = {
