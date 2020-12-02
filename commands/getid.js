@@ -3,7 +3,34 @@ const https = require('https');
 module.exports = {
     name: "getid",
     description: "",
-    execute(message, args, client) {
+    execute(message, args) {
+        if (args[0] === '-h') {
+            var reqEmbed = {
+                author: {
+                    name: client.user.username,
+                    icon_url: client.user.avatarURL(),
+                },
+                title: "**GetID**",
+                color: 0x24ACF2,
+                description: "Retrieve a ROBLOX user's ID",
+                fields: [
+                    {
+                        name: "Syntax",
+                        value: "`!getprofile <username>`"
+                    },
+                    {
+                        name: "Arguments",
+                        value: "`username`"
+                    },
+                    {
+                        name: "Examples",
+                        value: "!getid Builderman"
+                    }
+                ]
+            }
+            message.channel.send({embed: reqEmbed});
+            return;
+        }
         const requestOptions = {
             hostname: 'api.roblox.com',
             port: 443,

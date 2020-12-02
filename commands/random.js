@@ -17,7 +17,7 @@ module.exports = {
                 fields: [
                     {
                         name: "Syntax",
-                        value: "`!random <min> <max>`\nIf no arguments are supplied, a number is randomly generated up to " + Number.MAX_SAFE_INTEGER - 1
+                        value: "`!random <min> <max>`\nIf no arguments are supplied, a number is randomly generated up to " + (Number.MAX_SAFE_INTEGER - 1)
                     },
                     {
                         name: "Arguments",

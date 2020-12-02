@@ -4,7 +4,7 @@ const commands = new Discord.Collection();
 const fs = require('fs');
 
 const { prefix, token, lastChannelID, updateInProgress, lastClientMessageID } = require('./config.json');
-var version = "0.12.3 - Pre-Release";
+var version = "0.12.4.1 - Pre-Release";
 var versionDate = "2 December 2020";
 const configFile = './config.json';
 const file = require(configFile);
@@ -217,19 +217,19 @@ client.on('message', (message) => { // fires whenever a message is sent
         robloxRateLimit.add(message.author.id);
         setTimeout(() => { robloxRateLimit.delete(message.author.id); }, 3000);
 
-        commands.get("getid").execute(message, args, client);
+        commands.get("getid").execute(message, args);
     }
     else if (command === "getprofile") {
         if (!approvedUser) return;
 
         if (robloxRateLimit.has(message.author.id)) {
-            message.channel.send(":x: Please wait 5 more seconds before doing that again!");
+            message.channel.send(":x: Please wait 3 more seconds before doing that again!");
             return;
         }
         robloxRateLimit.add(message.author.id);
         setTimeout(() => { robloxRateLimit.delete(message.author.id); }, 3000);
 
-        commands.get("getprofile").execute(message, args, client);
+        commands.get("getprofile").execute(message, args);
     }
 });
 
