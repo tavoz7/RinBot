@@ -28,6 +28,6 @@ module.exports = {
     req.on('error', error => {
         console.log(error);
     })
-    req.end()
+    req.end();
     }
 }
