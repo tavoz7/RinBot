@@ -50,7 +50,7 @@ module.exports = {
                     if (statusJSON.LastLocation === "Playing") {
                         var status = "In-game";
                     }
-                    else if (status.JSON.LastLocation === "Creating") {
+                    else if (statusJSON.LastLocation === "Creating") {
                         var status = "In Studio"
                     }
                     else {
