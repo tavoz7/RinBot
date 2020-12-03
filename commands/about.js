@@ -19,7 +19,7 @@ module.exports = {
                 },
                 {
                     name: "Creation Date",
-                    value: "Friday, 23 October 2020",
+                    value: "23 October 2020",
                     inline: true
                 },
                 {
