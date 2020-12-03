@@ -64,7 +64,7 @@ module.exports = {
                         },
                         fields: [
                             {
-                                name: "User ID:",
+                                name: "User ID",
                                 value: userJSON.Id,
                                 inline: true
                             },
