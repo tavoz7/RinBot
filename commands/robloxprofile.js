@@ -114,7 +114,7 @@ module.exports = {
         const requestOptions = {
             hostname: 'api.roblox.com',
             port: 443,
-            path: '/users/get-by-username?username=' + args[0],
+            path: `/users/get-by-username?username=${args[0]}`,
             method: 'GET'
         }
         const req = https.request(requestOptions, res => {
