@@ -4,7 +4,7 @@ const commands = new Discord.Collection();
 const fs = require('fs');
 
 const { prefix, token, lastChannelID, updateInProgress, lastClientMessageID } = require('./config.json');
-var version = "0.12.5.1 - Pre-Release";
+var version = "0.12.6 - Pre-Release";
 var versionDate = "2 December 2020";
 const configFile = './config.json';
 const file = require(configFile);
@@ -207,7 +207,7 @@ client.on('message', (message) => { // fires whenever a message is sent
     //         commands.get('mute').execute(message, args, target, modLogChannel);
     //     }
     // }
-    else if (command === "getid") {
+    else if (command === "robloxid") {
         if (!approvedUser) return;
 
         if (robloxRateLimit.has(message.author.id)) {
@@ -217,9 +217,9 @@ client.on('message', (message) => { // fires whenever a message is sent
         robloxRateLimit.add(message.author.id);
         setTimeout(() => { robloxRateLimit.delete(message.author.id); }, 3000);
 
-        commands.get("getid").execute(message, args);
+        commands.get("robloxid").execute(message, args);
     }
-    else if (command === "getprofile") {
+    else if (command === "robloxprofile") {
         if (!approvedUser) return;
 
         if (robloxRateLimit.has(message.author.id)) {
@@ -229,7 +229,7 @@ client.on('message', (message) => { // fires whenever a message is sent
         robloxRateLimit.add(message.author.id);
         setTimeout(() => { robloxRateLimit.delete(message.author.id); }, 3000);
 
-        commands.get("getprofile").execute(message, args);
+        commands.get("robloxprofile").execute(message, args);
     }
 });
 

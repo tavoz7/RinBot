@@ -1,7 +1,7 @@
 const https = require('https');
 
 module.exports = {
-    name: "getid",
+    name: "robloxid",
     description: "",
     execute(message, args) {
         if (args[0] === '-h') {
@@ -10,13 +10,13 @@ module.exports = {
                     name: client.user.username,
                     icon_url: client.user.avatarURL(),
                 },
-                title: "**GetID**",
+                title: "**RobloxID**",
                 color: 0x24ACF2,
                 description: "Retrieve a ROBLOX user's ID",
                 fields: [
                     {
                         name: "Syntax",
-                        value: "`!getprofile <username>`"
+                        value: "`!robloxid <username>`"
                     },
                     {
                         name: "Arguments",
@@ -24,7 +24,7 @@ module.exports = {
                     },
                     {
                         name: "Examples",
-                        value: "!getid Builderman"
+                        value: "!robloxid Builderman"
                     }
                 ]
             }

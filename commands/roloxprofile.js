@@ -3,7 +3,7 @@ const moment = require('moment');
 const userinfo = require('./userinfo');
 
 module.exports = {
-    name: "getprofile",
+    name: "robloxprofile",
     description: "",
     execute(message, args, client) {
         if (args[0] === '-h') {
@@ -12,13 +12,13 @@ module.exports = {
                     name: client.user.username,
                     icon_url: client.user.avatarURL(),
                 },
-                title: "**Getprofile**",
+                title: "**Robloxprofile**",
                 color: 0x24ACF2,
                 description: "Retrieve a ROBLOX profile",
                 fields: [
                     {
                         name: "Syntax",
-                        value: "`!getprofile <username>`"
+                        value: "`!robloxprofile <username>`"
                     },
                     {
                         name: "Arguments",
@@ -26,7 +26,7 @@ module.exports = {
                     },
                     {
                         name: "Examples",
-                        value: "!getprofile Builderman"
+                        value: "!robloxprofile Builderman"
                     }
                 ]
             }
