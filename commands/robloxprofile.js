@@ -103,7 +103,7 @@ module.exports = {
             const req = https.request(requestOptions, res => {
                 res.on('data', d => {
                     const profileJSON = JSON.parse(d);
-                    assembleEmbed(message, userJSON, profileJSON)
+                    assembleEmbed(message, userJSON, profileJSON);
                 });
             });
             req.on('error', error => {

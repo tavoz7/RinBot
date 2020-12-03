@@ -4,8 +4,8 @@ const commands = new Discord.Collection();
 const fs = require('fs');
 
 const { prefix, token, lastChannelID, updateInProgress, lastClientMessageID } = require('./config.json');
-var version = "0.12.6.4 - Pre-Release";
-var versionDate = "2 December 2020";
+var version = "0.12.6.5 - Pre-Release";
+var versionDate = "3 December 2020";
 const configFile = './config.json';
 const file = require(configFile);
 const modLogChannel = "726176580405035169";
@@ -217,7 +217,7 @@ client.on('message', (message) => { // fires whenever a message is sent
         robloxRateLimit.add(message.author.id);
         setTimeout(() => { robloxRateLimit.delete(message.author.id); }, 3000);
 
-        commands.get("robloxid").execute(message, args);
+        commands.get("robloxid").execute(message, client, args);
     }
     else if (command === "robloxprofile") {
         if (!approvedUser) return;
@@ -229,7 +229,7 @@ client.on('message', (message) => { // fires whenever a message is sent
         robloxRateLimit.add(message.author.id);
         setTimeout(() => { robloxRateLimit.delete(message.author.id); }, 3000);
 
-        commands.get("robloxprofile").execute(message, args);
+        commands.get("robloxprofile").execute(message, client, args);
     }
 });
 
