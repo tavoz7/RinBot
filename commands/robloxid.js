@@ -3,7 +3,7 @@ const https = require('https');
 module.exports = {
     name: "robloxid",
     description: "",
-    execute(message, args) {
+    execute(message, args, client) {
         if (args[0] === '-h') {
             var reqEmbed = {
                 author: {

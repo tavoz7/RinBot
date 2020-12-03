@@ -32,7 +32,7 @@ module.exports = {
             message.channel.send({embed: reqEmbed});
             return;
         }
-        if (args[0] === undefined) {
+        else if (args[0] === undefined) {
             message.channel.send(":x: Please specify a user.");
             return;
         }
