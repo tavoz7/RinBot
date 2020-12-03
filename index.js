@@ -4,7 +4,7 @@ const commands = new Discord.Collection();
 const fs = require('fs');
 
 const { prefix, token, lastChannelID, updateInProgress, lastClientMessageID } = require('./config.json');
-var version = "0.12.5 - Pre-Release";
+var version = "0.12.5.1 - Pre-Release";
 var versionDate = "2 December 2020";
 const configFile = './config.json';
 const file = require(configFile);
@@ -167,7 +167,7 @@ client.on('message', (message) => { // fires whenever a message is sent
                 return;
             }
             else {
-                message.guild.members.fetch(args[0]).then(target => commands.get('kick').execute(message, args, target, modLogChannel)).catch(() => { message.channel.send(":x: That user doesn't seem to exist!") });
+                message.guild.members.fetch(args[0]).then(target => commands.get('kick').execute(message, args, target, modLogChannel)).catch(() => { message.channel.send({embed: { color: 0xD72D42, description: ":x: Error when trying to ban member. Please make sure the bot has the proper permissions, and that the user specified exists." }}); });
             }
         }
         else if (message.mentions.users.first() !== undefined) {
