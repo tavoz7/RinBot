@@ -1,6 +1,5 @@
 const https = require('https');
 const moment = require('moment');
-const userinfo = require('./userinfo');
 
 module.exports = {
     name: "robloxprofile",
