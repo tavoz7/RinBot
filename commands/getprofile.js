@@ -1,4 +1,3 @@
-const { profile } = require('console');
 const https = require('https');
 const moment = require('moment');
 const userinfo = require('./userinfo');
@@ -48,7 +47,6 @@ module.exports = {
             const req = https.request(requestOptions, res => {
                 res.on('data', d => {
                     const statusJSON = JSON.parse(d);
-                    console.log(statusJSON);
                     if (statusJSON.LastLocation === "Playing") {
                         var status = "In-game";
                     }

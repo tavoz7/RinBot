@@ -43,13 +43,7 @@ module.exports = {
                 },
                 timestamp: new Date()
             }
-            message.guild.channels.resolve(modLogChannel).send({embed: logEmbed});
-        }).catch(() => {
-            message.channel.send({embed: {
-                color: 0xD72D42,
-                description: ":x: Error when trying to ban member. Please make sure the bot has the proper permissions."
-            }
-        });
+            message.guild.channels.resolve('726176580405035169').send({embed: logEmbed});
         });
     }
 }

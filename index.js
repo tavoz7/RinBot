@@ -4,7 +4,7 @@ const commands = new Discord.Collection();
 const fs = require('fs');
 
 const { prefix, token, lastChannelID, updateInProgress, lastClientMessageID } = require('./config.json');
-var version = "0.12.4.1 - Pre-Release";
+var version = "0.12.5 - Pre-Release";
 var versionDate = "2 December 2020";
 const configFile = './config.json';
 const file = require(configFile);
@@ -28,6 +28,7 @@ for (const file of commandFiles) {
 }
 
 client.on('message', (message) => { // fires whenever a message is sent
+    if (!message.content.startsWith(prefix) || message.author.bot) return;
     if (message.member.roles.cache.has('685237145052512321') /* head mods */ || message.member.roles.cache.has('769013132541558795') /* mods */ || message.author.id === "245047280908894209")
     {
         var approvedUser = true;
@@ -35,7 +36,6 @@ client.on('message', (message) => { // fires whenever a message is sent
     else {
         var approvedUser = false;
     }
-    if (!message.content.startsWith(prefix) || message.author.bot) return;
 
     const args = message.content.slice(prefix.length).trim().split(/ +/); // stuff to throw arguments into an array
     const command = args.shift().toLowerCase(); // extract command from message
@@ -183,10 +183,10 @@ client.on('message', (message) => { // fires whenever a message is sent
                 return;
             }
             else {
-                message.guild.members.fetch(args[0]).then(target => commands.get('ban').execute(message, args, target, modLogChannel)).catch(() => { message.channel.send(":x: That user doesn't seem to exist!") });
+                message.guild.members.fetch(args[0]).then(target => commands.get('ban').execute(message, args, target, modLogChannel)).catch(() => { message.channel.send({embed: { color: 0xD72D42, description: ":x: Error when trying to ban member. Please make sure the bot has the proper permissions, and that the user specified exists." }}); });
             }
         }
-        else if (message.mentions.users.first() !== undefined) {
+        else if (message.mentions.users.first() !== undefined) { // THIS MAKES MENTIONS WORK, IT DOES NOT BAN THE SENDER OF THE MESSAGE
             var target = message.guild.member(message.mentions.users.first());
             commands.get('ban').execute(message, args, target, modLogChannel);
         }
