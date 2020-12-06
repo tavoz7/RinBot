@@ -71,7 +71,7 @@ module.exports = {
                                 inline: true
                             },
                             {
-                                name: "Creation Date",
+                                name: "Join Date",
                                 value: moment(profileJSON.created).format("D MMM YYYY"),
                                 inline: true
                             },
@@ -88,7 +88,7 @@ module.exports = {
                 })
             });
             req.on('error', error => {
-                console.log(error);
+                console.error(error);
                 message.channel.send(":x: There was an error contacting the HTTP endpoint. Please try again later.");
             });
             req.end();
@@ -107,7 +107,7 @@ module.exports = {
                 });
             });
             req.on('error', error => {
-                console.log(error);
+                console.error(error);
                 message.channel.send(":x: There was an error contacting the HTTP endpoint. Please try again later.");
             });
             req.end();
@@ -137,9 +137,9 @@ module.exports = {
             })
         });
         req.on('error', error => {
-            console.log(error);
+            console.error(error);
             message.channel.send(":x: There was an error contacting the HTTP endpoint. Please try again later.");
         });
-        req.end()
+        req.end();
     }
 }

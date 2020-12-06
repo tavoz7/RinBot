@@ -2,12 +2,11 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 const commands = new Discord.Collection();
 const fs = require('fs');
-
 const { prefix, token, lastChannelID, updateInProgress, lastClientMessageID } = require('./config.json');
 var version = "0.12.6.6 - Pre-Release";
 var versionDate = "3 December 2020";
-const configFile = './config.json';
-const file = require(configFile);
+const configFile = './config.json'
+const file = require('./config.json');
 const modLogChannel = "726176580405035169";
 
 const shibeRateLimit = new Set();
@@ -55,7 +54,7 @@ client.on('message', (message) => { // fires whenever a message is sent
             commands.get('userinfo').execute(message, args, null, client)
         }
         else if (args.length === 1 && message.mentions.users.first() === undefined) {
-            message.guild.members.fetch(args[0]).then(mentionedUser => commands.get('userinfo').execute(message, args, mentionedUser, client)).catch(() => { message.channel.send(":x: That user doesn't seem to exist!") });
+            message.guild.members.fetch(args[0]).then(mentionedUser => commands.get('userinfo').execute(message, args, mentionedUser, client)).catch(() => { message.channel.send(":x: That user doesn't seem to exist!") }); // this assumes that every error is a "user-does-not-exist" error so i probably should rework this
         }
     }
     else if (command === 'serverinfo') { // open to all users
@@ -83,11 +82,11 @@ client.on('message', (message) => { // fires whenever a message is sent
     else if (command === 'about') { // open to all users
         if (!approvedUser) {
             if (aboutRateLimit.has(message.author.id)) {
-                message.channel.send(":x: Please wait 5 more seconds before doing that again!");
+                message.channel.send(":x: Please wait 2 more seconds before doing that again!");
                 return;
             }
             aboutRateLimit.add(message.author.id);
-            setTimeout(() => { aboutRateLimit.delete(message.author.id); }, 5000);
+            setTimeout(() => { aboutRateLimit.delete(message.author.id); }, 2000);
         }
         commands.get('about').execute(message, client, version, versionDate);
     }
@@ -125,11 +124,11 @@ client.on('message', (message) => { // fires whenever a message is sent
     else if (command === 'avatar') { // open to all users
         if (!approvedUser) {
             if (avatarRateLimit.has(message.author.id)) {
-                message.channel.send(":x: Please wait 5 more seconds before doing that again!");
+                message.channel.send(":x: Please wait 2 more seconds before doing that again!");
                 return;
             }
             avatarRateLimit.add(message.author.id);
-            setTimeout(() => { avatarRateLimit.delete(message.author.id); }, 5000);
+            setTimeout(() => { avatarRateLimit.delete(message.author.id); }, 2000);
         }
         if (args[0] === '-h') {
             commands.get('avatar').execute(message, args, null, client);
@@ -167,7 +166,7 @@ client.on('message', (message) => { // fires whenever a message is sent
                 return;
             }
             else {
-                message.guild.members.fetch(args[0]).then(target => commands.get('kick').execute(message, args, target, modLogChannel)).catch(() => { message.channel.send({embed: { color: 0xD72D42, description: ":x: Error when trying to ban member. Please make sure the bot has the proper permissions, and that the user specified exists." }}); });
+                message.guild.members.fetch(args[0]).then(target => commands.get('kick').execute(message, args, target, modLogChannel)).catch(() => { message.channel.send({embed: { color: 0xD72D42, description: ":x: Error when trying to ban member. Please make sure the bot has the proper permissions, and that the user specified exists." }}); }); // comment on line 58
             }
         }
         else if (message.mentions.users.first() !== undefined) {
@@ -183,7 +182,7 @@ client.on('message', (message) => { // fires whenever a message is sent
                 return;
             }
             else {
-                message.guild.members.fetch(args[0]).then(target => commands.get('ban').execute(message, args, target, modLogChannel)).catch(() => { message.channel.send({embed: { color: 0xD72D42, description: ":x: Error when trying to ban member. Please make sure the bot has the proper permissions, and that the user specified exists." }}); });
+                message.guild.members.fetch(args[0]).then(target => commands.get('ban').execute(message, args, target, modLogChannel)).catch(() => { message.channel.send({embed: { color: 0xD72D42, description: ":x: Error when trying to ban member. Please make sure the bot has the proper permissions, and that the user specified exists." }}); }); // too lazy to copy it so go look at the comment on 58
             }
         }
         else if (message.mentions.users.first() !== undefined) { // THIS MAKES MENTIONS WORK, IT DOES NOT BAN THE SENDER OF THE MESSAGE
@@ -249,7 +248,7 @@ client.once("ready", () => { // bot custom status
         file.updateInProgress = false;
         file.lastChannelID = null;
         file.lastClientMessageID = null;
-        fs.writeFile(configFile, JSON.stringify(file, null, 2), function writeJSON(error) {
+        fs.writeFile(configFile, JSON.stringify(file, null, 2), (error) => {
             if (error) {
                 var reqEmbed = {
                     color: 0xD72D42,
