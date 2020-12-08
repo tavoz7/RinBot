@@ -48,12 +48,13 @@ module.exports = {
                         message.channel.send("There was an error.")
                     }
                 } else {
-                message.channel.send(`Roblox ID for ${args[0]}: ${userJSON.Id}`);
+                message.channel.send(`Roblox ID for ${userJSON.Username}: ${userJSON.Id}`);
                 }
             });
         })
     req.on('error', error => {
-        console.log(error);
+        console.error(error);
+        message.channel.send(":x: There was an error contacting the HTTP endpoint. Please try again later.");
     })
     req.end();
     }
