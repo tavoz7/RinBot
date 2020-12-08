@@ -18,7 +18,7 @@ module.exports = {
                     },
                     {
                         name: "Arguments",
-                        value: "`user (@mention or User ID)`\nIf no user is specified, the avater of the command invoker will be sent.\n`type (png, gif or webp)`\n PNG will be selected by default if an image format is not specified."
+                        value: "`user (@mention or User ID)`\nIf no user is specified, the avatar of the command invoker will be sent.\n`type (png, gif or webp)`\n PNG will be selected by default if an image format is not specified."
                     },
                     {
                         name: "Examples",

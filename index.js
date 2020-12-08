@@ -93,6 +93,10 @@ client.on('message', (message) => { // fires whenever a message is sent
             }
             commands.get('about').execute(message, client, version, versionDate);
             break;
+        case 'ping':
+            if (!approvedUser) return;
+            commands.get('ping').execute(message, client);
+            break;
         case 'host':
             commands.get('host').execute(message, client); // me only
             break;
@@ -170,8 +174,7 @@ client.on('message', (message) => { // fires whenever a message is sent
                 }
             }
             else if (message.mentions.users.first() !== undefined) {
-                var target = message.guild.member(message.mentions.users.first());
-                commands.get('kick').execute(message, args, target, modLogChannel);
+                commands.get('kick').execute(message, args, message.guild.member(message.mentions.users.first()), modLogChannel);
             }
             break;
         case 'ban':
@@ -186,8 +189,7 @@ client.on('message', (message) => { // fires whenever a message is sent
                 }
             }
             else if (message.mentions.users.first() !== undefined) { // THIS MAKES MENTIONS WORK, IT DOES NOT BAN THE SENDER OF THE MESSAGE
-                var target = message.guild.member(message.mentions.users.first());
-                commands.get('ban').execute(message, args, target, modLogChannel);
+                commands.get('ban').execute(message, args, message.guild.member(message.mentions.users.first()), modLogChannel);
             }
             break;
         // case 'mute':
