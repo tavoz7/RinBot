@@ -43,7 +43,7 @@ module.exports = {
                 },
                 timestamp: new Date()
             }
-            message.guild.channels.resolve('726176580405035169').send({embed: logEmbed});
+            message.guild.channels.resolve(modLogChannel).send({embed: logEmbed});
         });
     }
 }
