@@ -3,8 +3,8 @@ const client = new Discord.Client();
 const commands = new Discord.Collection();
 const fs = require('fs');
 const { prefix, token, lastChannelID, updateInProgress, lastClientMessageID } = require('./config.json');
-var version = "0.14.1 - Pre-Release";
-var versionDate = "8 December 2020";
+var version = "0.14.2 - Pre-Release";
+var versionDate = "9 December 2020";
 const configFile = './config.json'
 const file = require('./config.json');
 const modLogChannel = "726176580405035169";
@@ -27,7 +27,7 @@ for (const file of commandFiles) {
 }
 
 client.on('message', (message) => { // fires whenever a message is sent
-    if (!message.content.startsWith(prefix) || message.author.bot) return;
+    if (!message.content.startsWith(prefix) || message.author.bot || message.channel.type === 'dm') return;
     if (message.member.roles.cache.has('685237145052512321') /* head mods */ || message.member.roles.cache.has('769013132541558795') /* mods */ || message.author.id === "245047280908894209")
     {
         var approvedUser = true;
