@@ -74,7 +74,7 @@ module.exports = {
                                     fields: [
                                         {
                                             name: "Codebase Information",
-                                            value: `[\`master/${commitHash}\`](https://github.com/CominAtYou/RinBot/commit/${commitHash})\n**Node Version**: ${nodeVersion}\n**Bot Version**: ${version.replace(" - Pre-Release", "")}\n**Build Date**: ${versionDate}`,
+                                            value: `**Commit**: [\`master/${commitHash}\`](https://github.com/CominAtYou/RinBot/commit/${commitHash})\n**Node Version**: ${nodeVersion}\n**Bot Version**: ${version.replace(" - Pre-Release", "")}\n**Build Date**: ${versionDate}`,
                                             inline: true
                                         },
                                         {
