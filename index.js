@@ -3,8 +3,8 @@ const client = new Discord.Client();
 const commands = new Discord.Collection();
 const fs = require('fs');
 const { prefix, token, lastChannelID, updateInProgress, lastClientMessageID } = require('./config.json');
-var version = "0.14.2 - Pre-Release";
-var versionDate = "9 December 2020";
+var version = "0.15 - Pre-Release";
+var versionDate = "11 December 2020";
 const configFile = './config.json'
 const file = require('./config.json');
 const modLogChannel = "726176580405035169";
@@ -230,12 +230,15 @@ client.on('message', (message) => { // fires whenever a message is sent
             setTimeout(() => { robloxRateLimit.delete(message.author.id); }, 3000);
             commands.get("robloxprofile").execute(message, args, client);
             break;
+        case 'details':
+            if (message.author.id !== "245047280908894209") return;
+            commands.get('details').execute(message, client, versionDate, version);
+            break;
     }
-
 });
 
 client.once("ready", () => { // bot custom status
-    console.log(`Logged in as ${client.user.tag}`);
+    console.log("\x1b[32m[READY]","\x1b[0mLogged in as " + client.user.tag);
     client.user.setActivity("the campfire crackle", {type: "LISTENING"});
     if (updateInProgress === true) {
         var reqEmbed = {
