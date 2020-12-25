@@ -180,7 +180,7 @@ client.on('message', (message) => { // fires whenever a message is sent
         case 'ban':
             if (!approvedUser) return;
             if (args[0] === '-h') {
-                commands.get('ban').execute(message, args);
+                commands.get('ban').execute(message, args, null, null, client);
             }
             else if (message.mentions.users.first() === undefined) {
                 if (args.length === 0) {

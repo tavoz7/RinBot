@@ -2,7 +2,7 @@ const uuid = require('uuid');
 module.exports = {
     name: "ban",
     description: "Bans a user from the guild, specified either via mention or User ID.",
-    execute(message, args, target, modLogChannel) {
+    execute(message, args, target, modLogChannel, client) {
         if (args[0] === '-h') {
             var reqEmbed = {
                 title: "Ban",
