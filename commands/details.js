@@ -63,7 +63,7 @@ module.exports = {
                                 }
                                 if (kernel === "Linux") {
                                     var osFamily = "Ubuntu";
-                                    var osRelease = "20.04 LTS";
+                                    var osRelease = "20.04.1 LTS";
                                 }
                                 var reqEmbed = {
                                     author: {
@@ -89,6 +89,7 @@ module.exports = {
                                         }
                                     ],
                                     color: 0x24ACF2,
+                                    timestamp: new Date(),
                                     footer: {
                                         text: "Uptime: " + uptimeStr
                                     }
@@ -146,6 +147,7 @@ module.exports = {
                                 }
                             ],
                             color: 0x24ACF2,
+                            timestamp: new Date(),
                             footer: {
                                 text: "Uptime: " + uptimeStr
                             }

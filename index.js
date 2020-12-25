@@ -3,7 +3,7 @@ const client = new Discord.Client();
 const commands = new Discord.Collection();
 const fs = require('fs');
 const { prefix, token, lastChannelID, updateInProgress, lastClientMessageID } = require('./config.json');
-var version = "0.15.1.3 - Pre-Release";
+var version = "0.15.2 - Pre-Release";
 var versionDate = "11 December 2020";
 const configFile = './config.json'
 const file = require('./config.json');
@@ -28,7 +28,7 @@ for (const file of commandFiles) {
 
 client.on('message', (message) => { // fires whenever a message is sent
     if (!message.content.startsWith(prefix) || message.author.bot || message.channel.type === 'dm') return;
-    if (message.member.roles.cache.has('685237145052512321') /* head mods */ || message.member.roles.cache.has('769013132541558795') /* mods */ || message.author.id === "245047280908894209")
+    if (message.member.roles.cache.has('685237145052512321') /* head mods */ || message.member.roles.cache.has('769013132541558795') /* mods */ || message.member.roles.cache.has('772162214865272842') /* trial mods */ || message.author.id === "245047280908894209")
     {
         var approvedUser = true;
     }
@@ -91,7 +91,7 @@ client.on('message', (message) => { // fires whenever a message is sent
                 aboutRateLimit.add(message.author.id);
                 setTimeout(() => { aboutRateLimit.delete(message.author.id); }, 2000);
             }
-            commands.get('about').execute(message, client, version, versionDate);
+            commands.get('about').execute(message, client, version, versionDate, args);
             break;
         case 'ping':
             if (!approvedUser) return;
@@ -170,7 +170,7 @@ client.on('message', (message) => { // fires whenever a message is sent
                     return;
                 }
                 else {
-                    message.guild.members.fetch(args[0]).then(target => commands.get('kick').execute(message, args, target, modLogChannel)).catch(() => { message.channel.send({embed: { color: 0xD72D42, description: ":x: Error when trying to ban member. Please make sure the bot has the proper permissions, and that the user specified exists." }}); }); // comment on line 58
+                    message.guild.members.fetch(args[0]).then(target => commands.get('kick').execute(message, args, target, modLogChannel)).catch(() => { message.channel.send({embed: { color: 0xD72D42, description: ":x: Error when trying to kick member. Please make sure the bot has the proper permissions, and that the user specified exists." }}); }); // comment on line 58
                 }
             }
             else if (message.mentions.users.first() !== undefined) {
@@ -179,7 +179,10 @@ client.on('message', (message) => { // fires whenever a message is sent
             break;
         case 'ban':
             if (!approvedUser) return;
-            if (message.mentions.users.first() === undefined) {
+            if (args[0] === '-h') {
+                commands.get('ban').execute(message, args);
+            }
+            else if (message.mentions.users.first() === undefined) {
                 if (args.length === 0) {
                     message.channel.send(":no_entry: Please specify a user.");
                     return;

@@ -1,14 +1,45 @@
 const uuid = require('uuid');
 module.exports = {
     name: "ban",
+    description: "Bans a user from the guild, specified either via mention or User ID.",
     execute(message, args, target, modLogChannel) {
-        if (args[1] === undefined) {
-            var reason = "None provided";
+        if (args[0] === '-h') {
+            var reqEmbed = {
+                title: "Ban",
+                author: {
+                    name: client.user.username,
+                    icon_url: client.user.avatarURL()
+                },
+                description: this.description,
+                color: 0x24ACF2,
+                fields: [
+                    {
+                        name: "Syntax",
+                        value: "`!ban <user> <reason>`"
+                    },
+                    {
+                        name: "Arguments",
+                        value: "`<@mention>` or `userID`, `reason`"
+                    },
+                    {
+                        name: "Examples",
+                        value: "`!ban @CominAtYou Get out!` `!ban 123456789012345678 Spamming`"
+                    }
+                ]
+            }
+            message.channel.send({embed: reqEmbed});
+            return;
+        }
+        else if (args[1] === undefined) {
+            var APIReason = null
+            var reason = "No reason provided";
         }
         else {
-            var reason = args.slice(1).join(" ");
+            args.shift()
+            var reason = args.join(" ");
+            var APIReason = reason;
         }
-        target.ban({reason: reason}).then(() => {
+        target.ban({reason: APIReason}).then(() => {
             var successEmbed = {
                 description: `${target.user.tag} was banned.\nReason: ${reason}`,
                 color: 0x24ACF2
@@ -44,6 +75,11 @@ module.exports = {
                 timestamp: new Date()
             }
             message.guild.channels.resolve(modLogChannel).send({embed: logEmbed});
-        });
+        }).catch(() => {
+            message.channel.send({embed: {
+                color: 0xD72D42,
+                description: ":x: Error when trying to ban. Please make sure the bot has the proper permissions."
+            }});
+       })
     }
 }

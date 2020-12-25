@@ -2,7 +2,7 @@ const moment = require('moment');
 
 module.exports = {
     name: 'serverinfo',
-    description: "Get information about the current guild",
+    description: "Display information about the server",
     execute(message, args, client) {
         if (moment(message.guild.createdAt).format("Z").includes("05:00")) {
             var serverCreatedAtTimeZone = "CDT"
@@ -16,9 +16,9 @@ module.exports = {
                     name: client.user.username,
                     icon_url: client.user.avatarURL(),
                 },
-                title: "**Serverinfo**",
+                title: "Serverinfo",
                 color: 0x24ACF2,
-                description: "List information about the current server",
+                description: this.description,
                 fields: [
                     {
                         name: "Syntax",
@@ -49,7 +49,7 @@ module.exports = {
                     name: message.guild.name,
                     icon_url: message.guild.iconURL({dynamic: true}),
                 },
-                title: "**Server Information**",
+                title: "Server Information",
                 color: 0x24ACF2,
                 thumbnail: {url: message.guild.iconURL({dynamic: true})},
                 fields: [

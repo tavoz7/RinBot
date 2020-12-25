@@ -11,7 +11,7 @@ module.exports = {
                     name: client.user.username,
                     icon_url: client.user.avatarURL(),
                 },
-                title: "**Random**",
+                title: "Random",
                 description: "Generate a random number",
                 color: 0x24ACF2,
                 fields: [

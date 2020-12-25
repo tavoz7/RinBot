@@ -8,7 +8,7 @@ module.exports = {
                     name: client.user.username,
                     icon_url: client.user.avatarURL(),
                 },
-                title: "**Avatar**",
+                title: "Avatar",
                 color: 0x24ACF2,
                 description: "Display a user's avatar",
                 fields: [

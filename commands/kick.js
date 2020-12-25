@@ -3,12 +3,15 @@ module.exports = {
     name: "kick",
     execute(message, args, target, modLogChannel) {
         if (args[1] === undefined) {
-            var reason = "None provided";
+            var APIReason = null
+            var reason = "No reason provided";
         }
         else {
-            var reason = args.slice(1).join(" ");
+            args.shift();
+            var reason = args.join(" ")
+            var APIReason = reason;
         }
-        target.kick([reason]).then(() => {
+        target.kick([APIReason]).then(() => {
             var successEmbed = {
                 description: `${target.user.tag} was kicked.\nReason: ${reason}`,
                 color: 0x24ACF2
@@ -48,7 +51,7 @@ module.exports = {
             message.channel.send({embed: {
                 color: 0xD72D42,
                 description: ":x: Error when trying to kick. Please make sure the bot has the proper permissions."
-            }})
-        })
+            }});
+       })
     }
 }

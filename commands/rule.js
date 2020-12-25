@@ -4,6 +4,7 @@ module.exports = {
     execute(message, args, client) {
         if (args[0] !== '-h') {
             message.delete();
+            return;
         }
     // if (message.member.roles.find(r => r.id === '766858374377504818') || message.member.roles.find(r => r.id === '769299680357122088')) {
         if (args[0] === 'respect') {
@@ -28,7 +29,7 @@ module.exports = {
             message.channel.send({ embed: reqEmbed });
         } else if (args[0] === '-h') {
             var reqEmbed = {
-                title: "**Rule**",
+                title: "Rule",
                 description: "Send a rule in an embed to a channel.",
                 color: 0x24ACF2,
                 author: {

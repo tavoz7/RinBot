@@ -1,7 +1,7 @@
 const moment = require('moment');
 module.exports = {
     name: 'userinfo',
-    description: "Get information about a user's account.",
+    description: "Display information about a user",
     execute(message, args, mentionedUser, client) {
         if (args[0] === '-h') {
             var reqEmbed = {
@@ -9,9 +9,9 @@ module.exports = {
                     name: client.user.username,
                     icon_url: client.user.avatarURL(),
                 },
-                title: "**Userinfo**",
+                title: "Userinfo",
                 color: 0x24ACF2,
-                description: "List information about a user",
+                description: this.description,
                 fields: [
                     {
                         name: "Syntax",
@@ -19,7 +19,7 @@ module.exports = {
                     },
                     {
                         name: "Arguments",
-                        value: "`@user`, `UserID`\nIf no user is specified, information will be listed for the sender of the message."
+                        value: "`@user` or `UserID`\nIf no user is specified, information will be listed for the sender of the message."
                     },
                     {
                         name: "Examples",
@@ -107,7 +107,7 @@ module.exports = {
                 icon_url: mentionedUser.user.avatarURL({format: 'webp', dynamic: false, size: 256}),
             },
             thumbnail: {url: mentionedUser.user.avatarURL({format: 'webp', dynamic: true, size: 512})},
-            title: "**User Information**",
+            title: "User Information",
             color: 0x24ACF2,
             fields: [
                 {
