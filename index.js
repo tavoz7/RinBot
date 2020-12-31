@@ -3,8 +3,8 @@ const client = new Discord.Client();
 const commands = new Discord.Collection();
 const fs = require('fs');
 const { prefix, token, lastChannelID, updateInProgress, lastClientMessageID } = require('./config.json');
-var version = "0.15.2 - Pre-Release";
-var versionDate = "11 December 2020";
+var version = "0.15.3 - Pre-Release";
+var versionDate = "25 December 2020";
 const configFile = './config.json'
 const file = require('./config.json');
 const modLogChannel = "726176580405035169";
@@ -41,6 +41,7 @@ client.on('message', (message) => { // fires whenever a message is sent
 
     switch (command) {
         case 'rule':
+            if (!approvedUser) return;
             commands.get('rule').execute(message, args, client);
             break;
         case 'userinfo':
@@ -270,6 +271,6 @@ client.once("ready", () => { // bot custom status
             // please for the love of god add error handling here, if this fails the entire thing crashes on startup which results in pm2 having a fit
         });
     }
- });
+});
 
  client.login(token); // makes stuff work

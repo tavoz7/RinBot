@@ -11,6 +11,7 @@ module.exports = {
         var clientUptimeHours = clientUptimeSec / 3600;
         var clientUptimeDays = clientUptimeSec / 86400;
         var clientUptimeDaysMod = Math.floor(clientUptimeDays % 86400)
+
         if (clientUptimeDaysMod === 0) {
             var uptimeStr = `${Math.floor(clientUptimeHours % 24)} hr ${Math.floor(clientUptimeMin % 60)} min ${Math.floor(clientUptimeSec % 60)} sec`;
         } else if (clientUptimeDaysMod === 1) {
