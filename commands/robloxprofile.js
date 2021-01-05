@@ -123,7 +123,7 @@ module.exports = {
             res.on('data', d => {
                 const userJSON = JSON.parse(d);
                 if (userJSON.success === false) {
-                    if (userJSON.errorMessage === 'User not found') {
+                    if (userJSON.errorMessage === 'User not found' || userJSON.errorMessage === "Invalid username") {
                         message.channel.send(":x: That user does not exist!");
                         return;
                     }
