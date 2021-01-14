@@ -3,8 +3,8 @@ const client = new Discord.Client();
 const commands = new Discord.Collection();
 const fs = require('fs');
 const { prefix, token, lastChannelID, updateInProgress, lastClientMessageID } = require('./config.json');
-var version = "0.15.3.1 - Pre-Release";
-var versionDate = "4 January 2020";
+var version = "0.16 - Pre-Release";
+var versionDate = "14 January 2020";
 const configFile = './config.json'
 const file = require('./config.json');
 const modLogChannel = "726176580405035169";
@@ -28,8 +28,7 @@ for (const file of commandFiles) {
 
 client.on('message', (message) => { // fires whenever a message is sent
     if (!message.content.startsWith(prefix) || message.author.bot || message.channel.type === 'dm') return;
-    if (message.member.roles.cache.has('685237145052512321') /* head mods */ || message.member.roles.cache.has('769013132541558795') /* mods */ || message.member.roles.cache.has('772162214865272842') /* trial mods */ || message.author.id === "245047280908894209")
-    {
+    if (message.member.roles.cache.has('685237145052512321') /* head mods */ || message.member.roles.cache.has('769013132541558795') /* mods */ || message.member.roles.cache.has('772162214865272842') /* trial mods */ || message.author.id === "245047280908894209") {
         var approvedUser = true;
     }
     else {
@@ -237,6 +236,9 @@ client.on('message', (message) => { // fires whenever a message is sent
         case 'details':
             if (message.author.id !== "245047280908894209") return;
             commands.get('details').execute(message, client, versionDate, version);
+            break;
+        case 'coinflip':
+            commands.get('coinflip').execute(message);
             break;
     }
 });
