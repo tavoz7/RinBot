@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "target": "ES2020",
+        "rootDir": "commands",
+        "noImplicitUseStrict": true,
+        "outDir": "commands/transpiled"
+    },
+    "exclude": [
+        "node_modules"
+    ]
+}

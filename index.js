@@ -8,6 +8,8 @@ var versionDate = "14 January 2020";
 const configFile = './config.json'
 const file = require('./config.json');
 const modLogChannel = "726176580405035169";
+const codeBlue = 0x24ACF2;
+const errorRed = 0xD72D42;
 
 const shibeRateLimit = new Set();
 const randomRateLimit = new Set()
@@ -19,10 +21,10 @@ const robloxRateLimit = new Set();
 
 // that one color i need: 0x395F85;
 
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js')); // add command files to array as dependencies
+const commandFiles = fs.readdirSync('./commands/transpiled').filter(file => file.endsWith('.js')); // add command files to array as dependencies
 
 for (const file of commandFiles) {
-    const command = require(`./commands/${file}`);
+    const command = require(`./commands/transpiled/${file}`);
     commands.set(command.name, command);
 }
 
@@ -170,17 +172,17 @@ client.on('message', (message) => { // fires whenever a message is sent
                     return;
                 }
                 else {
-                    message.guild.members.fetch(args[0]).then(target => commands.get('kick').execute(message, args, target, modLogChannel)).catch(() => { message.channel.send({embed: { color: 0xD72D42, description: ":x: Error when trying to kick member. Please make sure the bot has the proper permissions, and that the user specified exists." }}); }); // comment on line 58
+                    message.guild.members.fetch(args[0]).then(target => commands.get('kick').execute(message, args, target, modLogChannel, client)).catch(() => { message.channel.send({embed: { color: 0xD72D42, description: ":x: Error when trying to kick member. Please make sure the bot has the proper permissions, and that the user specified exists." }}); }); // comment on line 58
                 }
             }
             else if (message.mentions.users.first() !== undefined) {
-                commands.get('kick').execute(message, args, message.guild.member(message.mentions.users.first()), modLogChannel);
+                commands.get('kick').execute(message, args, message.guild.member(message.mentions.users.first()), modLogChannel, client);
             }
             break;
         case 'ban':
             if (!approvedUser) return;
             if (args[0] === '-h') {
-                commands.get('ban').execute(message, args, null, null, client);
+                commands.get('ban').execute(message, args, undefined, undefined, client);
             }
             else if (message.mentions.users.first() === undefined) {
                 if (args.length === 0) {
@@ -192,7 +194,7 @@ client.on('message', (message) => { // fires whenever a message is sent
                 }
             }
             else if (message.mentions.users.first() !== undefined) { // THIS MAKES MENTIONS WORK, IT DOES NOT BAN THE SENDER OF THE MESSAGE
-                commands.get('ban').execute(message, args, message.guild.member(message.mentions.users.first()), modLogChannel);
+                commands.get('ban').execute(message, args, message.guild.member(message.mentions.users.first()), modLogChannel, client);
             }
             break;
         // case 'mute':
@@ -240,6 +242,9 @@ client.on('message', (message) => { // fires whenever a message is sent
         case 'coinflip':
             commands.get('coinflip').execute(message);
             break;
+        //case 'rps':
+        //    commands.get('rps').execute(message, args);
+        //    break;
     }
 });
 
