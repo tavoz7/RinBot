@@ -75,7 +75,7 @@ export function execute(message: Discord.Message, client: Discord.Client, config
                     }
                     else {
                         // Write to config.json to notify the bot upon restart that an update was applied, and where to delete the restart message then replace it with the update complete message
-                        let file = require('./config.json');
+                        let file = require('../../config.json');
                         file.updateInProgress = true;
                         file.lastChannelID = message.channel.id;
                         file.lastClientMessageID = client.user.lastMessageID;
