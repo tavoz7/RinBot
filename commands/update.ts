@@ -13,10 +13,10 @@ export function execute(message: Discord.Message, client: Discord.Client, config
         message.channel.send({embed: reqEmbed});
         return;
     }
-    cp.exec("git pull 2>&1 && npm i && tsc", (error, stdout) => {
+    cp.exec("git pull && npm i", (error, stdout) => {
         if (!stdout.includes("file changed") || !stdout.includes("files changed") /*|| stderr.includes("origin/master" === false) */) {
             if (error) {
-                var reqEmbed = {
+                let reqEmbed = {
                     title: "Update",
                     color: 0xD72D42,
                     description: "```" + error + "```",
@@ -37,21 +37,55 @@ export function execute(message: Discord.Message, client: Discord.Client, config
             return;
         }
         else {
-            var reqEmbed = {
+            let reqEmbed = {
                 title: "Update in Progress",
                 color: 0xFFCC4D,
                 description: ":arrows_counterclockwise: Restarting to install update...",
                 timestamp: new Date()
             }
-            message.channel.send({embed: reqEmbed})
-            // Write to config.json to notify the bot upon restart that an update was applied, and where to delete the restart message then replace it with the update complete message
-            file.updateInProgress = true;
-            file.lastChannelID = message.channel.id;
-            file.lastClientMessageID = client.user.lastMessageID; // god i hate async
-            let data = JSON.stringify(file, null, 2);
-            fs.writeFileSync('./config.json', data);
-            // please for the love of god add error handling here
-            process.exit();
+            message.channel.send({embed: reqEmbed}).then((sentMessage => {
+                cp.exec("tsc", (error, stderr, stdout) => {
+                    if (error) {
+                        let errorEmbed = {
+                            title: "Update",
+                            color: 0xD72D42,
+                            description: "```" + error + "```",
+                            timestamp: new Date(),
+                            footer: {
+                                text: "Occured during TypeScript compilation"
+                            }
+                        }
+                        message.channel.send({embed: errorEmbed});
+                        sentMessage.delete();
+                        return;
+                    }
+                    if (stderr) {
+                        let stderrEmbed = {
+                            title: "Update",
+                            color: 0xD72D42,
+                            description: "```" + stderr + "```",
+                            timestamp: new Date(),
+                            footer: {
+                                text: "Occured during TypeScript compilation (stderr)"
+                            }
+                        }
+                        message.channel.send({embed: stderrEmbed});
+                        sentMessage.delete();
+                        return;
+                    }
+                    else {
+                        // Write to config.json to notify the bot upon restart that an update was applied, and where to delete the restart message then replace it with the update complete message
+                        let file = require('./config.json');
+                        file.updateInProgress = true;
+                        file.lastChannelID = message.channel.id;
+                        file.lastClientMessageID = client.user.lastMessageID;
+                        let data = JSON.stringify(file, null, 2);
+                        fs.writeFileSync('./config.json', data);
+                        // please for the love of god add error handling here
+                        process.exit();
+                    }
+                })
+            }))
         }
     });
 }
