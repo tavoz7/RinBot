@@ -29,16 +29,18 @@ export function execute(message: Discord.Message, client: Discord.Client) {
             var osIcon = client.user.avatarURL();
         }
     }
-    freeMem = (os.freemem() / 1000000000).toFixed(2)
-    if (os.freemem() < 1000000000) {
+    // freeMem = (os.freemem() / 1000000000).toFixed(2);
+    if (os.freemem() < 1e+9) {
         var unit = 'MB'
-        if (host_os = 'Ubuntu 20.04.1') {
-            var freeMem = (os.freemem() / 1000000).toFixed(0)
-        } else if (os.version().includes("Windows")) {
-            var freeMem = (os.freemem() / 1000000000).toFixed(0)
-        }
+        // if (host_os = 'Ubuntu 20.04.1') {
+        //     var freeMem = (os.freemem() / 100000).toFixed(0)
+        // } else if (os.version().includes("Windows")) {
+        var freeMem = (os.freemem() / 100000000).toFixed(0);
     }
-    else { var unit = "GB" }
+    else {
+        var unit = "GB";
+        var freeMem = freeMem = (os.freemem() / 1000000000).toFixed(2);
+    }
     var clientUptimeSec = client.uptime / 1000;
     var clientUptimeMin = clientUptimeSec / 60;
     var clientUptimeHours = clientUptimeSec / 3600;
