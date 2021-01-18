@@ -3,7 +3,7 @@ const client = new Discord.Client();
 const commands = new Discord.Collection();
 const fs = require('fs');
 const { prefix, token, lastChannelID, updateInProgress, lastClientMessageID } = require('./config.json');
-var version = "0.16 - Pre-Release";
+var version = "0.17 - Pre-Release";
 var versionDate = "14 January 2020";
 const configFile = './config.json'
 const file = require('./config.json');
@@ -242,9 +242,9 @@ client.on('message', (message) => { // fires whenever a message is sent
         case 'coinflip':
             commands.get('coinflip').execute(message);
             break;
-        //case 'rps':
-        //    commands.get('rps').execute(message, args);
-        //    break;
+        case 'rps':
+           commands.get('rps').execute(message, args, client);
+           break;
     }
 });
 
