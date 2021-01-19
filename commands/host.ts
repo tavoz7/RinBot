@@ -4,7 +4,7 @@ require('loadavg-windows');
 
 export const name = "host";
 export const description = "get information about the host server.";
-export function execute(message: Discord.Message, client: Discord.Client) {
+export function execute(message: Discord.Message, client: Discord.Client) { // TODO: Rewrite this crap
     if (message.author.id !== '245047280908894209') {
         var disallowedEmbed = {
             color: 0xD72D42,

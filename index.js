@@ -3,11 +3,10 @@ const client = new Discord.Client();
 const commands = new Discord.Collection();
 const fs = require('fs');
 const { prefix, token, lastChannelID, updateInProgress, lastClientMessageID } = require('./config.json');
-var version = "0.16 - Pre-Release";
+var version = "0.16.1 - Pre-Release";
 var versionDate = "18 January 2020";
 const configFile = './config.json'
 const file = require('./config.json');
-const modLogChannel = "726176580405035169";
 const codeBlue = 0x24ACF2;
 const errorRed = 0xD72D42;
 
@@ -172,11 +171,11 @@ client.on('message', (message) => { // fires whenever a message is sent
                     return;
                 }
                 else {
-                    message.guild.members.fetch(args[0]).then(target => commands.get('kick').execute(message, args, target, modLogChannel, client)).catch(() => { message.channel.send({embed: { color: 0xD72D42, description: ":x: Error when trying to kick member. Please make sure the bot has the proper permissions, and that the user specified exists." }}); }); // comment on line 58
+                    message.guild.members.fetch(args[0]).then(target => commands.get('kick').execute(message, args, target, client)).catch(() => { message.channel.send({embed: { color: 0xD72D42, description: ":x: Error when trying to kick member. Please make sure the bot has the proper permissions, and that the user specified exists." }}); }); // comment on line 58
                 }
             }
             else if (message.mentions.users.first() !== undefined) {
-                commands.get('kick').execute(message, args, message.guild.member(message.mentions.users.first()), modLogChannel, client);
+                commands.get('kick').execute(message, args, message.guild.member(message.mentions.users.first()), client);
             }
             break;
         case 'ban':
@@ -190,11 +189,11 @@ client.on('message', (message) => { // fires whenever a message is sent
                     return;
                 }
                 else {
-                    message.guild.members.fetch(args[0]).then(target => commands.get('ban').execute(message, args, target, modLogChannel)).catch(() => { message.channel.send({embed: { color: 0xD72D42, description: ":x: Error when trying to ban member. Please make sure the bot has the proper permissions, and that the user specified exists." }}); }); // too lazy to copy it so go look at the comment on 58
+                    message.guild.members.fetch(args[0]).then(target => commands.get('ban').execute(message, args, target)).catch(() => { message.channel.send({embed: { color: 0xD72D42, description: ":x: Error when trying to ban member. Please make sure the bot has the proper permissions, and that the user specified exists." }}); }); // too lazy to copy it so go look at the comment on 58
                 }
             }
             else if (message.mentions.users.first() !== undefined) { // THIS MAKES MENTIONS WORK, IT DOES NOT BAN THE SENDER OF THE MESSAGE
-                commands.get('ban').execute(message, args, message.guild.member(message.mentions.users.first()), modLogChannel, client);
+                commands.get('ban').execute(message, args, message.guild.member(message.mentions.users.first()), client);
             }
             break;
         // case 'mute':
