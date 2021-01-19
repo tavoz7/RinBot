@@ -2,7 +2,7 @@ import uuid = require('uuid');
 import Discord = require('discord.js');
 export const name = "kick";
 export const description = "Kicks a user";
-export function execute(message: Discord.Message, args: string[], target: Discord.GuildMember, modLogChannel: string, client: Discord.Client) {
+export function execute(message: Discord.Message, args: string[], target: Discord.GuildMember, client: Discord.Client) {
     if (args[1] === undefined) {
         var APIReason: null | string = null
         var reason = "No reason provided";
@@ -11,6 +11,11 @@ export function execute(message: Discord.Message, args: string[], target: Discor
         args.shift();
         var reason = args.join(" ")
         var APIReason = reason;
+    }
+    if (message.guild.id === "685236709277040802") {
+        var modLogChannel = "726176580405035169";
+    } else if (message.guild.id === "766356648012283934") {
+        var modLogChannel = "781602141584097351";
     }
     // @ts-ignore
     target.kick([APIReason]).then(() => {
