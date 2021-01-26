@@ -19,7 +19,7 @@ export function execute(message: Discord.Message, client: Discord.Client, config
                 let reqEmbed = {
                     title: "Update",
                     color: 0xD72D42,
-                    description: "```" + error + "```", //
+                    description: "```" + error + "```", //h
                     timestamp: new Date()
                 }
                 message.channel.send({embed: reqEmbed});
