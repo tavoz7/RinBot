@@ -3,8 +3,8 @@ const client = new Discord.Client();
 const commands = new Discord.Collection();
 const fs = require('fs');
 const { prefix, token, lastChannelID, updateInProgress, lastClientMessageID } = require('./config.json');
-var version = "0.16.1 - Pre-Release";
-var versionDate = "18 January 2020";
+var version = "0.17 - Pre-Release";
+var versionDate = "26 January 2020";
 const configFile = './config.json'
 const file = require('./config.json');
 const codeBlue = 0x24ACF2;
@@ -17,6 +17,14 @@ const avatarRateLimit = new Set();
 const serverInfoRateLimit = new Set();
 const helpRateLimit = new Set();
 const robloxRateLimit = new Set();
+
+const admin = require('firebase-admin'); // quotes
+const serviceAccount = require('./firebase-serviceAccount.json');
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount)
+});
+console.log("\x1b[32m[SUCCESS]","\x1b[0mAuthenticated to Firebase");
+var db = admin.firestore();
 
 // that one color i need: 0x395F85;
 
@@ -244,6 +252,8 @@ client.on('message', (message) => { // fires whenever a message is sent
         case 'rps':
            commands.get('rps').execute(message, args, client);
            break;
+        case 'say':
+            commands.get('say').execute(message, args);
     }
 });
 
@@ -279,4 +289,4 @@ client.once("ready", () => { // bot custom status
     }
 });
 
- client.login(token); // makes stuff work
+client.login(token); // makes stuff work

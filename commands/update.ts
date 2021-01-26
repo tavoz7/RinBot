@@ -79,10 +79,20 @@ export function execute(message: Discord.Message, client: Discord.Client, config
                         file.updateInProgress = true;
                         file.lastChannelID = message.channel.id;
                         file.lastClientMessageID = client.user.lastMessageID;
-                        let data = JSON.stringify(file, null, 2);
-                        fs.writeFileSync('./config.json', data);
-                        // please for the love of god add error handling here
-                        process.exit();
+                        fs.writeFile(file, JSON.stringify(file, null, 2), (error) => {
+                            if (error) {
+                                var reqEmbed = {
+                                    color: 0xD72D42,
+                                    title: "Error Writing JSON",
+                                    description: "```" + error + "```",
+                                    timestamp: new Date()
+                                }
+                                message.channel.send({embed: reqEmbed});
+                                console.error(error);
+                                return;
+                            }
+                            process.exit();
+                        });
                     }
                 })
             }))
