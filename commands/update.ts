@@ -79,7 +79,7 @@ export function execute(message: Discord.Message, client: Discord.Client, config
                         file.updateInProgress = true;
                         file.lastChannelID = message.channel.id;
                         file.lastClientMessageID = client.user.lastMessageID;
-                        fs.writeFile(file, JSON.stringify(file, null, 2), (error) => {
+                        fs.writeFile('../../config.json', JSON.stringify(file, null, 2), (error) => {
                             if (error) {
                                 var reqEmbed = {
                                     color: 0xD72D42,
