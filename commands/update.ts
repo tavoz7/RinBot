@@ -75,24 +75,14 @@ export function execute(message: Discord.Message, client: Discord.Client, config
                     }
                     else {
                         // Write to config.json to notify the bot upon restart that an update was applied, and where to delete the restart message then replace it with the update complete message
-                        let file = require('../../config.json');
+                        let file = require('./config.json');
                         file.updateInProgress = true;
                         file.lastChannelID = message.channel.id;
                         file.lastClientMessageID = client.user.lastMessageID;
-                        fs.writeFile('../../config.json', JSON.stringify(file, null, 2), (error) => {
-                            if (error) {
-                                var reqEmbed = {
-                                    color: 0xD72D42,
-                                    title: "Error Writing JSON",
-                                    description: "```" + error + "```",
-                                    timestamp: new Date()
-                                }
-                                message.channel.send({embed: reqEmbed});
-                                console.error(error);
-                                return;
-                            }
-                            process.exit();
-                        });
+                        let data = JSON.stringify(file, null, 2);
+                        fs.writeFileSync('./config.json', data);
+                        // please for the love of god add error handling here
+                        process.exit();
                     }
                 })
             }))
