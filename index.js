@@ -53,7 +53,6 @@ client.on('message', (message) => { // fires whenever a message is sent
             commands.get('rule').execute(message, args, client);
             break;
         case 'userinfo':
-            if (!approvedUser) return;
             var mentionedUser = message.guild.member(message.mentions.users.first());
             if (args.length === 0 &&  message.mentions.users.first() === undefined) { // stuff for determining who's info to pull up
                 mentionedUser = message.member;
