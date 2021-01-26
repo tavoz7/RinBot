@@ -3,7 +3,7 @@ const client = new Discord.Client();
 const commands = new Discord.Collection();
 const fs = require('fs');
 const { prefix, token, lastChannelID, updateInProgress, lastClientMessageID } = require('./config.json');
-var version = "0.17 - Pre-Release";
+var version = "0.17.1 - Pre-Release";
 var versionDate = "26 January 2020";
 const configFile = './config.json'
 const file = require('./config.json');
@@ -252,6 +252,9 @@ client.on('message', (message) => { // fires whenever a message is sent
         case 'rps':
            commands.get('rps').execute(message, args, client);
            break;
+        case 'quote':
+            commands.get('quote').execute(message, args, client, db, prefix);
+            break;
         case 'say':
             commands.get('say').execute(message, args);
     }
@@ -269,7 +272,6 @@ client.once("ready", () => { // bot custom status
         }
         client.channels.fetch(lastChannelID).then(channel => channel.messages.fetch(lastClientMessageID).then(message => message.delete()));
         client.channels.fetch(lastChannelID).then(channel => channel.send({embed: reqEmbed}));
-        // client.channels.fetch(lastChannelID).then(channel => channel.messages.fetch(lastClientMessageID).then(message => message.edit({embed: reqEmbed})));
         file.updateInProgress = false;
         file.lastChannelID = null;
         file.lastClientMessageID = null;

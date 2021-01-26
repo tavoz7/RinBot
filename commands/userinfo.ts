@@ -33,11 +33,11 @@ export function execute(message: Discord.Message, args: string[], mentionedUser:
         return;
     }
     var userTotalPerms = mentionedUser.permissions.toArray().sort((a, b) => {
-            if (a < b)
-                return -1;
-            else if (a > b)
-                return 1;
-            return 0;
+        if (a < b)
+            return -1;
+        else if (a > b)
+            return 1;
+        return 0;
         });
     var unnededPerms = ['ADD_REACTIONS','ATTACH_FILES','CHANGE_NICKNAME','CONNECT','CREATE_INSTANT_INVITE','DEAFEN_MEMBERS','EMBED_LINKS','MANAGE_EMOJIS','MOVE_MEMBERS','MUTE_MEMBERS','PRIORITY_SPEAKER','READ_MESSAGE_HISTORY','SEND_MESSAGES','SEND_TTS_MESSAGES','SPEAK','STREAM','USE_EXTERNAL_EMOJIS','USE_VAD','VIEW_AUDIT_LOG','VIEW_CHANNEL','VIEW_GUILD_INSIGHTS']
     var userPerms: string | Discord.PermissionString[] = userTotalPerms.filter((f: string) => !unnededPerms.includes(f));
@@ -48,20 +48,9 @@ export function execute(message: Discord.Message, args: string[], mentionedUser:
         userPerms = userPerms.join(", ").replace(/_/g, ' ').toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ').replace("Add Reactions, ", "").replace("Attach Files,", "");
     }
 
-    if (moment(mentionedUser.joinedTimestamp).format('Z').includes("05:00")) {
-        var joinedAtTimeZone = "CDT";
-    }
-    else if (moment(mentionedUser.joinedTimestamp).format('Z').includes("06:00")) {
-        var joinedAtTimeZone = "CST";
-    }
+    var joinedAtTimeZone = moment(mentionedUser.joinedTimestamp).format('Z').includes("05:00") ? "CDT" : "CST";
+    var createdAtTimeZone = moment(mentionedUser.user.createdAt).format("Z").includes("05:00") ? "CDT": "CST";
 
-
-    if (moment(mentionedUser.user.createdAt).format("Z").includes("05:00")) {
-        var createdAtTimeZone = "CDT";
-    }
-    else if (moment(mentionedUser.user.createdAt).format("Z").includes("06:00")) {
-        var createdAtTimeZone = "CST";
-    }
     if (mentionedUser.id === message.guild.ownerID) {
         var serverAcknowledgements = "Server Owner";
         if (mentionedUser.id === '245047280908894209') {
@@ -80,28 +69,16 @@ export function execute(message: Discord.Message, args: string[], mentionedUser:
             serverAcknowledgements = `Member, ${client.user.username} Developer`
         }
     }
-    if (mentionedUser.nickname === null) {
-        var nickname = "None";
-    }
-    else {
-        var nickname = mentionedUser.nickname;
-    }
+
+    var nickname = mentionedUser.nickname === null ? "None" : mentionedUser.nickname;
+
     if (mentionedUser.premiumSinceTimestamp === null || mentionedUser.premiumSinceTimestamp === 0) {
         var boostStatus = "Not Boosting";
     }
     else {
-        if (moment(mentionedUser.premiumSinceTimestamp).format("Z").includes("05:00")) {
-            var boostStatus = moment(mentionedUser.premiumSinceTimestamp).format("D MMM YYYY [at] h:mm A") + " CDT";
-        }
-        else if (moment(mentionedUser.premiumSinceTimestamp).format("Z").includes("06:00")) {
-            var boostStatus = moment(mentionedUser.premiumSinceTimestamp).format("D MMM YYYY [at] h:mm A") + " CST";
-        }
+        var boostStatus = moment(mentionedUser.premiumSinceTimestamp).format("Z").includes("05:00") ? moment(mentionedUser.premiumSinceTimestamp).format("D MMM YYYY [at] h:mm A") + " CDT" : boostStatus = moment(mentionedUser.premiumSinceTimestamp).format("D MMM YYYY [at] h:mm A") + " CST";
     }
-    if (mentionedUser.roles.cache.map(role => role.id).length - 1 === 0) {
-        var memberRoles = "None";
-    } else {
-        var memberRoles = mentionedUser.roles.cache.map(roles => roles).sort((a, b) => b.rawPosition - a.rawPosition).join(' ').replace("@everyone", "");
-    }
+    var memberRoles = mentionedUser.roles.cache.map(role => role.id).length - 1 === 0 ? "None" : mentionedUser.roles.cache.map(roles => roles).sort((a, b) => b.rawPosition - a.rawPosition).join(' ').replace("@everyone", "");
 
     var reqEmbed = {
         author: {
