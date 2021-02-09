@@ -102,7 +102,7 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
                     infractionLevel: admin.firestore.FieldValue.increment(1),
                     lastModified: new Date(),
                 })
-                let retrievedDoc = await docRef.get();
+                let retrievedDoc = await db.collection(interaction.guild_id).doc('strikes').collection('image').doc(targetMember.user.id).get();
                 sendInteraction(`:white_check_mark: Successfully gave an image strike to ${targetMember.user.username}. (Strike ${retrievedDoc.data().infractionLevel} of 3)`);
                 await sendModLog("Given", retrievedDoc);
             }
@@ -117,7 +117,7 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
             })
             targetMember.roles.add(disabledImagesRole);
             sendInteraction(`:white_check_mark: Successfully gave an image strike to ${targetMember.user.username} and revoked image permissions. (Strike 3 of 3)`);
-            let retrievedDoc = await docRef.get()
+            let retrievedDoc = await db.collection(interaction.guild_id).doc('strikes').collection('image').doc(targetMember.user.id).get()
             await sendModLog("Given", retrievedDoc);
         }
     }
@@ -166,7 +166,7 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
                     infractionLevel: requestedDoc.data().infractionLevel - amount,
                     lastModified: new Date()
                 })
-                let retrievedDoc = (await docRef.get());
+                let retrievedDoc = await db.collection(interaction.guild_id).doc('strikes').collection('image').doc(targetMember.user.id).get();
                 sendInteraction(`:white_check_mark: Successfully removed ${amount} strike from ${targetMember.user.username}. (Strike ${retrievedDoc.data().infractionLevel} of 3)`);
                 await sendModLog("Removed", retrievedDoc);
             }
@@ -180,7 +180,7 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
                     infractionLevel: requestedDoc.data().infractionLevel - amount,
                     lastModified: new Date()
                 })
-                let retrievedDoc = (await docRef.get());
+                let retrievedDoc = await db.collection(interaction.guild_id).doc('strikes').collection('image').doc(targetMember.user.id).get();
                 sendInteraction(`:white_check_mark: Successfully removed ${amount} strike${amount === 1 ? '' : 's'} from ${targetMember.user.username}. (Strike ${retrievedDoc.data().infractionLevel} of 3)`);
                 await sendModLog("Removed", retrievedDoc);
             }
@@ -192,7 +192,7 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
                 lastModified: new Date()
             })
             sendInteraction(`:white_check_mark: Successfully removed ${amount} strike${amount === 1 ? '' : 's'} from ${targetMember.user.username} and restored image permissions.`);
-            let retrievedDoc = await docRef.get()
+            let retrievedDoc = await db.collection(interaction.guild_id).doc('strikes').collection('image').doc(targetMember.user.id).get()
             await sendModLog("Removed (L3)", retrievedDoc);
         }
     }
@@ -208,7 +208,7 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
                 lastModified: new Date()
             })
             sendInteraction(`:white_check_mark: Successfully removed all strikes from ${targetMember.user.username} and restored image permissions.`);
-            let retrievedDoc = await docRef.get()
+            let retrievedDoc = await db.collection(interaction.guild_id).doc('strikes').collection('image').doc(targetMember.user.id).get()
             await sendModLog("Reset (L3)", retrievedDoc);
         } else if (requestedDoc.data().infractionLevel > 2) {
             docRef.update({
