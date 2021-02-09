@@ -197,7 +197,7 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
         }
     }
     else if (interaction.data.options[0].name === "reset") {
-        if (requestedDoc.data() === undefined) {
+        if (requestedDoc.data() === undefined || requestedDoc.data().infractionLevel === 0) {
             sendInteraction(`:x: ${targetMember.user.username} doesn't have any strikes!`);
             return;
         }
