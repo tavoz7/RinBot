@@ -79,7 +79,8 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
             })
             let retrievedDoc = await docRef.get();
             sendInteraction(`:white_check_mark: Successfully gave an image strike to ${targetMember.user.username}. (Strike ${retrievedDoc.data().infractionLevel} of 3)`);
-        } else if (requestedDoc.data().infractionLevel < 2) { // doc exists, lt 2
+        }
+        else if (requestedDoc.data().infractionLevel < 2) { // doc exists, lt 2
             // 1-2 months
             if (new Date().getTime() - new Date(requestedDoc.data().lastModified.toDate()).getTime() >= 2.628e+9 && new Date().getTime() - new Date(requestedDoc.data().lastModified.toDate()).getTime() < 5.256e+9 && requestedDoc.data().infractionLevel !== 0) {
                 sendInteraction(`:white_check_mark: Successfully gave an image strike to ${targetMember.user.username}. (Strike ${requestedDoc.data().infractionLevel} of 3)`);
@@ -104,9 +105,11 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
                 sendInteraction(`:white_check_mark: Successfully gave an image strike to ${targetMember.user.username}. (Strike ${retrievedDoc.data().infractionLevel} of 3)`);
                 await sendModLog("Given", retrievedDoc);
             }
-        } else if (requestedDoc.data().infractionLevel === 3) { // perms already nuked
+        }
+        else if (requestedDoc.data().infractionLevel === 3) { // perms already nuked
             sendInteraction(`:x: ${targetMember.user.username} already has the maximum amount of strikes possible.`);
-        } else { // doc exists, equals 2
+        }
+        else { // doc exists, equals 2
             docRef.update({
                 infractionLevel: admin.firestore.FieldValue.increment(1),
                 lastModified: new Date(),
@@ -116,7 +119,8 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
             let retrievedDoc = await docRef.get()
             await sendModLog("Given", retrievedDoc);
         }
-    } else if (interaction.data.options[0].name === "remove") {
+    }
+    else if (interaction.data.options[0].name === "remove") {
         if (checkIfAllowed() === false) {
             sendInteraction(":x: You don't have permission to do that!");
             return;
@@ -189,7 +193,8 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
             let retrievedDoc = await docRef.get()
             await sendModLog("Removed (L3)", retrievedDoc);
         }
-    } else if (interaction.data.options[0].name === "reset") {
+    }
+    else if (interaction.data.options[0].name === "reset") {
         if (requestedDoc.data().infractionLevel === 3) {
             targetMember.roles.remove(disabledImagesRole);
             docRef.update({
@@ -206,7 +211,8 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
             })
             sendInteraction(`:white_check_mark: Successfully removed all strikes from ${targetMember.user.username}.`);
         }
-    } else if (interaction.data.options[0].name === "get") {
+    }
+    else if (interaction.data.options[0].name === "get") {
         if (checkIfAllowed() === true) {
             if (new Date().getTime() - new Date(requestedDoc.data().lastModified.toDate()).getTime() >= 2.628e+9 && new Date().getTime() - new Date(requestedDoc.data().lastModified.toDate()).getTime() < 5.256e+9 && requestedDoc.data().infractionLevel !== 0 && requestedDoc.data().infractionLevel !== 3) {
                 await docRef.update({
@@ -231,7 +237,8 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
             requestedDoc = await docRef.get();
             let isRequestingSelf = targetMember.user.username === interaction.member.user.username;
             sendInteraction(`${isRequestingSelf ? "You" : targetMember.user.username} currently ${isRequestingSelf ? "have" : "has"} ${requestedDoc.data().infractionLevel === 3 ? ` ${isRequestingSelf ? 'your' : 'their'} image permissions revoked` : `${requestedDoc.data().infractionLevel} of 3 strikes`}.`)
-        } else {
+        }
+        else {
             if (targetMember.user.id === interaction.member.user.id) { // 1-2 months
                 if (new Date().getTime() - new Date(requestedDoc.data().lastModified.toDate()).getTime() >= 2.628e+9 && new Date().getTime() - new Date(requestedDoc.data().lastModified.toDate()).getTime() < 5.256e+9 && requestedDoc.data().infractionLevel !== 0 && requestedDoc.data().infractionLevel !== 3) {
                     await docRef.update({
@@ -255,7 +262,8 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
                 }
                 requestedDoc = await docRef.get()
                 sendInteraction(`You currently have ${requestedDoc.data().infractionLevel === 3 ? "your image permissions revoked" : `${requestedDoc.data().infractionLevel} of 3 strikes`}.`);
-            } else {
+            }
+            else {
                 sendInteraction(`:x: You don't have permission to do that!`);
             }
         }
