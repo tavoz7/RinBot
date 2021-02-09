@@ -43,8 +43,8 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
                 infractionLevel: 1,
                 lastModified: new Date()
             })
-            let retrievedDoc = (await docRef.get()).data();
-            sendInteraction(`:white_check_mark: Successfully gave an image strike to ${targetMember.user.username}. (Strike ${retrievedDoc.infractionLevel} of 3)`);
+            let retrievedDoc = await docRef.get();
+            sendInteraction(`:white_check_mark: Successfully gave an image strike to ${targetMember.user.username}. (Strike ${retrievedDoc.data().infractionLevel} of 3)`);
         } else if (requestedDoc.data().infractionLevel < 2) { // doc exists, lt 2
             // 1-2 months
             if (new Date().getTime() - new Date(requestedDoc.data().lastModified.toDate()).getTime() >= 2.628e+9 && new Date().getTime() - new Date(requestedDoc.data().lastModified.toDate()).getTime() < 5.256e+9 && requestedDoc.data().infractionLevel !== 0) {
@@ -58,16 +58,16 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
                         lastModified: new Date(),
                     })
                 }
-                let retrievedDoc = (await docRef.get()).data();
-                sendInteraction(`:white_check_mark: Successfully gave an image strike to ${targetMember.user.username}. (Strike ${retrievedDoc.infractionLevel} of 3)`);
+                let retrievedDoc = await docRef.get();
+                sendInteraction(`:white_check_mark: Successfully gave an image strike to ${targetMember.user.username}. (Strike ${retrievedDoc.data().infractionLevel} of 3)`);
             }
             else {
                 docRef.update({
                     infractionLevel: admin.firestore.FieldValue.increment(1),
                     lastModified: new Date(),
                 })
-                let retrievedDoc = (await docRef.get()).data();
-                sendInteraction(`:white_check_mark: Successfully gave an image strike to ${targetMember.user.username}. (Strike ${retrievedDoc.infractionLevel} of 3)`);
+                let retrievedDoc = await docRef.get();
+                sendInteraction(`:white_check_mark: Successfully gave an image strike to ${targetMember.user.username}. (Strike ${retrievedDoc.data().infractionLevel} of 3)`);
             }
         } else if (requestedDoc.data().infractionLevel === 3) { // perms already nuked
             sendInteraction(`:x: ${targetMember.user.username} already has the maximum amount of strikes possible.`);
