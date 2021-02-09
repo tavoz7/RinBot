@@ -73,7 +73,7 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
     let requestedDoc = await docRef.get();
     if (interaction.data.options[0].name === "add") {
         if (requestedDoc.data() === undefined) { // no doc yet
-            docRef.set({
+            await docRef.set({
                 infractionLevel: 1,
                 lastModified: new Date()
             })
@@ -89,20 +89,20 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
             // more than 2 months
             else if (new Date().getTime() - new Date(requestedDoc.data().lastModified.toDate()).getTime() >= 5.256e+9 && requestedDoc.data().infractionLevel !== 0) {
                 if (requestedDoc.data().infractionLevel === 2) {
-                    docRef.update({
+                    await docRef.update({
                         infractionLevel: 1,
                         lastModified: new Date(),
                     })
                 }
-                let retrievedDoc = await db.collection(interaction.guild_id).doc('strikes').collection('image').doc(targetMember.user.id).get();
+                let retrievedDoc = await docRef.get();
                 sendInteraction(`:white_check_mark: Successfully gave an image strike to ${targetMember.user.username}. (Strike ${retrievedDoc.data().infractionLevel} of 3)`);
             }
             else {
-                docRef.update({
+                await docRef.update({
                     infractionLevel: admin.firestore.FieldValue.increment(1),
                     lastModified: new Date(),
                 })
-                let retrievedDoc = await db.collection(interaction.guild_id).doc('strikes').collection('image').doc(targetMember.user.id).get();
+                let retrievedDoc = await docRef.get();
                 sendInteraction(`:white_check_mark: Successfully gave an image strike to ${targetMember.user.username}. (Strike ${retrievedDoc.data().infractionLevel} of 3)`);
                 await sendModLog("Given", retrievedDoc);
             }
@@ -111,7 +111,7 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
             sendInteraction(`:x: ${targetMember.user.username} already has the maximum amount of strikes possible.`);
         }
         else { // doc exists, equals 2
-            docRef.update({
+            await docRef.update({
                 infractionLevel: admin.firestore.FieldValue.increment(1),
                 lastModified: new Date(),
             })
@@ -162,11 +162,11 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
                 sendInteraction(`:x: You can't do that - ${targetMember.user.username} only has ${requestedDoc.data().infractionLevel} strike${requestedDoc.data().infractionLevel === 1 ? '' : 's'}.`);
                 // 1-2 months
             } else {
-                docRef.update({
+                await docRef.update({
                     infractionLevel: requestedDoc.data().infractionLevel - amount,
                     lastModified: new Date()
                 })
-                let retrievedDoc = await db.collection(interaction.guild_id).doc('strikes').collection('image').doc(targetMember.user.id).get();
+                let retrievedDoc = await docRef.get();
                 sendInteraction(`:white_check_mark: Successfully removed ${amount} strike from ${targetMember.user.username}. (Strike ${retrievedDoc.data().infractionLevel} of 3)`);
                 await sendModLog("Removed", retrievedDoc);
             }
@@ -176,18 +176,18 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
                 sendInteraction(`:x: You can't do that - ${targetMember.user.username} only has ${requestedDoc.data().infractionLevel} strike${requestedDoc.data().infractionLevel === 1 ? '' : 's'}.`);
                 // 1-2 months
             } else {
-                docRef.update({
+                await docRef.update({
                     infractionLevel: requestedDoc.data().infractionLevel - amount,
                     lastModified: new Date()
                 })
-                let retrievedDoc = await db.collection(interaction.guild_id).doc('strikes').collection('image').doc(targetMember.user.id).get();
+                let retrievedDoc = await docRef.get();
                 sendInteraction(`:white_check_mark: Successfully removed ${amount} strike${amount === 1 ? '' : 's'} from ${targetMember.user.username}. (Strike ${retrievedDoc.data().infractionLevel} of 3)`);
                 await sendModLog("Removed", retrievedDoc);
             }
         }
         else if (requestedDoc.data().infractionLevel === 3) {
             targetMember.roles.remove(disabledImagesRole);
-            docRef.update({
+            await docRef.update({
                 infractionLevel: requestedDoc.data().infractionLevel - amount,
                 lastModified: new Date()
             })
@@ -203,7 +203,7 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
         }
         else if (requestedDoc.data().infractionLevel === 3) {
             targetMember.roles.remove(disabledImagesRole);
-            docRef.update({
+            await docRef.update({
                 infractionLevel: 0,
                 lastModified: new Date()
             })
@@ -211,7 +211,7 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
             let retrievedDoc = await db.collection(interaction.guild_id).doc('strikes').collection('image').doc(targetMember.user.id).get()
             await sendModLog("Reset (L3)", retrievedDoc);
         } else if (requestedDoc.data().infractionLevel > 2) {
-            docRef.update({
+            await docRef.update({
                 infractionLevel: 0,
                 lastModified: new Date()
             })
