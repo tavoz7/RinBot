@@ -108,6 +108,8 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
             })
             targetMember.roles.add(disabledImagesRole);
             sendInteraction(`:white_check_mark: Successfully gave an image strike to ${targetMember.user.username} and revoked image permissions. (Strike 3 of 3)`);
+            let retrievedDoc = await docRef.get()
+            await sendModLog("Given", retrievedDoc);
         }
     } else if (interaction.data.options[0].name === "remove") {
         if (checkIfAllowed() === false) {
