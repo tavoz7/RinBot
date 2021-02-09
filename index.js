@@ -258,8 +258,75 @@ client.on('message', (message) => { // fires whenever a message is sent
             commands.get('say').execute(message, client, args);
     }
 });
-
+client.ws.on("INTERACTION_CREATE", async interaction => {
+    commands.get('interactioninit').execute(client, interaction, db);
+})
 client.once("ready", () => { // bot custom status
+    client.api.applications(client.user.id).guilds('766356648012283934').commands.post({data: {
+        name: "imagestrike",
+        description: "Impose an image strike against a member.",
+        type: 2,
+        options: [
+            {
+                name: "add",
+                description: "Adds a strike to a member's strike tally.",
+                type: 1,
+                options: [
+                    {
+                        name: "member",
+                        description: "The member to add a strike to.",
+                        type: 6,
+                        required: true
+                    }
+                ]
+            },
+            {
+                name: "remove",
+                description: "Removes a number of strikes from a member's strike tally.",
+                type: 1,
+                options: [
+                    {
+                        name: "member",
+                        description: "The member to remove from.",
+                        type: 6,
+                        required: true
+                    },
+                    {
+                        name: "amount",
+                        description: "The amount of strikes to remove.",
+                        type: 4,
+                        required: true
+                    }
+                ]
+            },
+            {
+                name: "reset",
+                description: "Resets a member's strike tally.",
+                type: 1,
+                options: [
+                    {
+                        name: "member",
+                        description: "The member to reset.",
+                        type: 6,
+                        required: true
+                    }
+                ]
+            },
+            {
+                name: "get",
+                description: "Query the number of strikes a member has.",
+                type: 1,
+                options: [
+                    {
+                        name: "member",
+                        description: "The member to query.",
+                        type: 6,
+                        required: true
+                    }
+                ]
+            }
+        ]
+    }});
     console.log("\x1b[32m[READY]","\x1b[0mLogged in as " + client.user.tag);
     client.user.setActivity("the campfire crackle", {type: "LISTENING"});
     if (updateInProgress === true) {
@@ -289,5 +356,6 @@ client.once("ready", () => { // bot custom status
         });
     }
 });
+
 
 client.login(token); // makes stuff work
