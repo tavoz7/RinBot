@@ -26,7 +26,7 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
                 },
                 {
                     name: "Moderator",
-                    value: `<@${interaction.member.id}>`,
+                    value: `<@${interaction.member.user.id}>`,
                     inline: true
                 },
                 {
