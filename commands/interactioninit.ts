@@ -210,7 +210,7 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
             sendInteraction(`:white_check_mark: Successfully removed all strikes from ${targetMember.user.username} and restored image permissions.`);
             let retrievedDoc = await db.collection(interaction.guild_id).doc('strikes').collection('image').doc(targetMember.user.id).get()
             await sendModLog("Reset (L3)", retrievedDoc);
-        } else if (requestedDoc.data().infractionLevel > 2) {
+        } else if (requestedDoc.data().infractionLevel < 3) {
             await docRef.update({
                 infractionLevel: 0,
                 lastModified: new Date()
