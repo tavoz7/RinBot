@@ -126,20 +126,20 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
         }
         const amount = parseInt(interaction.data.options[0].options[1].value); // not needed but typescript complains
         if (new Date().getTime() - new Date(requestedDoc.data().lastModified.toDate()).getTime() >= 2.628e+9 && new Date().getTime() - new Date(requestedDoc.data().lastModified.toDate()).getTime() < 5.256e+9 && requestedDoc.data().infractionLevel !== 0 && requestedDoc.data().infractionLevel !== 3) {
-            docRef.update({
+            await docRef.update({
                 infractionLevel: admin.firestore.FieldValue.increment(-1),
                 lastModified: new Date()
             })
         }
         else if (new Date().getTime() - new Date(requestedDoc.data().lastModified.toDate()).getTime() >= 5.256e+9 && requestedDoc.data().infractionLevel !== 0 && requestedDoc.data().infractionLevel !== 3) {
             if (requestedDoc.data().infractionLevel === 1) {
-                docRef.update({
+                await docRef.update({
                     infractionLevel: admin.firestore.FieldValue.increment(-1),
                     lastModified: new Date()
                 })
             }
             else if (requestedDoc.data().infractionLevel === 2) {
-                docRef.update({
+                await docRef.update({
                     infractionLevel: admin.firestore.FieldValue.increment(-2),
                     lastModified: new Date()
                 })
