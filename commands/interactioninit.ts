@@ -127,6 +127,7 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
         }
         if (requestedDoc.data() === undefined) {
             sendInteraction(`:x: ${targetMember.user.username} doesn't have any strikes!`);
+            return;
         }
         const amount = parseInt(interaction.data.options[0].options[1].value); // not needed but typescript complains
         if (new Date().getTime() - new Date(requestedDoc.data().lastModified.toDate()).getTime() >= 2.628e+9 && new Date().getTime() - new Date(requestedDoc.data().lastModified.toDate()).getTime() < 5.256e+9 && requestedDoc.data().infractionLevel !== 0 && requestedDoc.data().infractionLevel !== 3) {
@@ -195,7 +196,11 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
         }
     }
     else if (interaction.data.options[0].name === "reset") {
-        if (requestedDoc.data().infractionLevel === 3) {
+        if (requestedDoc.data() === undefined) {
+            sendInteraction(`:x: ${targetMember.user.username} doesn't have any strikes!`);
+            return;
+        }
+        else if (requestedDoc.data().infractionLevel === 3) {
             targetMember.roles.remove(disabledImagesRole);
             docRef.update({
                 infractionLevel: 0,
@@ -214,6 +219,10 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
     }
     else if (interaction.data.options[0].name === "get") {
         if (checkIfAllowed() === true) {
+            if (requestedDoc.data() === undefined) {
+                sendInteraction(`:x: ${targetMember.user.username} doesn't have any strikes!`);
+                return;
+            }
             if (new Date().getTime() - new Date(requestedDoc.data().lastModified.toDate()).getTime() >= 2.628e+9 && new Date().getTime() - new Date(requestedDoc.data().lastModified.toDate()).getTime() < 5.256e+9 && requestedDoc.data().infractionLevel !== 0 && requestedDoc.data().infractionLevel !== 3) {
                 await docRef.update({
                     infractionLevel: admin.firestore.FieldValue.increment(-1),
@@ -240,6 +249,10 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
         }
         else {
             if (targetMember.user.id === interaction.member.user.id) { // 1-2 months
+                if (requestedDoc.data() === undefined) {
+                    sendInteraction(`:x: You don't have any strikes!`);
+                    return;
+                }
                 if (new Date().getTime() - new Date(requestedDoc.data().lastModified.toDate()).getTime() >= 2.628e+9 && new Date().getTime() - new Date(requestedDoc.data().lastModified.toDate()).getTime() < 5.256e+9 && requestedDoc.data().infractionLevel !== 0 && requestedDoc.data().infractionLevel !== 3) {
                     await docRef.update({
                         infractionLevel: admin.firestore.FieldValue.increment(-1),
