@@ -69,7 +69,7 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
             return;
         }
     }
-    let docRef = db.collection(interaction.guild_id).doc('strikes').collection('image').doc(targetMember.id);
+    let docRef = db.collection(interaction.guild_id).doc('strikes').collection('image').doc(targetMember.user.id);
     let requestedDoc = await docRef.get();
     if (interaction.data.options[0].name === "add") {
         if (requestedDoc.data() === undefined) { // no doc yet
@@ -79,6 +79,7 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
             })
             let retrievedDoc = await docRef.get();
             sendInteraction(`:white_check_mark: Successfully gave an image strike to ${targetMember.user.username}. (Strike ${retrievedDoc.data().infractionLevel} of 3)`);
+            return;
         }
         else if (requestedDoc.data().infractionLevel < 2) { // doc exists, lt 2
             // 1-2 months
