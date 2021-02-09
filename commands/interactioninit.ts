@@ -221,7 +221,7 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
     else if (interaction.data.options[0].name === "get") {
         if (checkIfAllowed() === true) {
             if (requestedDoc.data() === undefined) {
-                sendInteraction(`:x: ${targetMember.user.username} doesn't have any strikes!`);
+                sendInteraction(`${targetMember.user.username} doesn't have any strikes.`);
                 return;
             }
             if (new Date().getTime() - new Date(requestedDoc.data().lastModified.toDate()).getTime() >= 2.628e+9 && new Date().getTime() - new Date(requestedDoc.data().lastModified.toDate()).getTime() < 5.256e+9 && requestedDoc.data().infractionLevel !== 0 && requestedDoc.data().infractionLevel !== 3) {
