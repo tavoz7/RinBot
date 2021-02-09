@@ -209,20 +209,20 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
     } else if (interaction.data.options[0].name === "get") {
         if (checkIfAllowed() === true) {
             if (new Date().getTime() - new Date(requestedDoc.data().lastModified.toDate()).getTime() >= 2.628e+9 && new Date().getTime() - new Date(requestedDoc.data().lastModified.toDate()).getTime() < 5.256e+9 && requestedDoc.data().infractionLevel !== 0 && requestedDoc.data().infractionLevel !== 3) {
-                docRef.update({
+                await docRef.update({
                     infractionLevel: admin.firestore.FieldValue.increment(-1),
                     lastModified: new Date()
                 })
             }
             else if (new Date().getTime() - new Date(requestedDoc.data().lastModified.toDate()).getTime() >= 5.256e+9 && requestedDoc.data().infractionLevel !== 0 && requestedDoc.data().infractionLevel !== 3) {
                 if (requestedDoc.data().infractionLevel === 1) {
-                    docRef.update({
+                    await docRef.update({
                         infractionLevel: admin.firestore.FieldValue.increment(-1),
                         lastModified: new Date()
                     })
                 }
                 else if (requestedDoc.data().infractionLevel === 2) {
-                    docRef.update({
+                    await docRef.update({
                         infractionLevel: admin.firestore.FieldValue.increment(-2),
                         lastModified: new Date()
                     })
@@ -234,26 +234,26 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
         } else {
             if (targetMember.user.id === interaction.member.user.id) { // 1-2 months
                 if (new Date().getTime() - new Date(requestedDoc.data().lastModified.toDate()).getTime() >= 2.628e+9 && new Date().getTime() - new Date(requestedDoc.data().lastModified.toDate()).getTime() < 5.256e+9 && requestedDoc.data().infractionLevel !== 0 && requestedDoc.data().infractionLevel !== 3) {
-                    docRef.update({
+                    await docRef.update({
                         infractionLevel: admin.firestore.FieldValue.increment(-1),
                         lastModified: new Date()
                     })
                 }
                 else if (new Date().getTime() - new Date(requestedDoc.data().lastModified.toDate()).getTime() >= 5.256e+9 && requestedDoc.data().infractionLevel !== 0 && requestedDoc.data().infractionLevel !== 3) { // 2+ months
                     if (requestedDoc.data().infractionLevel === 1) {
-                        docRef.update({
+                        await docRef.update({
                             infractionLevel: admin.firestore.FieldValue.increment(-1),
                             lastModified: new Date()
                         })
                     }
                     else if (requestedDoc.data().infractionLevel === 2) {
-                        docRef.update({
+                        await docRef.update({
                             infractionLevel: admin.firestore.FieldValue.increment(-2),
                             lastModified: new Date()
                         })
                     }
                 }
-                requestedDoc = await docRef.get();
+                requestedDoc = await docRef.get()
                 sendInteraction(`You currently have ${requestedDoc.data().infractionLevel === 3 ? "your image permissions revoked" : `${requestedDoc.data().infractionLevel} of 3 strikes`}.`);
             } else {
                 sendInteraction(`:x: You don't have permission to do that!`);
