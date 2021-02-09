@@ -33,8 +33,13 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
                     name: "New Strike Amount",
                     value: `${retrievedDoc.data().infractionLevel} of 3`
                 }
-            ]
-        }})
+            ],
+            color: 0x24ACF2,
+            footer: {
+                text: `Member ID: ${targetMember.user.id} • Case ID: ${uuid.v4().slice(0, -28)}`
+            },
+            timestamp: new Date()
+        }});
     }
     function sendInteraction(message: string) {
         // @ts-expect-error     // not implemented in discord.js yet so we have to use this workaround
