@@ -1,5 +1,6 @@
 import Discord = require('discord.js');
 import admin = require('firebase-admin');
+import uuid = require('uuid');
 export const name = 'interactioninit';
 export async function execute(client: Discord.Client, interaction: {member: Discord.GuildMember, guild_id: string, id: string, data: {options: {options: {name: string, value: string}[], name: string}[], name: string, id: string} }, db: FirebaseFirestore.Firestore) {
     function checkIfAllowed() {
@@ -8,6 +9,32 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
             if (authorizedRoles.includes(r.id)) return true;
         }
         return false;
+    }
+    async function sendModLog(type: string, retrievedDoc: FirebaseFirestore.DocumentSnapshot) {
+        let modLogChannel = await client.channels.fetch(modLogChannelID);
+                (modLogChannel as Discord.TextChannel).send({embed:{
+                    author: {
+                        name: targetMember.user.tag,
+                        icon_url: targetMember.user.avatarURL({dynamic: false})
+                    },
+                    title: "Image Strike " + type,
+                    fields: [
+                        {
+                            name: "Member",
+                            value: targetMember.user.tag,
+                            inline: true
+                        },
+                        {
+                            name: "Moderator",
+                            value: `<@${interaction.member.id}>`,
+                            inline: true
+                        },
+                        {
+                            name: "New Strike Amount",
+                            value: `${retrievedDoc.data().infractionLevel} of 3`
+                        }
+                    ]
+                }})
     }
     function sendInteraction(message: string) {
         // @ts-expect-error     // not implemented in discord.js yet so we have to use this workaround
@@ -22,6 +49,8 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
     // console.log(interaction.data.options); // command name
     // console.log(interaction.data.options[0].options); // user, amnt.
     let authorizedRoles = ['769690913789313054'];
+    let modLogChannelID = "786592642364342302";
+    let disabledImagesRole = "769299680357122088";
     let invoker = await (await client.guilds.fetch(interaction.guild_id)).members.fetch(interaction.member.user.id);
     if (interaction.data.options[0].name !== "get" && checkIfAllowed() === false) {
         sendInteraction(":x: You don't have permission to do this!");
@@ -68,6 +97,7 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
                 })
                 let retrievedDoc = await docRef.get();
                 sendInteraction(`:white_check_mark: Successfully gave an image strike to ${targetMember.user.username}. (Strike ${retrievedDoc.data().infractionLevel} of 3)`);
+                await sendModLog("Given", retrievedDoc);
             }
         } else if (requestedDoc.data().infractionLevel === 3) { // perms already nuked
             sendInteraction(`:x: ${targetMember.user.username} already has the maximum amount of strikes possible.`);
@@ -76,7 +106,7 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
                 infractionLevel: admin.firestore.FieldValue.increment(1),
                 lastModified: new Date(),
             })
-            targetMember.roles.add('769299680357122088');
+            targetMember.roles.add(disabledImagesRole);
             sendInteraction(`:white_check_mark: Successfully gave an image strike to ${targetMember.user.username} and revoked image permissions. (Strike 3 of 3)`);
         }
     } else if (interaction.data.options[0].name === "remove") {
@@ -123,8 +153,9 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
                     infractionLevel: requestedDoc.data().infractionLevel - amount,
                     lastModified: new Date()
                 })
-                let retrievedDoc = (await docRef.get()).data();
-                sendInteraction(`:white_check_mark: Successfully removed ${amount} strike from ${targetMember.user.username}. (Strike ${requestedDoc.data().infractionLevel} of 3)`);
+                let retrievedDoc = (await docRef.get());
+                sendInteraction(`:white_check_mark: Successfully removed ${amount} strike from ${targetMember.user.username}. (Strike ${retrievedDoc.data().infractionLevel} of 3)`);
+                await sendModLog("Removed", retrievedDoc);
             }
         }
         else if (requestedDoc.data().infractionLevel === 2) {
@@ -136,12 +167,13 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
                     infractionLevel: requestedDoc.data().infractionLevel - amount,
                     lastModified: new Date()
                 })
-                let retrievedDoc = (await docRef.get()).data();
-                sendInteraction(`:white_check_mark: Successfully removed ${amount} strike${amount === 1 ? '' : 's'} from ${targetMember.user.username}. (Strike ${requestedDoc.data().infractionLevel} of 3)`);
+                let retrievedDoc = (await docRef.get());
+                sendInteraction(`:white_check_mark: Successfully removed ${amount} strike${amount === 1 ? '' : 's'} from ${targetMember.user.username}. (Strike ${retrievedDoc.data().infractionLevel} of 3)`);
+                await sendModLog("Removed", retrievedDoc);
             }
         }
         else if (requestedDoc.data().infractionLevel === 3) {
-            targetMember.roles.remove('769299680357122088');
+            targetMember.roles.remove(disabledImagesRole);
             docRef.update({
                 infractionLevel: requestedDoc.data().infractionLevel - amount,
                 lastModified: new Date()
@@ -150,12 +182,14 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
         }
     } else if (interaction.data.options[0].name === "reset") {
         if (requestedDoc.data().infractionLevel === 3) {
-            targetMember.roles.remove('769299680357122088');
+            targetMember.roles.remove(disabledImagesRole);
             docRef.update({
                 infractionLevel: 0,
                 lastModified: new Date()
             })
             sendInteraction(`:white_check_mark: Successfully removed all strikes from ${targetMember.user.username} and restored image permissions.`);
+            let retrievedDoc = await docRef.get()
+            await sendModLog("Reset (L3)", retrievedDoc);
         } else if (requestedDoc.data().infractionLevel > 2) {
             docRef.update({
                 infractionLevel: 0,
