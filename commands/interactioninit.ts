@@ -31,7 +31,8 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
                 },
                 {
                     name: "New Strike Amount",
-                    value: `${retrievedDoc.data().infractionLevel} of 3`
+                    value: `${retrievedDoc.data().infractionLevel} of 3`,
+                    inline: true
                 }
             ],
             color: 0x24ACF2,

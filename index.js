@@ -3,7 +3,7 @@ const client = new Discord.Client();
 const commands = new Discord.Collection();
 const fs = require('fs');
 const { prefix, token, lastChannelID, updateInProgress, lastClientMessageID } = require('./config.json');
-var version = "0.18.3 - Pre-Release";
+var version = "0.18.4 - Pre-Release";
 var versionDate = "9 February 2021";
 const configFile = './config.json'
 const file = require('./config.json');
@@ -262,7 +262,7 @@ client.ws.on("INTERACTION_CREATE", async interaction => {
     commands.get('interactioninit').execute(client, interaction, db);
 })
 client.once("ready", () => { // bot custom status
-    client.api.applications(client.user.id).guilds('685236709277040802').commands.post({data: {
+    client.api.applications(client.user.id).commands.post({data: {
         name: "imagestrike",
         description: "Impose an image strike against a member.",
         type: 2,
