@@ -12,29 +12,29 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
     }
     async function sendModLog(type: string, retrievedDoc: FirebaseFirestore.DocumentSnapshot) {
         let modLogChannel = await client.channels.fetch(modLogChannelID);
-                (modLogChannel as Discord.TextChannel).send({embed:{
-                    author: {
-                        name: targetMember.user.tag,
-                        icon_url: targetMember.user.avatarURL({dynamic: false})
-                    },
-                    title: "Image Strike " + type,
-                    fields: [
-                        {
-                            name: "Member",
-                            value: targetMember.user.tag,
-                            inline: true
-                        },
-                        {
-                            name: "Moderator",
-                            value: `<@${interaction.member.id}>`,
-                            inline: true
-                        },
-                        {
-                            name: "New Strike Amount",
-                            value: `${retrievedDoc.data().infractionLevel} of 3`
-                        }
-                    ]
-                }})
+        (modLogChannel as Discord.TextChannel).send({embed:{
+            author: {
+                name: targetMember.user.tag,
+                icon_url: targetMember.user.avatarURL({dynamic: false})
+            },
+            title: "Image Strike " + type,
+            fields: [
+                {
+                    name: "Member",
+                    value: targetMember.user.tag,
+                    inline: true
+                },
+                {
+                    name: "Moderator",
+                    value: `<@${interaction.member.id}>`,
+                    inline: true
+                },
+                {
+                    name: "New Strike Amount",
+                    value: `${retrievedDoc.data().infractionLevel} of 3`
+                }
+            ]
+        }})
     }
     function sendInteraction(message: string) {
         // @ts-expect-error     // not implemented in discord.js yet so we have to use this workaround
@@ -179,6 +179,8 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
                 lastModified: new Date()
             })
             sendInteraction(`:white_check_mark: Successfully removed ${amount} strike${amount === 1 ? '' : 's'} from ${targetMember.user.username} and restored image permissions.`);
+            let retrievedDoc = await docRef.get()
+            await sendModLog("Removed (L3)", retrievedDoc);
         }
     } else if (interaction.data.options[0].name === "reset") {
         if (requestedDoc.data().infractionLevel === 3) {
