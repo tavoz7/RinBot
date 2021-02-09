@@ -94,7 +94,7 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
                         lastModified: new Date(),
                     })
                 }
-                let retrievedDoc = await docRef.get();
+                let retrievedDoc = await db.collection(interaction.guild_id).doc('strikes').collection('image').doc(targetMember.user.id).get();
                 sendInteraction(`:white_check_mark: Successfully gave an image strike to ${targetMember.user.username}. (Strike ${retrievedDoc.data().infractionLevel} of 3)`);
             }
             else {
