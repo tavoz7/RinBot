@@ -80,12 +80,14 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
             })
             let retrievedDoc = await docRef.get();
             sendInteraction(`:white_check_mark: Successfully gave an image strike to ${targetMember.user.username}. (Strike ${retrievedDoc.data().infractionLevel} of 3)`);
+            await sendModLog("Given", retrievedDoc);
             return;
         }
         else if (requestedDoc.data().infractionLevel < 2) { // doc exists, lt 2
             // 1-2 months
             if (new Date().getTime() - new Date(requestedDoc.data().lastModified.toDate()).getTime() >= 2.628e+9 && new Date().getTime() - new Date(requestedDoc.data().lastModified.toDate()).getTime() < 5.256e+9 && requestedDoc.data().infractionLevel !== 0) {
                 sendInteraction(`:white_check_mark: Successfully gave an image strike to ${targetMember.user.username}. (Strike ${requestedDoc.data().infractionLevel} of 3)`);
+                await sendModLog("Given", requestedDoc);
             }
             // more than 2 months
             else if (new Date().getTime() - new Date(requestedDoc.data().lastModified.toDate()).getTime() >= 5.256e+9 && requestedDoc.data().infractionLevel !== 0) {
@@ -97,6 +99,7 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
                 }
                 let retrievedDoc = await docRef.get();
                 sendInteraction(`:white_check_mark: Successfully gave an image strike to ${targetMember.user.username}. (Strike ${retrievedDoc.data().infractionLevel} of 3)`);
+                await sendModLog("Given", retrievedDoc);
             }
             else {
                 await docRef.update({
