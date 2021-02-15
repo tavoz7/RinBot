@@ -3,7 +3,7 @@ const client = new Discord.Client();
 const commands = new Discord.Collection();
 const fs = require('fs');
 const { prefix, token, lastChannelID, updateInProgress, lastClientMessageID } = require('./config.json');
-var version = "0.18.5 - Pre-Release";
+var version = "0.19 - Pre-Release";
 var versionDate = "11 February 2021";
 const configFile = './config.json'
 const file = require('./config.json');
@@ -256,13 +256,15 @@ client.on('message', (message) => { // fires whenever a message is sent
             break;
         case 'say':
             commands.get('say').execute(message, client, args);
+        case 'retrieve':
+            commands.get('retrieve').execute(message, args);
     }
 });
 client.ws.on("INTERACTION_CREATE", async interaction => {
     commands.get('interactioninit').execute(client, interaction, db);
 })
 client.once("ready", () => { // bot custom status
-    client.api.applications(client.user.id).commands.post({data: {
+    /* client.api.applications(client.user.id).commands.post({data: {
         name: "imagestrike",
         description: "Impose an image strike against a member.",
         type: 2,
@@ -326,7 +328,7 @@ client.once("ready", () => { // bot custom status
                 ]
             }
         ]
-    }});
+    }}); */
     console.log("\x1b[32m[READY]","\x1b[0mLogged in as " + client.user.tag);
     client.user.setActivity("the campfire crackle", {type: "LISTENING"});
     if (updateInProgress === true) {
