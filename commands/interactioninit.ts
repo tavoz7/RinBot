@@ -250,7 +250,7 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
             }
             requestedDoc = await docRef.get();
             let isRequestingSelf = targetMember.user.username === interaction.member.user.username;
-            sendInteraction(`${isRequestingSelf ? "You" : targetMember.user.username} currently ${isRequestingSelf ? "have" : "has"} ${requestedDoc.data().infractionLevel === 3 ? ` ${isRequestingSelf ? 'your' : 'their'} image permissions revoked` : `${requestedDoc.data().infractionLevel} of 3 strikes`}.`)
+            sendInteraction(`${isRequestingSelf ? "You" : targetMember.user.username} currently ${isRequestingSelf ? "have" : "has"} ${requestedDoc.data().infractionLevel === 3 ? `${isRequestingSelf ? 'your' : 'their'} image permissions revoked` : `${requestedDoc.data().infractionLevel} of 3 strikes`}.`)
         }
         else {
             if (targetMember.user.id === interaction.member.user.id) { // 1-2 months
