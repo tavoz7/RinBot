@@ -330,7 +330,7 @@ client.once("ready", () => { // bot custom status
         ]
     }}); */
     console.log("\x1b[32m[READY]","\x1b[0mLogged in as " + client.user.tag);
-    client.user.setActivity("a battle against Mustache Girl", {type: "COMPETING"});
+    client.user.setActivity("Corgi Quest 7", {type: "Playing"});
     if (updateInProgress === true) {
         var reqEmbed = {
             title: "Update Complete!",
