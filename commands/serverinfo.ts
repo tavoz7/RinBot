@@ -2,7 +2,7 @@ import moment = require('moment');
 import Discord = require('discord.js');
 export const name = 'serverinfo';
 export const description = "Display information about the server";
-export function execute(message: Discord.Message, args: string[], client: Discord.Client) {
+export async function execute(message: Discord.Message, args: string[], client: Discord.Client) {
     if (moment(message.guild.createdAt).format("Z").includes("05:00")) {
         var serverCreatedAtTimeZone = "CDT"
     }
@@ -10,7 +10,7 @@ export function execute(message: Discord.Message, args: string[], client: Discor
         var serverCreatedAtTimeZone = "CST"
     }
     if (args[0] === '-h') {
-        let helpEmbed = {
+        const helpEmbed = {
             author: {
                 name: client.user.username,
                 icon_url: client.user.avatarURL(),
@@ -36,14 +36,15 @@ export function execute(message: Discord.Message, args: string[], client: Discor
         message.channel.send({embed: helpEmbed});
     }
     else if (!message.guild.available) {
-        let guildRetError = {
+        const guildRetError = {
             color: 0xD72D42,
             description: ":x: Unable to retrieve guild information at this time."
         }
         message.channel.send({embed: guildRetError});
     }
     else if (args.length === 0) {
-        let reqEmbed = {
+        const owner = await message.guild.members.fetch(message.guild.ownerID);
+        const reqEmbed = {
             author: {
                 name: message.guild.name,
                 icon_url: message.guild.iconURL({dynamic: true}),
@@ -54,7 +55,7 @@ export function execute(message: Discord.Message, args: string[], client: Discor
             fields: [
                 {
                     name: "Server Owner",
-                    value: message.guild.owner.user.tag,
+                    value: owner.user.tag,
                 },
                 {
                     name: "Member Count",

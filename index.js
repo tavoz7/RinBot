@@ -3,7 +3,7 @@ const client = new Discord.Client();
 const commands = new Discord.Collection();
 const fs = require('fs');
 const { prefix, token, lastChannelID, updateInProgress, lastClientMessageID } = require('./config.json');
-var version = "0.19.1 - Pre-Release";
+var version = "0.19.2 - Pre-Release";
 var versionDate = "11 February 2021";
 const configFile = './config.json'
 const file = require('./config.json');
@@ -36,7 +36,7 @@ for (const file of commandFiles) {
 }
 
 client.on('message', (message) => { // fires whenever a message is sent
-    if (!message.content.startsWith(prefix) || message.author.bot || message.channel.type === 'dm') return;
+    if (!message.content.startsWith(prefix) || message.author.bot || message.channel.type === 'dm' || message.webhookID) return;
     if (message.member.roles.cache.has('685237145052512321') /* head mods */ || message.member.roles.cache.has('769013132541558795') /* mods */ || message.member.roles.cache.has('772162214865272842') /* trial mods */ || message.author.id === "245047280908894209") {
         var approvedUser = true;
     }
@@ -338,8 +338,8 @@ client.once("ready", () => { // bot custom status
             description: `:white_check_mark: Version ${version}`,
             timestamp: new Date()
         }
-        client.channels.fetch(lastChannelID).then(channel => channel.messages.fetch(lastClientMessageID).then(message => message.delete()));
-        client.channels.fetch(lastChannelID).then(channel => channel.send({embed: reqEmbed}));
+        client.channels.fetch(lastChannelID).then(c => c.messages.fetch(lastClientMessageID).then(m => m.delete()));
+        client.channels.fetch(lastChannelID).then(c => c.send({embed: reqEmbed}));
         file.updateInProgress = false;
         file.lastChannelID = null;
         file.lastClientMessageID = null;
