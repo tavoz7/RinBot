@@ -41,13 +41,8 @@ export function execute(message: Discord.Message, args: string[], mentionedUser:
         });
     var unnededPerms = ['ADD_REACTIONS','ATTACH_FILES','CHANGE_NICKNAME','CONNECT','CREATE_INSTANT_INVITE','DEAFEN_MEMBERS','EMBED_LINKS','MANAGE_EMOJIS','MOVE_MEMBERS','MUTE_MEMBERS','PRIORITY_SPEAKER','READ_MESSAGE_HISTORY','SEND_MESSAGES','SEND_TTS_MESSAGES','SPEAK','STREAM','USE_EXTERNAL_EMOJIS','USE_VAD','VIEW_AUDIT_LOG','VIEW_CHANNEL','VIEW_GUILD_INSIGHTS']
     var userPerms: string | Discord.PermissionString[] = userTotalPerms.filter((f: string) => !unnededPerms.includes(f));
-    if (userPerms.length === 0) {
-        userPerms = "None"
-    }
-    else {
-        userPerms = userPerms.join(", ").replace(/_/g, ' ').toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ').replace("Add Reactions, ", "").replace("Attach Files,", "");
-    }
-
+    let permAmount = userPerms.length;
+    userPerms = userPerms.length === 0 ? "None" : userPerms.join(", ").replace(/_/g, ' ').toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ').replace("Add Reactions, ", "").replace("Attach Files,", "");
     var joinedAtTimeZone = moment(mentionedUser.joinedTimestamp).format('Z').includes("05:00") ? "CDT" : "CST";
     var createdAtTimeZone = moment(mentionedUser.user.createdAt).format("Z").includes("05:00") ? "CDT": "CST";
 
@@ -121,7 +116,7 @@ export function execute(message: Discord.Message, args: string[], mentionedUser:
                 value: memberRoles
             },
             {
-                name: "Significant Permissions",
+                name: `Significant Permissions (${permAmount})`,
                 value: userPerms
             },
             {
