@@ -47,11 +47,11 @@ export async function execute(message: Discord.Message, args: string[], client: 
         const reqEmbed = {
             author: {
                 name: message.guild.name,
-                icon_url: message.guild.iconURL({dynamic: true}),
+                ...(message.guild.iconURL() !== null && { icon_url: message.guild.iconURL({dynamic: true}) }),
             },
             title: "Server Information",
             color: 0x24ACF2,
-            thumbnail: {url: message.guild.iconURL({dynamic: true})},
+            ...(message.guild.iconURL() !== null && { thumbnail: { url: message.guild.iconURL({dynamic: true}) } }),
             fields: [
                 {
                     name: "Server Owner",
