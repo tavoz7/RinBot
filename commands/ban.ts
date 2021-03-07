@@ -30,19 +30,26 @@ export function execute(message: Discord.Message, args: string[], target: Discor
         message.channel.send({embed: reqEmbed});
         return;
     }
-    if (message.guild.id === "685236709277040802") {
+    if (target.user.id === message.author.id) {
+        message.channel.send({embed: {
+            color: 0xD72D42,
+            description: ":x: Try again, I don't think you'd want to ban yourself."
+        }});
+        return;
+    }
+    else if (message.guild.id === "685236709277040802") {
         var modLogChannel = "726176580405035169";
     } else if (message.guild.id === "766356648012283934") {
         var modLogChannel = "781602141584097351";
     }
     else if (args[1] === undefined) {
-        var APIReason: any = null
+        var APIReason: null | string = null
         var reason = "No reason provided";
     }
     else {
         args.shift();
         var reason = args.join(" ");
-        var APIReason: any = reason;
+        var APIReason: string | null = reason;
     }
     target.ban({reason: APIReason}).then(() => {
         var successEmbed = {
@@ -53,7 +60,7 @@ export function execute(message: Discord.Message, args: string[], target: Discor
         var logEmbed = {
             author: {
                 name: target.user.username,
-                icon_url: target.user.avatarURL()
+                icon_url:  target.user.avatarURL() === null ? `https://cdn.discordapp.com/embed/avatars/${parseInt(target.user.discriminator) % 5}.png` : target.user.avatarURL()
             },
             title: "Member Banned",
             color: 0x24ACF2,

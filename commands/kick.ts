@@ -3,7 +3,14 @@ import Discord = require('discord.js');
 export const name = "kick";
 export const description = "Kicks a user";
 export function execute(message: Discord.Message, args: string[], target: Discord.GuildMember, client: Discord.Client) {
-    if (args[1] === undefined) {
+    if (target.user.id === message.author.id) {
+        message.channel.send({embed: {
+            color: 0xD72D42,
+            description: ":x: I don't think you'd want to that, banning yourself would be catastrophic."
+        }});
+        return;
+    }
+    else if (args[1] === undefined) {
         var APIReason: null | string = null
         var reason = "No reason provided";
     }
@@ -27,7 +34,7 @@ export function execute(message: Discord.Message, args: string[], target: Discor
         var logEmbed = {
             author: {
                 name: target.user.username,
-                icon_url: target.user.avatarURL()
+                icon_url:  target.user.avatarURL() === null ? `https://cdn.discordapp.com/embed/avatars/${parseInt(target.user.discriminator) % 5}.png` : target.user.avatarURL({dynamic: false})
             },
             title: "Member Kicked",
             color: 0x24ACF2,

@@ -15,7 +15,7 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
         (modLogChannel as Discord.TextChannel).send({embed:{
             author: {
                 name: targetMember.user.tag,
-                icon_url: targetMember.user.avatarURL({dynamic: false})
+                icon_url:  targetMember.user.avatarURL() === null ? `https://cdn.discordapp.com/embed/avatars/${parseInt(targetMember.user.discriminator) % 5}.png` : targetMember.user.avatarURL({dynamic: false})
             },
             title: "Image Strike " + type,
             fields: [

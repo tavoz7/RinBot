@@ -1,4 +1,4 @@
-import cp = require('child_process');
+import { exec } from 'child_process';
 import os = require('os');
 import Discord = require('discord.js');
 
@@ -19,7 +19,7 @@ export function execute(message: Discord.Message, client: Discord.Client, versio
     else if (clientUptimeDaysMod % 86400 > 1) {
         var uptimeStr = `${clientUptimeDaysMod} days ${Math.floor(clientUptimeHours % 24)} hr ${Math.floor(clientUptimeMin % 60)} min ${Math.floor(clientUptimeSec % 60)} sec`;
     }
-    cp.exec("git show --oneline -s", (error, stdout) => {
+    exec("git show --oneline -s", (error, stdout) => {
         if (error) {
             let gitShowError = {
                 title: "Error",
@@ -32,7 +32,7 @@ export function execute(message: Discord.Message, client: Discord.Client, versio
         }
         var commitHash = stdout.split(" ")[0];
         if (os.type() === "Linux") {
-            cp.exec("apt list --upgradable | wc -l", (error, stdout) => {
+            exec("apt list --upgradable | wc -l", (error, stdout) => {
                 if (error) {
                     let aptError = {
                         title: "Error",
@@ -45,7 +45,7 @@ export function execute(message: Discord.Message, client: Discord.Client, versio
                 } else {
                     var packages = stdout;
                     var kernel = os.type();
-                    cp.exec("node -v", (error, stdout) => {
+                    exec("node -v", (error, stdout) => {
                         if (error) {
                             let nodeError = {
                                 title: "Error",
@@ -63,7 +63,7 @@ export function execute(message: Discord.Message, client: Discord.Client, versio
                             }
                             if (kernel === "Linux") {
                                 var osFamily = "Ubuntu";
-                                var osRelease = "20.04.1 LTS";
+                                var osRelease = "20.04.2 LTS";
                             }
                             let NTEmbed = {
                                 author: {
@@ -103,7 +103,7 @@ export function execute(message: Discord.Message, client: Discord.Client, versio
         else if (os.type() === 'Windows_NT') {
             var packages = "None"
             var kernel = "Windows NT";
-            cp.exec("node -v", (error, stdout) => {
+            exec("node -v", (error, stdout) => {
                 if (error) {
                     let nodeError = {
                         title: "Error",

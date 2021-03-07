@@ -78,9 +78,9 @@ export function execute(message: Discord.Message, args: string[], mentionedUser:
     var reqEmbed = {
         author: {
             name: `${mentionedUser.user.tag}`,
-            icon_url: mentionedUser.user.avatarURL({format: 'webp', dynamic: false, size: 256}),
+            icon_url: mentionedUser.user.avatarURL() === null ? `https://cdn.discordapp.com/embed/avatars/${parseInt(mentionedUser.user.discriminator) % 5}.png` : mentionedUser.user.avatarURL({format: 'webp', dynamic: false, size: 256}),
         },
-        thumbnail: {url: mentionedUser.user.avatarURL({format: 'webp', dynamic: true, size: 512})},
+        thumbnail: {url:  mentionedUser.user.avatarURL() === null ? `https://cdn.discordapp.com/embed/avatars/${parseInt(mentionedUser.user.discriminator) % 5}.png` : mentionedUser.user.avatarURL({format: 'webp', dynamic: false, size: 512})},
         title: "User Information",
         color: 0x24ACF2,
         fields: [
