@@ -251,8 +251,8 @@ client.on('message', (message) => { // fires whenever a message is sent
         case 'rps':
            commands.get('rps').execute(message, args, client);
            break;
-        case 'quote':
-            commands.get('quote').execute(message, args, client, db, prefix);
+        // case 'quote':
+        //     commands.get('quote').execute(message, args, client, db, prefix);
             break;
         case 'say':
             commands.get('say').execute(message, client, args);
