@@ -3,8 +3,8 @@ const client = new Discord.Client();
 const commands = new Discord.Collection();
 const fs = require('fs');
 const { prefix, token, lastChannelID, updateInProgress, lastClientMessageID } = require('./config.json');
-var version = "0.19.5 - Pre-Release";
-var versionDate = "6 March 2021";
+var version = "0.20 - Pre-Release";
+var versionDate = "21 March 2021";
 const configFile = './config.json'
 const file = require('./config.json');
 const codeBlue = 0x24ACF2;
@@ -17,6 +17,7 @@ const avatarRateLimit = new Set();
 const serverInfoRateLimit = new Set();
 const helpRateLimit = new Set();
 const robloxRateLimit = new Set();
+const monkeRateLimit = new Set();
 
 const admin = require('firebase-admin'); // quotes
 const serviceAccount = require('./firebase-serviceAccount.json');
@@ -253,11 +254,20 @@ client.on('message', (message) => { // fires whenever a message is sent
            break;
         // case 'quote':
         //     commands.get('quote').execute(message, args, client, db, prefix);
-            break;
+            // break;
         case 'say':
             commands.get('say').execute(message, client, args);
         case 'retrieve':
             commands.get('retrieve').execute(message, args);
+        case 'monke':
+            if (monkeRateLimit.has(message.author.id)) {
+                message.channel.send(":x: Please wait 5 more seconds before doing that again!");
+                return;
+            }
+            monkeRateLimit.add(message.author.id);
+            setTimeout(() => {monkeRateLimit.delete(message.author.id)}, 5000);
+            message.channel.send("https://cdn.discordapp.com/attachments/604407073156890637/771883295570133003/video0_80.mp4");
+            break;
     }
 });
 client.ws.on("INTERACTION_CREATE", async interaction => {
