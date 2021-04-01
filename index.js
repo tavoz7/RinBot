@@ -36,6 +36,12 @@ for (const file of commandFiles) {
     commands.set(command.name, command);
 }
 
+client.on("guildMemberUpdate", (oldMember, newMember) => {
+    if (oldMember.pending === true && newMember.pending === false && newMember.guild.id === "685236709277040802") {
+        newMember.roles.add("685237146193494026");
+    }
+});
+
 client.on('message', (message) => { // fires whenever a message is sent
     if (!message.content.startsWith(prefix) || message.author.bot || message.channel.type === 'dm' || message.webhookID) return;
     if (message.member.roles.cache.has('685237145052512321') /* head mods */ || message.member.roles.cache.has('769013132541558795') /* mods */ || message.member.roles.cache.has('772162214865272842') /* trial mods */ || message.author.id === "245047280908894209") {
@@ -274,7 +280,7 @@ client.on('message', (message) => { // fires whenever a message is sent
 });
 client.ws.on("INTERACTION_CREATE", async interaction => {
     commands.get('interactioninit').execute(client, interaction, db);
-})
+});
 client.once("ready", () => { // bot custom status
     /* client.api.applications(client.user.id).commands.post({data: {
         name: "imagestrike",
