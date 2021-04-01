@@ -3,7 +3,7 @@ const client = new Discord.Client();
 const commands = new Discord.Collection();
 const fs = require('fs');
 const { prefix, token, lastChannelID, updateInProgress, lastClientMessageID } = require('./config.json');
-var version = "0.21.1 - Pre-Release";
+var version = "0.21.2 - Pre-Release";
 var versionDate = "26 March 2021";
 const configFile = './config.json'
 const file = require('./config.json');
@@ -37,7 +37,7 @@ for (const file of commandFiles) {
 }
 
 client.ws.on("GUILD_MEMBER_UPDATE", m => {
-    if (m.pending === false && !m.roles.includes("685237146193494026")) {
+    if (m.pending === false && !m.roles.includes("685237146193494026") && m.guild.id === "685236709277040802") {
         client.guilds.cache.get(m.guild_id).members.cache.get(m.user.id).roles.add("685237146193494026");
     }
 });
