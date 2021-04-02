@@ -57,59 +57,52 @@ export function execute(message: Discord.Message, client: Discord.Client, versio
                             return;
                         } else {
                             var nodeVersion = stdout.replace("v", "").replace("\n", "");
-                            if (kernel === "Windows NT") {
-                                var osFamily = "Windows";
-                                var osRelease = "10 Pro"
-                            }
-                            if (kernel === "Linux") {
-                                var osFamily: string;
-                                var osRelease: string;
-                                exec("lsb_release -a | grep Description", (error, stdout) => {
-                                    if (error) {
-                                        let releaseError = {
-                                            title: "Error",
-                                            color: 0xD72D42,
-                                            description: "```" + error + "```",
-                                            timestamp: new Date()
-                                        }
-                                        message.channel.send({embed: releaseError});
-                                        return;
-                                    } else {
-                                        osFamily = "";
-                                        osRelease = stdout.replace("\n", "");
+                            exec("lsb_release -a | grep Description", (error, stdout) => {
+                                if (error) {
+                                    let releaseError = {
+                                        title: "Error",
+                                        color: 0xD72D42,
+                                        description: "```" + error + "```",
+                                        timestamp: new Date()
                                     }
-                                })
-                            }
-                            let NTEmbed = {
-                                author: {
-                                    name: client.user.username,
-                                    icon_url: client.user.avatarURL()
-                                },
-                                title: "Technical Details",
-                                fields: [
-                                    {
-                                        name: "Codebase Information",
-                                        value: `**Commit**: [\`master/${commitHash}\`](https://github.com/CominAtYou/RinBot/commit/${commitHash})\n**Node Version**: ${nodeVersion}\n**Bot Version**: ${version.replace(" - Pre-Release", "")}\n**Build Date**: ${versionDate}`,
-                                        inline: true
-                                    },
-                                    {
-                                        name: "System Information",
-                                        value: `**Kernel**: ${kernel}\n**Kernel Build**: ${os.release().replace("-generic", "").replace("-Microsoft", "")}\n**OS Family**: ${osFamily}\n**OS Version**: ${osRelease}`,
-                                        inline: true,
-                                    },
-                                    {
-                                        name: "Miscellaneous Info",
-                                        value: `**Available Updates**: ${(parseInt(packages) - 1).toString()}\n**API Latency**: ${client.ws.ping} ms`,
-                                        inline: true
-                                    }
-                                ],
-                                color: 0x24ACF2,
-                                timestamp: new Date(),
-                                footer: {
-                                    text: "Uptime: " + uptimeStr
+                                    message.channel.send({embed: releaseError});
+                                    return;
+                                } else {
+                                    var osFamily = "Ubuntu";
+                                    var osRelease = stdout.replace("Description:\tUbuntu ", "");
                                 }
-                            }
-                            message.channel.send({embed: NTEmbed});
+
+                                let NTEmbed = {
+                                    author: {
+                                        name: client.user.username,
+                                        icon_url: client.user.avatarURL()
+                                    },
+                                    title: "Technical Details",
+                                    fields: [
+                                        {
+                                            name: "Codebase Information",
+                                            value: `**Commit**: [\`master/${commitHash}\`](https://github.com/CominAtYou/RinBot/commit/${commitHash})\n**Node Version**: ${nodeVersion}\n**Bot Version**: ${version.replace(" - Pre-Release", "")}\n**Build Date**: ${versionDate}`,
+                                            inline: true
+                                        },
+                                        {
+                                            name: "System Information",
+                                            value: `**Kernel**: ${kernel}\n**Kernel Build**: ${os.release().replace("-generic", "").replace("-Microsoft", "")}\n**OS Family**: ${osFamily}\n**OS Version**: ${osRelease}`,
+                                            inline: true,
+                                        },
+                                        {
+                                            name: "Miscellaneous Info",
+                                            value: `**Available Updates**: ${(parseInt(packages) - 1).toString()}\n**API Latency**: ${client.ws.ping} ms`,
+                                            inline: true
+                                        }
+                                    ],
+                                    color: 0x24ACF2,
+                                    timestamp: new Date(),
+                                    footer: {
+                                        text: "Uptime: " + uptimeStr
+                                    }
+                                }
+                                message.channel.send({embed: NTEmbed});
+                            });
                         }
                     })
                 }
@@ -133,10 +126,6 @@ export function execute(message: Discord.Message, client: Discord.Client, versio
                     if (kernel === "Windows NT") {
                         var osFamily = "Windows";
                         var osRelease = "10 Pro"
-                    }
-                    if (kernel === "Linux") {
-                        var osFamily = "Ubuntu";
-                        var osRelease = "20.04 LTS";
                     }
                     var assembledEmbed = {
                         author: {
