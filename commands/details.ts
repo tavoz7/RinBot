@@ -62,8 +62,23 @@ export function execute(message: Discord.Message, client: Discord.Client, versio
                                 var osRelease = "10 Pro"
                             }
                             if (kernel === "Linux") {
-                                var osFamily = "Ubuntu";
-                                var osRelease = "20.04.2 LTS";
+                                var osFamily: string;
+                                var osRelease: string;
+                                exec("lsb_release -a | grep Description", (error, stdout) => {
+                                    if (error) {
+                                        let releaseError = {
+                                            title: "Error",
+                                            color: 0xD72D42,
+                                            description: "```" + error + "```",
+                                            timestamp: new Date()
+                                        }
+                                        message.channel.send({embed: releaseError});
+                                        return;
+                                    } else {
+                                        osFamily = "";
+                                        osRelease = stdout.replace("\n", "");
+                                    }
+                                })
                             }
                             let NTEmbed = {
                                 author: {
@@ -94,7 +109,7 @@ export function execute(message: Discord.Message, client: Discord.Client, versio
                                     text: "Uptime: " + uptimeStr
                                 }
                             }
-                            message.channel.send({embed: NTEmbed})
+                            message.channel.send({embed: NTEmbed});
                         }
                     })
                 }
@@ -138,7 +153,7 @@ export function execute(message: Discord.Message, client: Discord.Client, versio
                             {
                                 name: "System Information",
                                 value: `**Kernel**: ${kernel}\n**Kernel Build**: ${os.release().replace("-generic", "")}\n**OS Family**: ${osFamily}\n**OS Version**: ${osRelease}`,
-                                inline: true,
+                                inline: true
                             },
                             {
                                 name: "Miscellaneous Info",
