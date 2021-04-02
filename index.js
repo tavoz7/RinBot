@@ -3,8 +3,8 @@ const client = new Discord.Client();
 const commands = new Discord.Collection();
 const fs = require('fs');
 const { prefix, token, lastChannelID, updateInProgress, lastClientMessageID } = require('./config.json');
-var version = "0.21.2 - Pre-Release";
-var versionDate = "26 March 2021";
+var version = "0.21.3 - Pre-Release";
+var versionDate = "27 March 2021";
 const configFile = './config.json'
 const file = require('./config.json');
 const codeBlue = 0x24ACF2;
@@ -37,12 +37,12 @@ for (const file of commandFiles) {
 }
 
 client.ws.on("GUILD_MEMBER_UPDATE", m => {
-    if (m.pending === false && !m.roles.includes("685237146193494026") && m.guild.id === "685236709277040802") {
+    if (m.pending === false && !m.roles.includes("685237146193494026") && m.guild_id === "685236709277040802") {
         client.guilds.cache.get(m.guild_id).members.cache.get(m.user.id).roles.add("685237146193494026");
     }
 });
 
-client.on('message', (message) => { // fires whenever a message is sent
+client.on('message', message => { // fires whenever a message is sent
     if (!message.content.startsWith(prefix) || message.author.bot || message.channel.type === 'dm' || message.webhookID) return;
     if (message.member.roles.cache.has('685237145052512321') /* head mods */ || message.member.roles.cache.has('769013132541558795') /* mods */ || message.member.roles.cache.has('772162214865272842') /* trial mods */ || message.author.id === "245047280908894209") {
         var approvedUser = true;
