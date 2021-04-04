@@ -3,8 +3,8 @@ const client = new Discord.Client();
 const commands = new Discord.Collection();
 const fs = require('fs');
 const { prefix, token, lastChannelID, updateInProgress, lastClientMessageID } = require('./config.json');
-var version = "0.21.5 - Pre-Release";
-var versionDate = "2 April 2021";
+var version = "0.22 - Pre-Release";
+var versionDate = "3 April 2021";
 const configFile = './config.json'
 const file = require('./config.json');
 const codeBlue = 0x24ACF2;
@@ -36,6 +36,10 @@ for (const file of commandFiles) {
     commands.set(command.name, command);
 }
 
+client.on('guildMemberAdd', member => {
+    commands.get("welcomeMessage").execute(member);
+})
+
 client.ws.on("GUILD_MEMBER_UPDATE", m => {
     if (m.pending === false && !m.roles.includes("685237146193494026") && m.guild_id === "685236709277040802") {
         client.guilds.cache.get(m.guild_id).members.cache.get(m.user.id).roles.add("685237146193494026");
@@ -44,16 +48,9 @@ client.ws.on("GUILD_MEMBER_UPDATE", m => {
 
 client.on('message', message => { // fires whenever a message is sent
     if (!message.content.startsWith(prefix) || message.author.bot || message.channel.type === 'dm' || message.webhookID) return;
-    if (message.member.roles.cache.has('685237145052512321') /* head mods */ || message.member.roles.cache.has('769013132541558795') /* mods */ || message.member.roles.cache.has('772162214865272842') /* trial mods */ || message.author.id === "245047280908894209") {
-        var approvedUser = true;
-    }
-    else {
-        var approvedUser = false;
-    }
-
+    const approvedUser = message.member.roles.cache.has('685237145052512321') /* head mods */ || message.member.roles.cache.has('769013132541558795') /* mods */ || message.member.roles.cache.has('772162214865272842') /* trial mods */ || message.author.id === "245047280908894209";
     const args = message.content.slice(prefix.length).trim().split(/ +/); // stuff to throw arguments into an array
     const command = args.shift().toLowerCase(); // extract command from message
-
     switch (command) {
         case 'rule':
             if (!approvedUser) return;
@@ -115,10 +112,11 @@ client.on('message', message => { // fires whenever a message is sent
         case 'host':
             commands.get('host').execute(message, client); // me only
             break;
-        case 'update':
+        case 'update': {
             commands.get('update').execute(message, client, configFile, file, version);
             break;
-        case 'help':
+        }
+        case 'help': {
             if (!approvedUser) {
                 if (helpRateLimit.has(message.author.id)) {
                     message.channel.send(":x: Please wait 5 more seconds before doing that again!");
@@ -129,11 +127,13 @@ client.on('message', message => { // fires whenever a message is sent
             }
             commands.get('help').execute(message, prefix, client);
             break;
-        case 'execute':
+        }
+        case 'execute': {
             if (message.author.id !== "245047280908894209") return;
             commands.get('execute').execute(message, args);
             break;
-        case 'shibe':
+        }
+        case 'shibe': {
             if (shibeRateLimit.has(message.author.id)) {
                 message.channel.send(":x: Please wait 10 more seconds before doing that again!");
                 return;
@@ -143,7 +143,8 @@ client.on('message', message => { // fires whenever a message is sent
 
             commands.get('shibe').execute(message);
             break;
-        case 'avatar':
+        }
+        case 'avatar': {
             if (!approvedUser) {
                 if (avatarRateLimit.has(message.author.id)) {
                     message.channel.send(":x: Please wait 2 more seconds before doing that again!");
@@ -177,7 +178,8 @@ client.on('message', message => { // fires whenever a message is sent
                 }
             }
             break;
-        case 'kick':
+        }
+        case 'kick': {
             if (!approvedUser) return;
                 if (message.mentions.users.first() === undefined) {
                 if (args.length === 0) {
@@ -192,7 +194,8 @@ client.on('message', message => { // fires whenever a message is sent
                 commands.get('kick').execute(message, args, message.guild.member(message.mentions.users.first()), client);
             }
             break;
-        case 'ban':
+        }
+        case 'ban': {
             if (!approvedUser) return;
             if (args[0] === '-h') {
                 commands.get('ban').execute(message, args, undefined, undefined, client);
@@ -210,6 +213,7 @@ client.on('message', message => { // fires whenever a message is sent
                 commands.get('ban').execute(message, args, message.guild.member(message.mentions.users.first()), client);
             }
             break;
+        }
         // case 'mute':
         //     if (!approvedUser) return;
         //     if (message.mentions.users.first() === undefined) {
@@ -226,7 +230,7 @@ client.on('message', message => { // fires whenever a message is sent
         //         commands.get('mute').execute(message, args, target, modLogChannel);
         //     }
         //     break;
-        case 'robloxid':
+        case 'robloxid': {
             if (!approvedUser) return;
             if (robloxRateLimit.has(message.author.id)) {
                 message.channel.send(":x: Please wait 5 more seconds before doing that again!");
@@ -237,7 +241,8 @@ client.on('message', message => { // fires whenever a message is sent
 
             commands.get("robloxid").execute(message, args, client);
             break;
-        case 'robloxprofile':
+        }
+        case 'robloxprofile': {
             if (!approvedUser) return;
 
             if (robloxRateLimit.has(message.author.id)) {
@@ -248,26 +253,32 @@ client.on('message', message => { // fires whenever a message is sent
             setTimeout(() => { robloxRateLimit.delete(message.author.id); }, 3000);
             commands.get("robloxprofile").execute(message, args, client);
             break;
-        case 'details':
+        }
+        case 'details': {
             if (message.author.id !== "245047280908894209") return;
             commands.get('details').execute(message, client, versionDate, version);
             break;
-        case 'coinflip':
+        }
+        case 'coinflip': {
             commands.get('coinflip').execute(message);
             break;
-        case 'rps':
+        }
+        case 'rps': {
            commands.get('rps').execute(message, args, client);
            break;
+        }
         // case 'quote':
         //     commands.get('quote').execute(message, args, client, db, prefix);
             // break;
-        case 'say':
+        case 'say': {
             commands.get('say').execute(message, client, args);
             break;
-        case 'retrieve':
+        }
+        case 'retrieve': {
             commands.get('retrieve').execute(message, args);
             break;
-        case 'monke':
+        }
+        case 'monke': {
             if (monkeRateLimit.has(message.author.id)) {
                 message.channel.send(":x: Please wait 5 more seconds before doing that again!");
                 return;
@@ -276,6 +287,12 @@ client.on('message', message => { // fires whenever a message is sent
             setTimeout(() => {monkeRateLimit.delete(message.author.id)}, 5000);
             message.channel.send("https://cdn.discordapp.com/attachments/604407073156890637/771883295570133003/video0_80.mp4");
             break;
+        }
+        case 'fakejoin': {
+            if (!approvedUser) return;
+            client.emit("guildMemberAdd", message.member);
+            break;
+        }
     }
 });
 client.ws.on("INTERACTION_CREATE", async interaction => {
