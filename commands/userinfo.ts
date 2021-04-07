@@ -1,6 +1,5 @@
 import moment = require('moment')
 import Discord = require('discord.js');
-import { stringify } from 'uuid';
 
 export const name = 'userinfo';
 export const description = "Display information about a user";
@@ -32,19 +31,19 @@ export function execute(message: Discord.Message, args: string[], mentionedUser:
         message.channel.send({embed: helpEmbed});
         return;
     }
-    var userTotalPerms = mentionedUser.permissions.toArray().sort((a, b) => {
+    let userTotalPerms = mentionedUser.permissions.toArray().sort((a, b) => {
         if (a < b)
             return -1;
         else if (a > b)
             return 1;
         return 0;
         });
-    var unnededPerms = ['ADD_REACTIONS','ATTACH_FILES','CHANGE_NICKNAME','CONNECT','CREATE_INSTANT_INVITE','DEAFEN_MEMBERS','EMBED_LINKS','MANAGE_EMOJIS','MOVE_MEMBERS','MUTE_MEMBERS','PRIORITY_SPEAKER','READ_MESSAGE_HISTORY','SEND_MESSAGES','SEND_TTS_MESSAGES','SPEAK','STREAM','USE_EXTERNAL_EMOJIS','USE_VAD','VIEW_AUDIT_LOG','VIEW_CHANNEL','VIEW_GUILD_INSIGHTS']
-    var userPerms: string | Discord.PermissionString[] = userTotalPerms.filter((f: string) => !unnededPerms.includes(f));
+    let unnededPerms = ['ADD_REACTIONS','ATTACH_FILES','CHANGE_NICKNAME','CONNECT','CREATE_INSTANT_INVITE','DEAFEN_MEMBERS','EMBED_LINKS','MANAGE_EMOJIS','MOVE_MEMBERS','MUTE_MEMBERS','PRIORITY_SPEAKER','READ_MESSAGE_HISTORY','SEND_MESSAGES','SEND_TTS_MESSAGES','SPEAK','STREAM','USE_EXTERNAL_EMOJIS','USE_VAD','VIEW_AUDIT_LOG','VIEW_CHANNEL','VIEW_GUILD_INSIGHTS']
+    let userPerms: string | Discord.PermissionString[] = userTotalPerms.filter((f: string) => !unnededPerms.includes(f));
     let permAmount = userPerms.length;
     userPerms = userPerms.length === 0 ? "None" : userPerms.join(", ").replace(/_/g, ' ').toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ').replace("Add Reactions, ", "").replace("Attach Files,", "");
-    var joinedAtTimeZone = moment(mentionedUser.joinedTimestamp).format('Z').includes("05:00") ? "CDT" : "CST";
-    var createdAtTimeZone = moment(mentionedUser.user.createdAt).format("Z").includes("05:00") ? "CDT": "CST";
+    let joinedAtTimeZone = moment(mentionedUser.joinedTimestamp).format('Z').includes("05:00") ? "CDT" : "CST";
+    let createdAtTimeZone = moment(mentionedUser.user.createdAt).format("Z").includes("05:00") ? "CDT": "CST";
 
     if (mentionedUser.id === message.guild.ownerID) {
         var serverAcknowledgements = "Server Owner";
@@ -65,7 +64,6 @@ export function execute(message: Discord.Message, args: string[], mentionedUser:
         }
     }
 
-    var nickname = mentionedUser.nickname === null ? "None" : mentionedUser.nickname;
 
     if (mentionedUser.premiumSinceTimestamp === null || mentionedUser.premiumSinceTimestamp === 0) {
         var boostStatus = "Not Boosting";
@@ -73,7 +71,7 @@ export function execute(message: Discord.Message, args: string[], mentionedUser:
     else {
         var boostStatus = moment(mentionedUser.premiumSinceTimestamp).format("Z").includes("05:00") ? moment(mentionedUser.premiumSinceTimestamp).format("D MMM YYYY [at] h:mm A") + " CDT" : boostStatus = moment(mentionedUser.premiumSinceTimestamp).format("D MMM YYYY [at] h:mm A") + " CST";
     }
-    var memberRoles = mentionedUser.roles.cache.map(role => role.id).length - 1 === 0 ? "None" : mentionedUser.roles.cache.map(roles => roles).sort((a, b) => b.rawPosition - a.rawPosition).join(' ').replace("@everyone", "");
+    let memberRoles = mentionedUser.roles.cache.map(role => role.id).length - 1 === 0 ? "None" : mentionedUser.roles.cache.map(roles => roles).sort((a, b) => b.rawPosition - a.rawPosition).join(' ').replace("@everyone", "");
 
     var reqEmbed = {
         author: {
@@ -81,7 +79,7 @@ export function execute(message: Discord.Message, args: string[], mentionedUser:
             icon_url: mentionedUser.user.avatarURL() === null ? `https://cdn.discordapp.com/embed/avatars/${parseInt(mentionedUser.user.discriminator) % 5}.png` : mentionedUser.user.avatarURL({format: 'webp', dynamic: false, size: 256}),
         },
         thumbnail: {url:  mentionedUser.user.avatarURL() === null ? `https://cdn.discordapp.com/embed/avatars/${parseInt(mentionedUser.user.discriminator) % 5}.png` : mentionedUser.user.avatarURL({format: 'webp', dynamic: false, size: 512})},
-        title: "User Information",
+        title: `${mentionedUser.id === "245047280908894209" ? "<:kidhat:807485094906429451> User Information" : "User Information"}`,
         color: 0x24ACF2,
         fields: [
             {
@@ -90,7 +88,7 @@ export function execute(message: Discord.Message, args: string[], mentionedUser:
             },
             {
                 name: "Nickname",
-                value: nickname,
+                value: mentionedUser.nickname === null ? "None" : mentionedUser.nickname
             },
             {
                 name: "Joined Server",
