@@ -17,7 +17,7 @@
     "canvas": "^2.7.0",
     "date": "^1.0.2",
     "discord.js": "^12.5.3",
-    "firebase-admin": "^9.4.2",
+    "firebase-admin": "^9.6.0",
     "loadavg-windows": "^1.1.1",
     "moment": "^2.29.1",
     "uuid": "^8.3.2"
