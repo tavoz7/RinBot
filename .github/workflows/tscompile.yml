@@ -13,3 +13,14 @@ jobs:
         node-version: '14'
     - name: Compile TypeScript
       run: npm run ci
+    - uses: actions/setup-ruby@v1
+    - name: Post Result
+      env:
+        JOB_STATUS: ${{ job.status }}
+        WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+        HOOK_OS_NAME: ${{ runner.os }}
+        WORKFLOW_NAME: ${{ github.workflow }}
+      run: |
+        git clone https://github.com/CominAtYou/github-actions-discord-webhook webhook
+        bash webhook/send.sh $JOB_STATUS $WEBHOOK_URL
+      shell: bash
