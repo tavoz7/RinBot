@@ -15,6 +15,7 @@ jobs:
       run: npm run ci
     - uses: actions/setup-ruby@v1
     - name: Post Result
+      if: always()
       env:
         JOB_STATUS: ${{ job.status }}
         WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
