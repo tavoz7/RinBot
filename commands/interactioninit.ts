@@ -45,14 +45,13 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
     function sendInteraction(message: string) {
         // @ts-expect-error     // not implemented in discord.js yet so we have to use this workaround
         client.api.interactions(interaction.id, interaction.token).callback.post({data: {
-            type: 3,
+            type: 4,
             data: {
                 content: message,
-                flags: 6
+                flags: 1 << 6
             }
         }})
     }
-    console.log(interaction);
     // console.log(interaction.data.options); // command name
     // console.log(interaction.data.options[0].options); // user, amnt.
     let authorizedRoles = ['769690913789313054', '685237145052512321', '772162159332425728'];
