@@ -48,15 +48,16 @@ export async function execute(client: Discord.Client, interaction: {member: Disc
             type: 3,
             data: {
                 content: message,
-                flags: 1 << 6
+                flags: 6
             }
         }})
     }
+    console.log(interaction);
     // console.log(interaction.data.options); // command name
     // console.log(interaction.data.options[0].options); // user, amnt.
     let authorizedRoles = ['769690913789313054', '685237145052512321', '772162159332425728'];
     let modLogChannelID = interaction.guild_id === "685236709277040802" ? "726176580405035169" : "786592642364342302";
-    let disabledImagesRole = interaction.guild_id ==="685236709277040802" ? "808762383882649650" : "769299680357122088";
+    let disabledImagesRole = interaction.guild_id === "685236709277040802" ? "808762383882649650" : "769299680357122088";
     let invoker = await (await client.guilds.fetch(interaction.guild_id)).members.fetch(interaction.member.user.id);
     if (interaction.data.options[0].name !== "get" && checkIfAllowed() === false) {
         sendInteraction(":x: You don't have permission to do this!");
