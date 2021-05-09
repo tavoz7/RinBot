@@ -1,6 +1,6 @@
 import Discord = require('discord.js');
 import Canvas = require('canvas');
-export const name="welcomeMessage"
+export const name = "welcomeMessage"
 export async function execute(member: Discord.GuildMember) {
     if (member.id === "480754227510247451") return;
     function applyText(canvas: Canvas.Canvas, text: string) {

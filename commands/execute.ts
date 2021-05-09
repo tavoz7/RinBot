@@ -1,4 +1,4 @@
-import cp = require('child_process');
+import { exec } from 'child_process';
 import os = require('os');
 import Discord = require('discord.js');
 
@@ -6,7 +6,7 @@ export const name = "execute";
 export const description = "ssh but worse";
 export function execute(message: Discord.Message, args: string[]) {
     if (os.type() === "Linux") {
-        cp.exec(args.join(" "), (error, stdout, stderr) => {
+        exec(args.join(" "), (error, stdout, stderr) => {
                 if (error) {
                     var reqEmbed = {
                         color: 0xD72D42,
@@ -48,7 +48,7 @@ export function execute(message: Discord.Message, args: string[]) {
             })
     }
     else if (os.type() === "Windows_NT") {
-        cp.exec(`powershell.exe -Command ${args.join(" ")}`, (error, stdout, stderr) => {
+        exec(`powershell.exe -Command ${args.join(" ")}`, (error, stdout, stderr) => {
                 if (error) {
                     var reqEmbed = {
                         color: 0xD72D42,

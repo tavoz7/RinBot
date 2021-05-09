@@ -1,7 +1,6 @@
-import cp = require('child_process');
+import { exec } from 'child_process';
 import fs = require('fs');
 import Discord = require('discord.js');
-import { URL } from 'url';
 export const name = "update";
 export const description = "";
 export function execute(message: Discord.Message, client: Discord.Client, configFile: string | number | Buffer | URL, file: { updateInProgress: boolean; lastChannelID: string; lastClientMessageID: string; }, version: string) {
@@ -13,8 +12,8 @@ export function execute(message: Discord.Message, client: Discord.Client, config
         message.channel.send({embed: reqEmbed});
         return;
     }
-    cp.exec("git pull && npm i", (error, stdout) => {
-        if (!stdout.includes("file changed") || !stdout.includes("files changed") /*|| stderr.includes("origin/master" === false) */) {
+    exec("git pull && npm i", (error, stdout) => {
+        if (!stdout.includes("file changed") || !stdout.includes("files changed") /* || stderr.includes("origin/master" === false) */) {
             if (error) {
                 let reqEmbed = {
                     title: "Update",
@@ -44,7 +43,7 @@ export function execute(message: Discord.Message, client: Discord.Client, config
                 timestamp: new Date()
             }
             message.channel.send({embed: reqEmbed}).then((sentMessage => {
-                cp.exec("tsc", (error, stderr, stdout) => {
+                exec("tsc", (error, stderr, stdout) => {
                     if (error) {
                         let errorEmbed = {
                             title: "Update",
