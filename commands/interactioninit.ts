@@ -1,6 +1,7 @@
 import Discord = require('discord.js');
 import admin = require('firebase-admin');
 import uuid = require('uuid');
+import moment = require('moment');
 export const name = 'interactioninit';
 export async function execute(client: Discord.Client, interaction: {
     users: Discord.User,
@@ -22,12 +23,49 @@ export async function execute(client: Discord.Client, interaction: {
             }
         }})
     }
+    function sendGetCommandInteraction(message: string, retrievedDoc: FirebaseFirestore.DocumentSnapshot) {
+        // @ts-expect-error
+        client.api.interactions(interaction.id, interaction.token).callback.post({data: {
+            type: 4,
+            data: {
+                content: message,
+                embeds: [
+                    {
+                        author: {
+                            name: targetMember.user.tag,
+                            icon_url: targetMember.user.avatarURL() === null ? `https://cdn.discordapp.com/embed/avatars/${parseInt(targetMember.user.discriminator) % 5}.png` : targetMember.user.avatarURL({dynamic: false})
+                        },
+                        color: 0x24ACF2,
+                        title: `Strikes for ${targetMember.user.tag}`,
+                        fields: [ // note to self: please fix this, it only works because the check for 'undefined' is in the first position
+                            {
+                                name: "Strikes",
+                                value: retrievedDoc.data() === undefined ? '0' : retrievedDoc.data().infractionLevel,
+                                inline: true
+                            },
+                            {
+                                name: "Images Disabled",
+                                value: retrievedDoc.data() !== undefined && retrievedDoc.data().infractionLevel === 3 ? "Yes" : "No",
+                                inline: true
+                            },
+                            {
+                                name: "Next Strike Removal",
+                                value: retrievedDoc.data() === undefined || retrievedDoc.data().infractionLevel === 3 ? "N/A" : (moment(new Date((requestedDoc.data().lastModified.toDate() as Date).getTime() + 2.628e+9)).format("Z").includes("05:00") ? moment(new Date((requestedDoc.data().lastModified.toDate() as Date).getTime() + 2.628e+9)).format("D MMM YYYY [at] h:mm A") + " CDT" : moment(new Date((requestedDoc.data().lastModified.toDate() as Date).getTime() + 2.628e+9)).format("D MMM YYYY [at] h:mm A") + " CST"),
+                                inline: true
+                            }
+                        ]
+                    }
+                ],
+                flags: 1 << 6
+            }
+        }})
+    }
     async function sendModLog(type: string, retrievedDoc: FirebaseFirestore.DocumentSnapshot) {
         let modLogChannel = await client.channels.fetch(modLogChannelID);
         (modLogChannel as Discord.TextChannel).send({embed:{
             author: {
                 name: targetMember.user.tag,
-                icon_url:  targetMember.user.avatarURL() === null ? `https://cdn.discordapp.com/embed/avatars/${parseInt(targetMember.user.discriminator) % 5}.png` : targetMember.user.avatarURL({dynamic: false})
+                icon_url: targetMember.user.avatarURL() === null ? `https://cdn.discordapp.com/embed/avatars/${parseInt(targetMember.user.discriminator) % 5}.png` : targetMember.user.avatarURL({dynamic: false})
             },
             title: "Image Strike " + type,
             fields: [
@@ -71,7 +109,7 @@ export async function execute(client: Discord.Client, interaction: {
         }
 
     */
-    const authorizedRoles = ['769690913789313054', '685237145052512321', '772162159332425728']; // staff roles
+    const authorizedRoles = ['769690913789313054', '685237145052512321', '772162159332425728', '766858374377504818']; // staff roles
     const modLogChannelID = interaction.guild_id === "685236709277040802" ? "726176580405035169" : "786592642364342302"; // mod log channel, either Kubo server or BTL
     const disabledImagesRole = interaction.guild_id === "685236709277040802" ? "808762383882649650" : "769299680357122088"; // same as above but role
     const invoker = await (await client.guilds.fetch(interaction.guild_id)).members.fetch(interaction.member.user.id); // member who invoked slash command
@@ -187,9 +225,9 @@ export async function execute(client: Discord.Client, interaction: {
             const isRequestingSelf = targetMember.user.id === interaction.member.user.id;
             const infractionLevel = requestedDoc.data() !== undefined ? requestedDoc.data().infractionLevel : 0;
             if (isRequestingSelf === true) {
-                sendInteraction(`You currently have ${infractionLevel} of 3 strikes${infractionLevel === 3 ? ' and your image permissions revoked' : ''}.`);
+               sendGetCommandInteraction(`You currently have ${infractionLevel} of 3 strikes${infractionLevel === 3 ? ' and your image permissions revoked' : ''}.`, requestedDoc);
             } else if (!isRequestingSelf && checkIfAllowed()) {
-                sendInteraction(`${targetMember.user.username} currently has ${infractionLevel} of 3 strikes${infractionLevel === 3 ? ' and their image permissions revoked' : ''}.`);
+                sendGetCommandInteraction(`${targetMember.user.username} currently has ${infractionLevel} of 3 strikes${infractionLevel === 3 ? ' and their image permissions revoked' : ''}.`, requestedDoc);
             } else {
                 sendInteraction(`:x: You're not allowedd to do this!`);
             }
