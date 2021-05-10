@@ -23,7 +23,7 @@ export async function execute(client: Discord.Client, interaction: {
             }
         }})
     }
-    function sendGetCommandInteraction(message: string, retrievedDoc: FirebaseFirestore.DocumentSnapshot) {
+    function sendGetCommandInteraction(message: string, retrievedDoc: FirebaseFirestore.DocumentSnapshot, isRequestingSelf: boolean) {
         // @ts-expect-error
         client.api.interactions(interaction.id, interaction.token).callback.post({data: {
             type: 4,
@@ -36,7 +36,7 @@ export async function execute(client: Discord.Client, interaction: {
                             icon_url: targetMember.user.avatarURL() === null ? `https://cdn.discordapp.com/embed/avatars/${parseInt(targetMember.user.discriminator) % 5}.png` : targetMember.user.avatarURL({dynamic: false})
                         },
                         color: 0x24ACF2,
-                        title: `Strikes for ${targetMember.user.tag}`,
+                        title: isRequestingSelf ? `Your Strikes` : `Strikes for ${targetMember.user.tag}`,
                         fields: [ // note to self: please fix this, it only works because the check for 'undefined' is in the first position
                             {
                                 name: "Strikes",
@@ -225,9 +225,9 @@ export async function execute(client: Discord.Client, interaction: {
             const isRequestingSelf = targetMember.user.id === interaction.member.user.id;
             const infractionLevel = requestedDoc.data() !== undefined ? requestedDoc.data().infractionLevel : 0;
             if (isRequestingSelf === true) {
-               sendGetCommandInteraction(`You currently have ${infractionLevel} of 3 strikes${infractionLevel === 3 ? ' and your image permissions revoked' : ''}.`, requestedDoc);
+               sendGetCommandInteraction(`You currently have ${infractionLevel} of 3 strikes${infractionLevel === 3 ? ' and your image permissions revoked' : ''}.`, requestedDoc, isRequestingSelf);
             } else if (!isRequestingSelf && checkIfAllowed()) {
-                sendGetCommandInteraction(`${targetMember.user.username} currently has ${infractionLevel} of 3 strikes${infractionLevel === 3 ? ' and their image permissions revoked' : ''}.`, requestedDoc);
+                sendGetCommandInteraction(`${targetMember.user.username} currently has ${infractionLevel} of 3 strikes${infractionLevel === 3 ? ' and their image permissions revoked' : ''}.`, requestedDoc, isRequestingSelf);
             } else {
                 sendInteraction(`:x: You're not allowedd to do this!`);
             }
