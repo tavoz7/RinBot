@@ -2,3 +2,4 @@ config.json
 node_modules
 transpiled
 firebase-serviceAccount.json
+index.js
