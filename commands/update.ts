@@ -12,8 +12,8 @@ export function execute(message: Discord.Message, client: Discord.Client, config
         message.channel.send({embed: reqEmbed});
         return;
     }
+    console.log("[UPDATE] Update check triggered, running 'git pull'...");
     exec("git pull && npm i", (error, stdout) => {
-        console.log("[UPDATE] Update check triggered, running 'git pull'...");
         if (!stdout.includes("file changed") || !stdout.includes("files changed") /* || stderr.includes("origin/master" === false) */) {
             if (error) {
                 let reqEmbed = {
