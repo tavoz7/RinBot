@@ -3,7 +3,7 @@ const client = new Discord.Client();
 const commands = new Discord.Collection();
 const fs = require('fs');
 const { prefix, token, lastChannelID, updateInProgress, lastClientMessageID } = require('./config.json');
-const version = "0.26.1 - Pre-Release";
+const version = "0.26.2 - Pre-Release";
 const versionDate = "14 May 2021";
 const configFile = './config.json'
 const file = require('./config.json');
@@ -21,6 +21,7 @@ const monkeRateLimit = new Set();
 
 const admin = require('firebase-admin'); // quotes
 const serviceAccount = require('./firebase-serviceAccount.json');
+console.log("RinBot " + version);
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
 });
@@ -362,7 +363,6 @@ client.once("ready", () => { // bot custom status
             }
         ]
     }}); */
-    console.log("RinBot " + version);
     console.log("\x1b[32m[READY]","\x1b[0mLogged in as " + client.user.tag);
     client.user.setActivity("Corgi Quest 7", {type: "PLAYING"});
     if (updateInProgress === true) {
