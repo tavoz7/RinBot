@@ -3,7 +3,7 @@ const client = new Discord.Client();
 const commands = new Discord.Collection();
 const fs = require('fs');
 const { prefix, token, lastChannelID, updateInProgress, lastClientMessageID } = require('./config.json');
-const version = "0.26.2 - Pre-Release";
+const version = "0.26.3 - Pre-Release";
 const versionDate = "14 May 2021";
 const configFile = './config.json'
 const file = require('./config.json');
@@ -391,7 +391,7 @@ client.once("ready", () => { // bot custom status
             }
             // please for the love of god add error handling here, if this fails the entire thing crashes on startup which results in pm2 having a fit
         });
-        console.log("[UPDATE] Update complete, updated to " + version);
+        console.log("[UPDATE] Update complete, updated to " + version.replace(" - Pre-Release"));
     }
 });
 
