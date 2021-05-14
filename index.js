@@ -3,7 +3,7 @@ const client = new Discord.Client();
 const commands = new Discord.Collection();
 const fs = require('fs');
 const { prefix, token, lastChannelID, updateInProgress, lastClientMessageID } = require('./config.json');
-const version = "0.25.6 - Pre-Release";
+const version = "0.26.0 - Pre-Release";
 const versionDate = "14 May 2021";
 const configFile = './config.json'
 const file = require('./config.json');
@@ -362,9 +362,11 @@ client.once("ready", () => { // bot custom status
             }
         ]
     }}); */
+    console.log("RinBot " + version);
     console.log("\x1b[32m[READY]","\x1b[0mLogged in as " + client.user.tag);
     client.user.setActivity("Corgi Quest 7", {type: "PLAYING"});
     if (updateInProgress === true) {
+        console.log("[UPDATE] Previous update values detected, performing post-update operations")
         var reqEmbed = {
             title: "Update Complete!",
             color: 0x77B255,
@@ -389,6 +391,7 @@ client.once("ready", () => { // bot custom status
             }
             // please for the love of god add error handling here, if this fails the entire thing crashes on startup which results in pm2 having a fit
         });
+        console.log("[UPDATE] Update complete, updated to " + version);
     }
 });
 
