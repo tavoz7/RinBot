@@ -3,8 +3,8 @@ const client = new Discord.Client();
 const commands = new Discord.Collection();
 const fs = require('fs');
 const { prefix, token, lastChannelID, updateInProgress, lastClientMessageID } = require('./config.json');
-var version = "0.24.2 - Pre-Release";
-var versionDate = "14 May 2021";
+const version = "0.25.5 - Pre-Release";
+const versionDate = "14 May 2021";
 const configFile = './config.json'
 const file = require('./config.json');
 const codeBlue = 0x24ACF2;
@@ -288,10 +288,8 @@ client.on('message', message => { // fires whenever a message is sent
             message.channel.send("https://cdn.discordapp.com/attachments/604407073156890637/771883295570133003/video0_80.mp4");
             break;
         }
-        case 'fakejoin': {
-            if (!approvedUser) return;
-            client.emit("guildMemberAdd", message.member);
-            break;
+        case 'setactivity': {
+            commands.get('setactivity').execute(message, args, client)
         }
     }
 });
