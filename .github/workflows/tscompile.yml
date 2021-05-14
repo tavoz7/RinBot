@@ -13,7 +13,9 @@ jobs:
         node-version: '14'
     - name: Compile TypeScript
       run: npm run ci
-    - uses: actions/setup-ruby@v1
+    - uses: ruby/setup-ruby@v1
+      with: 
+        ruby-version: "3.0.1"
     - name: Post Result
       if: always()
       env:
