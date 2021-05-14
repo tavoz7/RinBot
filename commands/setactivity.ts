@@ -8,7 +8,7 @@ export function execute(message: Discord.Message, args: string[], client: Discor
     }
     const type = (args[args.indexOf('--type') + 1].toUpperCase() as Discord.ActivityType);
     args.splice(args.indexOf('--type'), 1);
-    args.splice(args.indexOf('--type' + 1), 1);
+    args.splice(args.indexOf('--type') + 1, 1);
     if (type === "PLAYING" || type === "STREAMING" || type === "LISTENING" || type === "WATCHING" || type === "COMPETING") {
         client.user.setActivity(args.join(" "), {type: type});
         message.channel.send(`:white_check_mark: Status has been set to "${type[0] + type.slice(1, type.length).toLowerCase()} ${args.join(" ")}"`);
