@@ -41,7 +41,7 @@ export function execute(message: Discord.Message, client: Discord.Client, config
             exec(`cat index.js | grep 'const version ='`, (error, stdout) => {
                 if (stdout) {
                     const version = stdout.replace("\n", "").replace("const version = \"", "").replace(" - Pre-Release\";", "");
-                    console.log(`\033[0;33m[UPDATE]\033[0m Version ${version} downloaded`);
+                    console.log("\033[0;33m[UPDATE]\033[0m Version " + version + " downloaded");
                 }
             });
             let reqEmbed = {
