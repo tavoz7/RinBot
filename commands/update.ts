@@ -12,7 +12,7 @@ export function execute(message: Discord.Message, client: Discord.Client, config
         message.channel.send({embed: reqEmbed});
         return;
     }
-    console.log("[UPDATE] Update check triggered, running 'git pull'...");
+    console.log("\033[0;33m[UPDATE]\033[0m Update check triggered, running 'git pull'...");
     exec("git pull && npm i", (error, stdout) => {
         if (!stdout.includes("file changed") || !stdout.includes("files changed") /* || stderr.includes("origin/master" === false) */) {
             if (error) {
@@ -27,7 +27,7 @@ export function execute(message: Discord.Message, client: Discord.Client, config
             }
         }
         if (stdout.includes("Already up to date.")) {
-            console.log("[UPDATE] Bot is already up to date.");
+            console.log("\033[0;33m[UPDATE]\033[0m Bot is already up to date.");
             var alreadyUpdatedEmbed = {
                 title: "Update",
                 description: ":white_check_mark: Already up to date.",
@@ -41,7 +41,7 @@ export function execute(message: Discord.Message, client: Discord.Client, config
             exec(`cat index.js | grep 'const version ='`, (error, stdout) => {
                 if (stdout) {
                     const version = stdout.replace("\n", "").replace("const version = \"", "").replace(" - Pre-Release\";", "");
-                    console.log(`[UPDATE] Version ${version} downloaded`);
+                    console.log(`\033[0;33m[UPDATE]\033[0m Version ${version} downloaded`);
                 }
             });
             let reqEmbed = {
@@ -51,10 +51,10 @@ export function execute(message: Discord.Message, client: Discord.Client, config
                 timestamp: new Date()
             }
             message.channel.send({embed: reqEmbed}).then((sentMessage => {
-                console.log("[UPDATE] Compiling TypeScript...");
+                console.log("\033[0;33m[UPDATE]\033[0m Compiling TypeScript...");
                 exec("tsc", (error, stderr, stdout) => {
                     if (error) {
-                        console.error("[UPDATE] TypeScript compile failed, aborting")
+                        console.error("\033[0;33m[UPDATE]\033[0m TypeScript compile failed, aborting")
                         let errorEmbed = {
                             title: "Update",
                             color: 0xD72D42,
@@ -69,7 +69,7 @@ export function execute(message: Discord.Message, client: Discord.Client, config
                         return;
                     }
                     if (stderr) {
-                        console.error("[UPDATE] TypeScript compile failed, aborting")
+                        console.error("\033[0;33m[UPDATE]\033[0m TypeScript compile failed, aborting")
                         let stderrEmbed = {
                             title: "Update",
                             color: 0xD72D42,
@@ -85,7 +85,7 @@ export function execute(message: Discord.Message, client: Discord.Client, config
                     }
                     else {
                         // Write to config.json to notify the bot upon restart that an update was applied, and where to delete the restart message then replace it with the update complete message
-                        console.log("[UPDATE] Performing final update preparations...")
+                        console.log("\033[0;33m[UPDATE]\033[0m Performing final update preparations...")
                         let file = require('../../config.json');
                         file.updateInProgress = true;
                         file.lastChannelID = message.channel.id;
@@ -93,7 +93,7 @@ export function execute(message: Discord.Message, client: Discord.Client, config
                         let data = JSON.stringify(file, null, 2);
                         fs.writeFileSync('./config.json', data);
                         // please for the love of god add error handling here
-                        console.log("[UPDATE] Restarting...")
+                        console.log("\033[0;33m[UPDATE]\033[0m Restarting...")
                         process.exit();
                     }
                 })
