@@ -38,6 +38,7 @@ export function execute(message: Discord.Message, client: Discord.Client, config
             return;
         }
         else {
+            client.user.setPresence({activity: {name: "with an update - currently unavailable"}, status: "dnd"});
             exec(`cat index.js | grep 'const version ='`, (error, stdout) => {
                 if (stdout) {
                     const version = stdout.replace("\n", "").replace("const version = \"", "").replace(" - Pre-Release\";", "");
