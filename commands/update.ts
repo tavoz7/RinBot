@@ -13,7 +13,7 @@ export function execute(message: Discord.Message, client: Discord.Client, config
         return;
     }
     console.log("\033[0;33m[UPDATE]\033[0m Update check triggered, running 'git pull'...");
-    exec("git pull && npm i", (error, stdout) => {
+    exec("git pull", (error, stdout) => {
         if (!stdout.includes("file changed") || !stdout.includes("files changed") /* || stderr.includes("origin/master" === false) */) {
             if (error) {
                 let reqEmbed = {
@@ -52,8 +52,8 @@ export function execute(message: Discord.Message, client: Discord.Client, config
                 timestamp: new Date()
             }
             message.channel.send({embed: reqEmbed}).then((sentMessage => {
-                console.log("\033[0;33m[UPDATE]\033[0m Compiling TypeScript...");
-                exec("tsc", (error, stderr, stdout) => {
+                console.log("\033[0;33m[UPDATE]\033[0m Installing modules and compiling TypeScript...");
+                exec("npm i && tsc", (error, stderr, stdout) => {
                     if (error) {
                         console.error("\033[0;33m[UPDATE]\033[0m TypeScript compile failed, aborting")
                         let errorEmbed = {
