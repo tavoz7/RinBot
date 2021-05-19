@@ -53,7 +53,7 @@ export function execute(message: Discord.Message, client: Discord.Client, config
             }
             message.channel.send({embed: reqEmbed}).then((sentMessage => {
                 console.log("\033[0;33m[UPDATE]\033[0m Installing modules and compiling TypeScript...");
-                exec("npm i && tsc", (error, stderr, stdout) => {
+                exec("npm i > /dev/null 2&>1 && tsc", (error, stderr) => {
                     if (error) {
                         console.error("\033[0;33m[UPDATE]\033[0m TypeScript compile failed, aborting")
                         let errorEmbed = {
