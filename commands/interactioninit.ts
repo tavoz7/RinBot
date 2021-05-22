@@ -6,6 +6,12 @@ export const name = 'interactioninit';
 export async function execute(client: Discord.Client, interaction: {
     users: Discord.User,
     member: {roles: Array<string>, premium_since: Date | null, permissions: string, pending: boolean, nick: string | null, mute: boolean, joined_at: Date, is_pending: boolean, deaf: boolean, user: {id: string, username: string, avatar: string, discriminator: string, public_flags: number}}, guild_id: string, id: string, data: {options: {options: {name: string, value: string}[], name: string}[], name: string, id: string} }, db: FirebaseFirestore.Firestore) {
+    function checkIfNotStaffMember() {
+        for (let i of authorizedRoles) {
+            if (targetMemberRoles.array().map(r => r.id).includes(i)) return false;
+        }
+        return true;
+    }
     function checkIfAllowed() {
         let invokerRoles = interaction.member.roles;
         for (let r of invokerRoles) {
@@ -50,7 +56,7 @@ export async function execute(client: Discord.Client, interaction: {
                             },
                             {
                                 name: "Next Strike Removal",
-                                value: retrievedDoc.data() === undefined || retrievedDoc.data().infractionLevel === 3 ? "N/A" : (moment(new Date((requestedDoc.data().lastModified.toDate() as Date).getTime() + 2.628e+9)).format("Z").includes("05:00") ? moment(new Date((requestedDoc.data().lastModified.toDate() as Date).getTime() + 2.628e+9)).format("D MMM YYYY [at] h:mm A") + " CDT" : moment(new Date((requestedDoc.data().lastModified.toDate() as Date).getTime() + 2.628e+9)).format("D MMM YYYY [at] h:mm A") + " CST"),
+                                value: retrievedDoc.data() === undefined || retrievedDoc.data().infractionLevel === 0 || retrievedDoc.data().infractionLevel === 3 ? "N/A" : (moment(new Date((requestedDoc.data().lastModified.toDate() as Date).getTime() + 2.628e+9)).format("Z").includes("05:00") ? moment(new Date((requestedDoc.data().lastModified.toDate() as Date).getTime() + 2.628e+9)).format("D MMM YYYY [at] h:mm A") + " CDT" : moment(new Date((requestedDoc.data().lastModified.toDate() as Date).getTime() + 2.628e+9)).format("D MMM YYYY [at] h:mm A") + " CST"),
                                 inline: true
                             }
                         ]
@@ -120,7 +126,12 @@ export async function execute(client: Discord.Client, interaction: {
     const targetMember = await (await client.guilds.fetch(interaction.guild_id)).members.fetch(interaction.data.options[0].options[0].value);
     const targetMemberRoles = targetMember.roles.cache;
     const docRef = db.collection(interaction.guild_id).doc("strikes").collection("image").doc(interaction.data.options[0].options[0].value);
+    const command = interaction.data.options[0].name;
     let requestedDoc = await docRef.get();
+    if (!checkIfNotStaffMember() && command !== "get") {
+        sendInteraction(`:x: Staff can't have strikes!`);
+        return;
+    }
     if (requestedDoc.data() !== undefined && requestedDoc.data().infractionLevel !== 3 && requestedDoc.data().infractionLevel !== 0) {
         if (new Date().getTime() - (requestedDoc.data().lastModified.toDate() as Date).getTime() >= 2.628e+9 && new Date().getTime() - (requestedDoc.data().lastModified.toDate() as Date).getTime() < 5.256e+9) {
             await docRef.update({
@@ -137,7 +148,6 @@ export async function execute(client: Discord.Client, interaction: {
             requestedDoc = await docRef.get();
         }
     }
-    const command = interaction.data.options[0].name;
     switch (command) {
         case "add": {
             if (requestedDoc.data() === undefined) { // db entry for user does not exist; create it
@@ -164,6 +174,7 @@ export async function execute(client: Discord.Client, interaction: {
                 } else sendInteraction(`:white_check_mark: Successfully gave an image strike to ${targetMember.user.username}. (Strike ${requestedDoc.data().infractionLevel} of 3)`);
                 await sendModLog("Given", requestedDoc);
             }
+            break;
         }
         case "remove": {
             const amountToRemove = parseInt(interaction.data.options[0].options[1].value);
@@ -197,6 +208,7 @@ export async function execute(client: Discord.Client, interaction: {
                 sendInteraction(`:white_check_mark: Successfully removed ${amountToRemove} strike${amountToRemove === 1 ? '' : 's'} from ${targetMember.user.username}. (Strike ${requestedDoc.data().infractionLevel} of 3)`);
                 await sendModLog("Removed", requestedDoc);
             }
+            break;
         }
         case 'reset': {
             if (requestedDoc.data() === undefined || requestedDoc.data().infractionLevel === 0) {
@@ -220,6 +232,7 @@ export async function execute(client: Discord.Client, interaction: {
                 sendInteraction(`:white_check_mark: Successfully removed all strikes from ${targetMember.user.username}.`);
                 sendModLog("Reset", await docRef.get());
             }
+            break;
         }
         case 'get': {
             const isRequestingSelf = targetMember.user.id === interaction.member.user.id;
@@ -231,6 +244,7 @@ export async function execute(client: Discord.Client, interaction: {
             } else {
                 sendInteraction(`:x: You're not allowedd to do this!`);
             }
+            break;
         }
     }
 }
