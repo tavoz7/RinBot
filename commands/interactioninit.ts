@@ -116,7 +116,7 @@ export async function execute(client: Discord.Client, interaction: {
 
     */
     const authorizedRoles = ['769690913789313054', '685237145052512321', '772162159332425728', '766858374377504818']; // staff roles
-    const modLogChannelID = interaction.guild_id === "685236709277040802" ? "726176580405035169" : "786592642364342302"; // mod log channel, either Kubo server or BTL
+    const modLogChannelID = interaction.guild_id === "685236709277040802" ? "726176580405035169" : "781602141584097351"; // mod log channel, either Kubo server or BTL
     const disabledImagesRole = interaction.guild_id === "685236709277040802" ? "808762383882649650" : "769299680357122088"; // same as above but role
     const invoker = await (await client.guilds.fetch(interaction.guild_id)).members.fetch(interaction.member.user.id); // member who invoked slash command
     if (interaction.data.options[0].name !== "get" && checkIfAllowed() === false) {
