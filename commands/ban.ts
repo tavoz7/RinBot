@@ -8,7 +8,7 @@ export function execute(message: Discord.Message, args: string[], target: Discor
             title: "Ban",
             author: {
                 name: client.user.username,
-                icon_url: client.user.avatarURL()
+                icon_url: client.user.displayAvatarURL()
             },
             description: description,
             color: 0x24ACF2,
@@ -60,7 +60,7 @@ export function execute(message: Discord.Message, args: string[], target: Discor
         var logEmbed = {
             author: {
                 name: target.user.username,
-                icon_url:  target.user.avatarURL() === null ? `https://cdn.discordapp.com/embed/avatars/${parseInt(target.user.discriminator) % 5}.png` : target.user.avatarURL()
+                icon_url:  target.user.displayAvatarURL({dynamic: false})
             },
             title: "Member Banned",
             color: 0x24ACF2,

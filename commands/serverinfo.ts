@@ -13,7 +13,7 @@ export async function execute(message: Discord.Message, args: string[], client: 
         const helpEmbed = {
             author: {
                 name: client.user.username,
-                icon_url: client.user.avatarURL(),
+                icon_url: client.user.displayAvatarURL(),
             },
             title: "Serverinfo",
             color: 0x24ACF2,

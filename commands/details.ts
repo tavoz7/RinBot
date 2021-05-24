@@ -75,7 +75,7 @@ export function execute(message: Discord.Message, client: Discord.Client, versio
                                 let NTEmbed = {
                                     author: {
                                         name: client.user.username,
-                                        icon_url: client.user.avatarURL()
+                                        icon_url: client.user.displayAvatarURL()
                                     },
                                     title: "Technical Details",
                                     fields: [
@@ -130,7 +130,7 @@ export function execute(message: Discord.Message, client: Discord.Client, versio
                     var assembledEmbed = {
                         author: {
                             name: client.user.username,
-                            icon_url: client.user.avatarURL()
+                            icon_url: client.user.displayAvatarURL()
                         },
                         title: "Technical Details",
                         fields: [

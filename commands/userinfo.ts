@@ -1,4 +1,4 @@
-import moment = require('moment')
+import moment = require('moment');
 import Discord = require('discord.js');
 
 export const name = 'userinfo';
@@ -8,7 +8,7 @@ export function execute(message: Discord.Message, args: string[], mentionedUser:
         let helpEmbed = {
             author: {
                 name: client.user.username,
-                icon_url: client.user.avatarURL(),
+                icon_url: client.user.displayAvatarURL(),
             },
             title: "Userinfo",
             color: 0x24ACF2,
@@ -27,8 +27,8 @@ export function execute(message: Discord.Message, args: string[], mentionedUser:
                     value: "!userinfo @user\n!userinfo 123456789098765432"
                 }
             ]
-        }
-        message.channel.send({embed: helpEmbed});
+        };
+        message.channel.send({ embed: helpEmbed });
         return;
     }
     let userTotalPerms = mentionedUser.permissions.toArray().sort((a, b) => {
@@ -37,30 +37,30 @@ export function execute(message: Discord.Message, args: string[], mentionedUser:
         else if (a > b)
             return 1;
         return 0;
-        });
-    let unnededPerms = ['ADD_REACTIONS','ATTACH_FILES','CHANGE_NICKNAME','CONNECT','CREATE_INSTANT_INVITE','DEAFEN_MEMBERS','EMBED_LINKS','MANAGE_EMOJIS','MOVE_MEMBERS','MUTE_MEMBERS','PRIORITY_SPEAKER','READ_MESSAGE_HISTORY','SEND_MESSAGES','SEND_TTS_MESSAGES','SPEAK','STREAM','USE_EXTERNAL_EMOJIS','USE_VAD','VIEW_AUDIT_LOG','VIEW_CHANNEL','VIEW_GUILD_INSIGHTS']
+    });
+    let unnededPerms = ['ADD_REACTIONS', 'ATTACH_FILES', 'CHANGE_NICKNAME', 'CONNECT', 'CREATE_INSTANT_INVITE', 'DEAFEN_MEMBERS', 'EMBED_LINKS', 'MANAGE_EMOJIS', 'MOVE_MEMBERS', 'MUTE_MEMBERS', 'PRIORITY_SPEAKER', 'READ_MESSAGE_HISTORY', 'SEND_MESSAGES', 'SEND_TTS_MESSAGES', 'SPEAK', 'STREAM', 'USE_EXTERNAL_EMOJIS', 'USE_VAD', 'VIEW_AUDIT_LOG', 'VIEW_CHANNEL', 'VIEW_GUILD_INSIGHTS'];
     let userPerms: string | Discord.PermissionString[] = userTotalPerms.filter((f: string) => !unnededPerms.includes(f));
     let permAmount = userPerms.length;
     userPerms = userPerms.length === 0 ? "None" : userPerms.join(", ").replace(/_/g, ' ').toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ').replace("Add Reactions, ", "").replace("Attach Files,", "");
     let joinedAtTimeZone = moment(mentionedUser.joinedTimestamp).format('Z').includes("05:00") ? "CDT" : "CST";
-    let createdAtTimeZone = moment(mentionedUser.user.createdAt).format("Z").includes("05:00") ? "CDT": "CST";
+    let createdAtTimeZone = moment(mentionedUser.user.createdAt).format("Z").includes("05:00") ? "CDT" : "CST";
 
     if (mentionedUser.id === message.guild.ownerID) {
         var serverAcknowledgements = "Server Owner";
         if (mentionedUser.id === '245047280908894209') {
-            serverAcknowledgements = `Server Owner, ${client.user.username} Developer`
+            serverAcknowledgements = `Server Owner, ${client.user.username} Developer`;
         }
     }
     else if (mentionedUser.hasPermission("ADMINISTRATOR")) {
         var serverAcknowledgements = "Administrator";
         if (mentionedUser.id === '245047280908894209') {
-            serverAcknowledgements = `Administrator, ${client.user.username} Developer`
+            serverAcknowledgements = `Administrator, ${client.user.username} Developer`;
         }
     }
     else {
         var serverAcknowledgements = "Member";
         if (mentionedUser.id === '245047280908894209') {
-            serverAcknowledgements = `Member, ${client.user.username} Developer`
+            serverAcknowledgements = `Member, ${client.user.username} Developer`;
         }
     }
 
@@ -76,9 +76,9 @@ export function execute(message: Discord.Message, args: string[], mentionedUser:
     var reqEmbed = {
         author: {
             name: `${mentionedUser.user.tag}`,
-            icon_url: mentionedUser.user.avatarURL() === null ? `https://cdn.discordapp.com/embed/avatars/${parseInt(mentionedUser.user.discriminator) % 5}.png` : mentionedUser.user.avatarURL({format: 'webp', dynamic: false, size: 256}),
+            icon_url: mentionedUser.user.displayAvatarURL({ format: 'png', dynamic: false, size: 256 })
         },
-        thumbnail: {url:  mentionedUser.user.avatarURL() === null ? `https://cdn.discordapp.com/embed/avatars/${parseInt(mentionedUser.user.discriminator) % 5}.png` : mentionedUser.user.avatarURL({format: 'webp', dynamic: false, size: 512})},
+        thumbnail: { url: mentionedUser.user.displayAvatarURL({ format: 'webp', dynamic: false, size: 512 }) },
         title: `${mentionedUser.id === "245047280908894209" ? "<:kidhat:807485094906429451> User Information" : "User Information"}`,
         color: 0x24ACF2,
         fields: [
@@ -126,6 +126,6 @@ export function execute(message: Discord.Message, args: string[], mentionedUser:
             text: `User ID: ${mentionedUser.user.id}`,
         }
 
-    }
-        message.channel.send({embed: reqEmbed});
+    };
+    message.channel.send({ embed: reqEmbed });
 }

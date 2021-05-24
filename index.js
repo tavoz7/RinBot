@@ -3,15 +3,15 @@ const client = new Discord.Client();
 const commands = new Discord.Collection();
 const fs = require('fs');
 const { prefix, token, lastChannelID, updateInProgress, lastClientMessageID } = require('./config.json');
-const version = "0.26.10 - Pre-Release";
-const versionDate = "21 May 2021";
-const configFile = './config.json'
+const version = "0.26.11 - Pre-Release";
+const versionDate = "24 May 2021";
+const configFile = './config.json';
 const file = require('./config.json');
 const codeBlue = 0x24ACF2;
 const errorRed = 0xD72D42;
 
 const shibeRateLimit = new Set();
-const randomRateLimit = new Set()
+const randomRateLimit = new Set();
 const aboutRateLimit = new Set();
 const avatarRateLimit = new Set();
 const serverInfoRateLimit = new Set();
@@ -25,7 +25,7 @@ console.log("RinBot " + version);
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
 });
-console.log("\x1b[32m[SUCCESS]","\x1b[0mAuthenticated to Firebase");
+console.log("\x1b[32m[SUCCESS]", "\x1b[0mAuthenticated to Firebase");
 var db = admin.firestore();
 
 // that one color i need: 0x395F85;
@@ -39,7 +39,7 @@ for (const file of commandFiles) {
 
 client.on('guildMemberAdd', member => {
     commands.get("welcomeMessage").execute(member);
-})
+});
 
 client.ws.on("GUILD_MEMBER_UPDATE", m => {
     if (m.pending === false && !m.roles.includes("685237146193494026") && m.guild_id === "685236709277040802") {
@@ -59,7 +59,7 @@ client.on('message', message => { // fires whenever a message is sent
             break;
         case 'userinfo':
             var mentionedUser = message.guild.member(message.mentions.users.first());
-            if (args.length === 0 &&  message.mentions.users.first() === undefined) { // stuff for determining who's info to pull up
+            if (args.length === 0 && message.mentions.users.first() === undefined) { // stuff for determining who's info to pull up
                 mentionedUser = message.member;
                 commands.get('userinfo').execute(message, args, mentionedUser, client);
             }
@@ -67,10 +67,10 @@ client.on('message', message => { // fires whenever a message is sent
                 commands.get('userinfo').execute(message, args, mentionedUser, client);
             }
             else if (args[0] === "-h") {
-                commands.get('userinfo').execute(message, args, null, client)
+                commands.get('userinfo').execute(message, args, null, client);
             }
             else if (args.length === 1 && message.mentions.users.first() === undefined) {
-                message.guild.members.fetch(args[0]).then(mentionedUser => commands.get('userinfo').execute(message, args, mentionedUser, client)).catch(() => { message.channel.send(":x: That user doesn't seem to exist!") }); // this assumes that every error is a "user-does-not-exist" error so i probably should rework this
+                message.guild.members.fetch(args[0]).then(mentionedUser => commands.get('userinfo').execute(message, args, mentionedUser, client)).catch(() => { message.channel.send(":x: That user doesn't seem to exist!"); }); // this assumes that every error is a "user-does-not-exist" error so i probably should rework this
             }
             break;
         case 'serverinfo':
@@ -91,9 +91,9 @@ client.on('message', message => { // fires whenever a message is sent
                     return;
                 }
             }
-                randomRateLimit.add(message.author.id);
-                setTimeout(() => { randomRateLimit.delete(message.author.id); }, 3000);
-                commands.get('random').execute(message, args, client);
+            randomRateLimit.add(message.author.id);
+            setTimeout(() => { randomRateLimit.delete(message.author.id); }, 3000);
+            commands.get('random').execute(message, args, client);
             break;
         case 'about':
             if (!approvedUser) {
@@ -166,7 +166,7 @@ client.on('message', message => { // fires whenever a message is sent
                 }
                 else if (message.mentions.users.first() === undefined && args.length === 0) {
                     commands.get('avatar').execute(message, args, message.author);
-                    }
+                }
                 else if (message.mentions.users.first() === undefined && args.length > 0 && args.length <= 2 && args[0].length === 18) {
                     mentionedUser = message.guild.members.fetch(args[0]).then(mentionedUser => commands.get('avatar').execute(message, args, mentionedUser.user));
                 }
@@ -174,21 +174,21 @@ client.on('message', message => { // fires whenever a message is sent
                     var reqEmbed = {
                         color: 0xD72D42,
                         description: ":x: Too many arguments supplied."
-                    }
-                    message.channel.send({embed: reqEmbed});
+                    };
+                    message.channel.send({ embed: reqEmbed });
                 }
             }
             break;
         }
         case 'kick': {
             if (!approvedUser) return;
-                if (message.mentions.users.first() === undefined) {
+            if (message.mentions.users.first() === undefined) {
                 if (args.length === 0) {
                     message.channel.send(":no_entry: Please specify a user.");
                     return;
                 }
                 else {
-                    message.guild.members.fetch(args[0]).then(target => commands.get('kick').execute(message, args, target, client)).catch(() => { message.channel.send({embed: { color: 0xD72D42, description: ":x: Error when trying to kick member. Please make sure the bot has the proper permissions, and that the user specified exists." }}); }); // comment on line 58
+                    message.guild.members.fetch(args[0]).then(target => commands.get('kick').execute(message, args, target, client)).catch(() => { message.channel.send({ embed: { color: 0xD72D42, description: ":x: Error when trying to kick member. Please make sure the bot has the proper permissions, and that the user specified exists." } }); }); // comment on line 58
                 }
             }
             else if (message.mentions.users.first() !== undefined) {
@@ -207,7 +207,7 @@ client.on('message', message => { // fires whenever a message is sent
                     return;
                 }
                 else {
-                    message.guild.members.fetch(args[0]).then(target => commands.get('ban').execute(message, args, target)).catch(() => { message.channel.send({embed: { color: 0xD72D42, description: ":x: Error when trying to ban member. Please make sure the bot has the proper permissions, and that the user specified exists." }}); }); // too lazy to copy it so go look at the comment on 58
+                    message.guild.members.fetch(args[0]).then(target => commands.get('ban').execute(message, args, target)).catch(() => { message.channel.send({ embed: { color: 0xD72D42, description: ":x: Error when trying to ban member. Please make sure the bot has the proper permissions, and that the user specified exists." } }); }); // too lazy to copy it so go look at the comment on 58
                 }
             }
             else if (message.mentions.users.first() !== undefined) { // THIS MAKES MENTIONS WORK, IT DOES NOT BAN THE SENDER OF THE MESSAGE
@@ -265,12 +265,12 @@ client.on('message', message => { // fires whenever a message is sent
             break;
         }
         case 'rps': {
-           commands.get('rps').execute(message, args, client);
-           break;
+            commands.get('rps').execute(message, args, client);
+            break;
         }
         // case 'quote':
         //     commands.get('quote').execute(message, args, client, db, prefix);
-            // break;
+        // break;
         case 'say': {
             commands.get('say').execute(message, client, args);
             break;
@@ -285,12 +285,12 @@ client.on('message', message => { // fires whenever a message is sent
                 return;
             }
             monkeRateLimit.add(message.author.id);
-            setTimeout(() => {monkeRateLimit.delete(message.author.id)}, 5000);
+            setTimeout(() => { monkeRateLimit.delete(message.author.id); }, 5000);
             message.channel.send("https://cdn.discordapp.com/attachments/604407073156890637/771883295570133003/video0_80.mp4");
             break;
         }
         case 'setactivity': {
-            commands.get('setactivity').execute(message, args, client)
+            commands.get('setactivity').execute(message, args, client);
         }
     }
 });
@@ -363,18 +363,18 @@ client.once("ready", () => { // bot custom status
             }
         ]
     }}); */
-    console.log("\x1b[32m[READY]","\x1b[0mLogged in as " + client.user.tag);
-    client.user.setActivity("Corgi Quest 7", {type: "PLAYING"});
+    console.log("\x1b[32m[READY]", "\x1b[0mLogged in as " + client.user.tag);
+    client.user.setActivity("Corgi Quest 7", { type: "PLAYING" });
     if (updateInProgress === true) {
-        console.log("\033[0;33m[UPDATE]\033[0m Previous update values detected, performing post-update operations")
+        console.log("\033[0;33m[UPDATE]\033[0m Previous update values detected, performing post-update operations");
         var reqEmbed = {
             title: "Update Complete!",
             color: 0x77B255,
             description: `:white_check_mark: Version ${version}`,
             timestamp: new Date()
-        }
+        };
         client.channels.fetch(lastChannelID).then(c => c.messages.fetch(lastClientMessageID).then(m => m.delete()));
-        client.channels.fetch(lastChannelID).then(c => c.send({embed: reqEmbed}));
+        client.channels.fetch(lastChannelID).then(c => c.send({ embed: reqEmbed }));
         file.updateInProgress = false;
         file.lastChannelID = null;
         file.lastClientMessageID = null;
@@ -385,8 +385,8 @@ client.once("ready", () => { // bot custom status
                     title: "Error Writing JSON",
                     description: "```" + error + "```",
                     timestamp: new Date()
-                }
-                client.channels.fetch(lastChannelID).then(channel => channel.send({embed: reqEmbed}));
+                };
+                client.channels.fetch(lastChannelID).then(channel => channel.send({ embed: reqEmbed }));
                 console.error(error);
             }
             // please for the love of god add error handling here, if this fails the entire thing crashes on startup which results in pm2 having a fit

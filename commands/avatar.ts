@@ -6,7 +6,7 @@ export function execute(message: Discord.Message, args: string[], mentionedUser:
         var helpEmbed = {
             author: {
                 name: client.user.username,
-                icon_url: client.user.avatarURL(),
+                icon_url: client.user.displayAvatarURL(),
             },
             title: "Avatar",
             color: 0x24ACF2,
@@ -48,12 +48,12 @@ export function execute(message: Discord.Message, args: string[], mentionedUser:
     var reqEmbed = {
         author: {
             name: `${mentionedUser.tag}`,
-            icon_url:  mentionedUser.avatarURL() === null ? `https://cdn.discordapp.com/embed/avatars/${parseInt(mentionedUser.discriminator) % 5}.png` : mentionedUser.avatarURL({format: 'webp', dynamic: false}),
+            icon_url:  mentionedUser.displayAvatarURL({format: 'png', dynamic: false}),
         },
         title: "Avatar",
         color: 0x24ACF2,
         image: {
-            url:  mentionedUser.avatarURL() === null ? `https://cdn.discordapp.com/embed/avatars/${parseInt(mentionedUser.discriminator) % 5}.png` : mentionedUser.avatarURL({format: reqType, dynamic: false, size: 1024})
+            url:  mentionedUser.displayAvatarURL({format: reqType, dynamic: false, size: 1024})
         }
     }
     message.channel.send({embed: reqEmbed});

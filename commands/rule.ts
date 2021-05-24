@@ -30,7 +30,7 @@ export function execute(message: Discord.Message, args: string[], client: Discor
             color: 0x24ACF2,
             author: {
                 name: client.user.username,
-                icon_url: client.user.avatarURL(),
+                icon_url: client.user.displayAvatarURL(),
             },
             fields: [
                 {

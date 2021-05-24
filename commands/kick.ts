@@ -34,7 +34,7 @@ export function execute(message: Discord.Message, args: string[], target: Discor
         var logEmbed = {
             author: {
                 name: target.user.username,
-                icon_url:  target.user.avatarURL() === null ? `https://cdn.discordapp.com/embed/avatars/${parseInt(target.user.discriminator) % 5}.png` : target.user.avatarURL({dynamic: false})
+                icon_url:  target.user.displayAvatarURL({dynamic: false})
             },
             title: "Member Kicked",
             color: 0x24ACF2,

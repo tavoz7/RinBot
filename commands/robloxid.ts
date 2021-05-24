@@ -7,7 +7,7 @@ export function execute(message: Discord.Message, args: string[], client: Discor
         var reqEmbed = {
             author: {
                 name: client.user.username,
-                icon_url: client.user.avatarURL(),
+                icon_url: client.user.displayAvatarURL(),
             },
             title: "RobloxID",
             color: 0x007ACC,

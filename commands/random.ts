@@ -10,7 +10,7 @@ export function execute(message: Discord.Message, args: string[], client: Discor
         let helpEmbed = {
             author: {
                 name: client.user.username,
-                icon_url: client.user.avatarURL(),
+                icon_url: client.user.displayAvatarURL(),
             },
             title: "Random",
             description: "Generate a random number",

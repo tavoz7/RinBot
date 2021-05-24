@@ -39,7 +39,7 @@ export async function execute(client: Discord.Client, interaction: {
                     {
                         author: {
                             name: targetMember.user.tag,
-                            icon_url: targetMember.user.avatarURL() === null ? `https://cdn.discordapp.com/embed/avatars/${parseInt(targetMember.user.discriminator) % 5}.png` : targetMember.user.avatarURL({dynamic: false})
+                            icon_url: targetMember.user.displayAvatarURL({dynamic: false})
                         },
                         color: 0x24ACF2,
                         title: isRequestingSelf ? `Your Strikes` : `Strikes for ${targetMember.user.tag}`,
@@ -71,7 +71,7 @@ export async function execute(client: Discord.Client, interaction: {
         (modLogChannel as Discord.TextChannel).send({embed:{
             author: {
                 name: targetMember.user.tag,
-                icon_url: targetMember.user.avatarURL() === null ? `https://cdn.discordapp.com/embed/avatars/${parseInt(targetMember.user.discriminator) % 5}.png` : targetMember.user.avatarURL({dynamic: false})
+                icon_url: targetMember.user.displayAvatarURL({dynamic: false})
             },
             title: "Image Strike " + type,
             fields: [
