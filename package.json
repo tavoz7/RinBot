@@ -13,7 +13,7 @@
     "url": "git://github.com/CominAtYou/RinBot.git"
   },
   "dependencies": {
-    "@types/node": "^15.6.0",
+    "@types/node": "^15.6.1",
     "canvas": "^2.8.0",
     "date": "^1.0.2",
     "discord.js": "^12.5.3",
