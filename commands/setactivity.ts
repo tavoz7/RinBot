@@ -10,7 +10,7 @@ export function execute(message: Discord.Message, args: string[], client: Discor
     args.splice(args.indexOf('--type'), 2);
     if (type === "PLAYING" || type === "STREAMING" || type === "LISTENING" || type === "WATCHING" || type === "COMPETING") {
         client.user.setActivity(args.join(" "), {type: type});
-        message.channel.send(`:white_check_mark: Status has been set to "${type[0] + type.slice(1, type.length).toLowerCase()} **${args.join(" ")}**"`);
+        message.channel.send(`:white_check_mark: Status has been set to "${type[0] + type.slice(1, type.length).toLowerCase()} ${type === "LISTENING" ? "to " : ""}**${args.join(" ")}**"`);
     }
     else message.channel.send(`:x: ${type} is not a valid activity type!`);
 }
