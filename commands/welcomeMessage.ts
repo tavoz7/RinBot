@@ -2,7 +2,7 @@ import Discord = require('discord.js');
 import Canvas = require('canvas');
 export const name = "welcomeMessage"
 export async function execute(member: Discord.GuildMember) {
-    if (member.id === "480754227510247451") return;
+    if (member.id === "480754227510247451" || member.guild.id !== "685236709277040802") return;
     function applyText(canvas: Canvas.Canvas, text: string) {
         const ctx = canvas.getContext('2d');
         // Declare a base size of the font
