@@ -3,8 +3,8 @@ const client = new Discord.Client();
 const commands = new Discord.Collection();
 const fs = require('fs');
 const { prefix, token, lastChannelID, updateInProgress, lastClientMessageID } = require('./config.json');
-const version = "0.26.13 - Pre-Release";
-const versionDate = "12 Jun 2021";
+const version = "0.27.0 - Pre-Release";
+const versionDate = "14 Jun 2021";
 const configFile = './config.json';
 const file = require('./config.json');
 const codeBlue = 0x24ACF2;
@@ -52,7 +52,7 @@ client.ws.on("GUILD_MEMBER_UPDATE", m => {
     }
 });
 
-client.on('message', message => { // fires whenever a message is sent
+client.on('message', async message => { // fires whenever a message is sent
     if (!message.content.startsWith(prefix) || message.author.bot || message.channel.type === 'dm' || message.webhookID) return;
     const approvedUser = message.member.roles.cache.has('685237145052512321') /* head mods */ || message.member.roles.cache.has('769013132541558795') /* mods */ || message.member.roles.cache.has('772162214865272842') /* trial mods */ || message.author.id === "245047280908894209";
     const args = message.content.slice(prefix.length).trim().split(/ +/); // stuff to throw arguments into an array
@@ -297,6 +297,11 @@ client.on('message', message => { // fires whenever a message is sent
         }
         case 'setactivity': {
             commands.get('setactivity').execute(message, args, client);
+            break;
+        }
+        case 'eval': {
+            require('./commands/transpiled/evaluate').execute(message, args); // it doesn't work the regular way for some reason
+            break;
         }
     }
 });
