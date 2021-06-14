@@ -3,7 +3,7 @@ const client = new Discord.Client();
 const commands = new Discord.Collection();
 const fs = require('fs');
 const { prefix, token, lastChannelID, updateInProgress, lastClientMessageID } = require('./config.json');
-const version = "0.27.0 - Pre-Release";
+const version = "0.27.1 - Pre-Release";
 const versionDate = "14 Jun 2021";
 const configFile = './config.json';
 const file = require('./config.json');
@@ -300,7 +300,7 @@ client.on('message', async message => { // fires whenever a message is sent
             break;
         }
         case 'eval': {
-            require('./commands/transpiled/evaluate').execute(message, args); // it doesn't work the regular way for some reason
+            require('./commands/transpiled/evaluate').execute(message, args, client); // it doesn't work the regular way for some reason
             break;
         }
     }
