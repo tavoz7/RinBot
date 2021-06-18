@@ -44,6 +44,11 @@ for (const file of commandFiles) {
 
 client.on('guildMemberAdd', member => {
     commands.get("welcomeMessage").execute(member);
+    member.guild.channels.cache.get('765695810591522836').setTopic('Say hello to our new friends! | Current member count: ' + member.guild.memberCount);
+});
+
+client.on('guildMemberRemove', member => {
+    member.guild.channels.cache.get('765695810591522836').setTopic('Say hello to our new friends! | Current member count: ' + member.guild.memberCount);
 });
 
 client.ws.on("GUILD_MEMBER_UPDATE", m => {
@@ -305,6 +310,7 @@ client.on('message', async message => { // fires whenever a message is sent
         }
     }
 });
+
 client.ws.on("INTERACTION_CREATE", async interaction => {
     commands.get('interactioninit').execute(client, interaction, db);
 });
