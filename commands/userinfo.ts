@@ -42,8 +42,6 @@ export function execute(message: Discord.Message, args: string[], mentionedUser:
     let userPerms: string | Discord.PermissionString[] = userTotalPerms.filter((f: string) => !unnededPerms.includes(f));
     let permAmount = userPerms.length;
     userPerms = userPerms.length === 0 ? "None" : userPerms.join(", ").replace(/_/g, ' ').toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ').replace("Add Reactions, ", "").replace("Attach Files,", "");
-    let joinedAtTimeZone = moment(mentionedUser.joinedTimestamp).format('Z').includes("05:00") ? "CDT" : "CST";
-    let createdAtTimeZone = moment(mentionedUser.user.createdAt).format("Z").includes("05:00") ? "CDT" : "CST";
 
     if (mentionedUser.id === message.guild.ownerID) {
         var serverAcknowledgements = "Server Owner";
@@ -69,7 +67,7 @@ export function execute(message: Discord.Message, args: string[], mentionedUser:
         var boostStatus = "Not Boosting";
     }
     else {
-        var boostStatus = moment(mentionedUser.premiumSinceTimestamp).format("Z").includes("05:00") ? moment(mentionedUser.premiumSinceTimestamp).format("D MMM YYYY [at] h:mm A") + " CDT" : boostStatus = moment(mentionedUser.premiumSinceTimestamp).format("D MMM YYYY [at] h:mm A") + " CST";
+	var boostStatus = `<t:${Math.round(mentionedUser.premiumSinceTimestamp / 1000)}:f>`
     }
     let memberRoles = mentionedUser.roles.cache.map(role => role.id).length - 1 === 0 ? "None" : mentionedUser.roles.cache.map(roles => roles).sort((a, b) => b.rawPosition - a.rawPosition).join(' ').replace("@everyone", "");
 
@@ -92,12 +90,12 @@ export function execute(message: Discord.Message, args: string[], mentionedUser:
             },
             {
                 name: "Joined Server",
-                value: `${moment(mentionedUser.joinedAt).format('D MMM YYYY [at] h:mm A')} ${joinedAtTimeZone}`,
+                value: `<t:${Math.round(mentionedUser.joinedTimestamp / 1000)}:f>`,
                 inline: true
             },
             {
                 name: "Account Creation Date",
-                value: `${moment(mentionedUser.user.createdAt).format("D MMM YYYY [at] h:mm A")} ${createdAtTimeZone}`,
+                value: `<t:${Math.round(mentionedUser.user.createdTimestamp / 1000)}:f>`,
                 inline: true
 
             },
