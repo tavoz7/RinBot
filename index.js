@@ -3,8 +3,8 @@ const client = new Discord.Client();
 const commands = new Discord.Collection();
 const fs = require('fs');
 const { prefix, token, lastChannelID, updateInProgress, lastClientMessageID } = require('./config.json');
-const version = "0.29.0 - Pre-Release";
-const versionDate = "24 Jul 2021";
+const version = "0.30.0 - Pre-Release";
+const versionDate = "26 Jul 2021";
 const configFile = './config.json';
 const file = require('./config.json');
 const codeBlue = 0x24ACF2;
@@ -55,6 +55,10 @@ client.ws.on("GUILD_MEMBER_UPDATE", m => {
     if (m.pending === false && !m.roles.includes("685237146193494026") && m.guild_id === "685236709277040802") {
         client.guilds.cache.get(m.guild_id).members.cache.get(m.user.id).roles.add("685237146193494026");
     }
+});
+
+client.on('guildMemberUpdate', (_om, nm) => { // prevent nickname hoisting
+    if (nm.nickname.match(/^(!|\*|\[|\]|\_)/)) nm.setNickname("");
 });
 
 client.on('message', async message => { // fires whenever a message is sent
