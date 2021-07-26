@@ -1,6 +1,5 @@
 import Discord = require('discord.js');
 import os = require('os');
-require('loadavg-windows');
 
 export const name = "host";
 export const description = "get information about the host server.";
