@@ -63,7 +63,7 @@ client.on('guildMemberUpdate', (_om, nm) => { // prevent nickname hoisting
 
 client.on('message', async message => { // fires whenever a message is sent
     if (!message.content.startsWith(prefix) || message.author.bot || message.channel.type === 'dm' || message.webhookID) return;
-    const approvedUser = message.member.roles.cache.has('685237145052512321') /* head mods */ || message.member.roles.cache.has('769013132541558795') /* mods */ || message.member.roles.cache.has('772162214865272842') /* trial mods */ || message.author.id === "245047280908894209";
+    const approvedUser = message.member.roles.cache.has('685237145052512321') /* head mods */ || message.member.roles.cache.has('769013132541558795') /* mods */ || message.member.roles.cache.has('772162214865272842') /* trial mods */ || message.member.roles.cache.has('869642565148885043') /* threads - approved */ || message.author.id === "245047280908894209";
     const args = message.content.slice(prefix.length).trim().split(/ +/); // stuff to throw arguments into an array
     const command = args.shift().toLowerCase(); // extract command from message
     invocations.inc();
