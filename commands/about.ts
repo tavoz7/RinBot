@@ -34,7 +34,7 @@ export function execute(message: Discord.Message, client: Discord.Client, versio
                 icon_url: client.user.displayAvatarURL(),
             },
             title: "**About**",
-            description: `${client.user.username} is a bot made in Kansas City.`,
+            description: `${client.user.username} is a bot made with :heart: in Kansas City.`,
             thumbnail: {url: client.user.displayAvatarURL()},
             color: 0x24ACF2,
             fields: [
@@ -54,18 +54,13 @@ export function execute(message: Discord.Message, client: Discord.Client, versio
                     inline: true,
                 },
                 {
-                    name: "Made With",
-                    value: "[discord.js](https://discord.js.org)\n[moment.js](https://momentjs.com)",
-                    inline: true,
-                },
-                {
                     name: "Version",
                     value: `${version}\n(${versionDate})`,
                     inline: true,
                 },
                 {
                     name: "Special Thanks",
-                    value: "VCInventerman\nStackOverflow",
+                    value: "VCInventerman\nStack Overflow",
                     inline: true,
                 }
             ]

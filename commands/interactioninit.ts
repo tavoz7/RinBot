@@ -1,7 +1,6 @@
 import Discord = require('discord.js');
 import admin = require('firebase-admin');
 import uuid = require('uuid');
-import moment = require('moment');
 export const name = 'interactioninit';
 export async function execute(client: Discord.Client, interaction: {
     users: Discord.User,
@@ -56,7 +55,7 @@ export async function execute(client: Discord.Client, interaction: {
                             },
                             {
                                 name: "Next Strike Removal",
-                                value: retrievedDoc.data() === undefined || retrievedDoc.data().infractionLevel === 0 || retrievedDoc.data().infractionLevel === 3 ? "N/A" : (moment(new Date((requestedDoc.data().lastModified.toDate() as Date).getTime() + 2.628e+9)).format("Z").includes("05:00") ? moment(new Date((requestedDoc.data().lastModified.toDate() as Date).getTime() + 2.628e+9)).format("D MMM YYYY [at] h:mm A") + " CDT" : moment(new Date((requestedDoc.data().lastModified.toDate() as Date).getTime() + 2.628e+9)).format("D MMM YYYY [at] h:mm A") + " CST"),
+                                value: retrievedDoc.data() === undefined || retrievedDoc.data().infractionLevel === 0 || retrievedDoc.data().infractionLevel === 3 ? "N/A" : `<t:${Math.floor(((retrievedDoc.data().lastModified.toDate() as Date).getTime() + 2.628e+9) / 1000)}:f>`,
                                 inline: true
                             }
                         ]

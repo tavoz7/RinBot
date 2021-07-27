@@ -1,5 +1,4 @@
 import https = require('https');
-import moment = require('moment');
 import Discord = require('discord.js');
 
 export const name = "robloxprofile";
@@ -72,7 +71,7 @@ export function execute(message: Discord.Message, args: string[], client: Discor
                         },
                         {
                             name: "Join Date",
-                            value: moment(profileJSON.created).format("D MMM YYYY"),
+                            value: `<t:${Math.floor(new Date(profileJSON.created).getTime() / 1000)}:f>`,
                             inline: true
                         },
                         {

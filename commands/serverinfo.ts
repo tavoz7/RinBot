@@ -1,14 +1,7 @@
-import moment = require('moment');
 import Discord = require('discord.js');
 export const name = 'serverinfo';
 export const description = "Display information about the server";
 export async function execute(message: Discord.Message, args: string[], client: Discord.Client) {
-    if (moment(message.guild.createdAt).format("Z").includes("05:00")) {
-        var serverCreatedAtTimeZone = "CDT"
-    }
-    else if (moment(message.guild.createdAt).format("Z").includes("06:00")) {
-        var serverCreatedAtTimeZone = "CST"
-    }
     if (args[0] === '-h') {
         const helpEmbed = {
             author: {
@@ -56,10 +49,12 @@ export async function execute(message: Discord.Message, args: string[], client: 
                 {
                     name: "Server Owner",
                     value: owner.user.tag,
+                    inline: true
                 },
                 {
                     name: "Member Count",
                     value: message.guild.memberCount,
+                    inline: true
                 },
                 {
                     name: "Server Region",
@@ -68,7 +63,8 @@ export async function execute(message: Discord.Message, args: string[], client: 
                 },
                 {
                     name: "Server Boost",
-                    value: `Boosters: ${message.guild.premiumSubscriptionCount}\n Level: ${message.guild.premiumTier}`
+                    value: `Boosters: ${message.guild.premiumSubscriptionCount}\n Level: ${message.guild.premiumTier}`,
+                    inline: true
                 },
                 {
                     name: "Text Channels",
@@ -82,7 +78,7 @@ export async function execute(message: Discord.Message, args: string[], client: 
                 },
                 {
                     name: "Server Creation Date",
-                    value: `${moment(message.guild.createdAt).format("D MMM YYYY [at] h:mm A")} ${serverCreatedAtTimeZone}`,
+                    value: `<t:${Math.floor(message.guild.createdTimestamp / 1000)}:F>`,
                 },
             ],
             footer: {

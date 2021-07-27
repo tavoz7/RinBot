@@ -1,4 +1,3 @@
-import moment = require('moment');
 import Discord = require('discord.js');
 
 export const name = 'userinfo';
