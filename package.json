@@ -13,6 +13,7 @@
     "url": "git://github.com/CominAtYou/RinBot.git"
   },
   "dependencies": {
+    "@pm2/io": "^5.0.0",
     "@types/node": "^16.4.8",
     "canvas": "^2.8.0",
     "date": "^1.0.2",
@@ -20,7 +21,5 @@
     "firebase-admin": "^9.11.0",
     "uuid": "^8.3.2"
   },
-  "devDependencies": {
-    "@pm2/io": "^5.0.0"
-  }
+  "devDependencies": {}
 }
