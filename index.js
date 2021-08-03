@@ -58,7 +58,7 @@ client.ws.on("GUILD_MEMBER_UPDATE", m => {
 });
 
 client.on('guildMemberUpdate', (_om, nm) => { // prevent nickname hoisting
-    if (nm.nickname.match(/^(!|\*|\[|\]|\_)/)) nm.setNickname("");
+    if (nm.nickname !== null && nm.nickname.match(/^(!|\*|\[|\]|\_)/)) nm.setNickname("");
 });
 
 client.on('message', async message => { // fires whenever a message is sent
